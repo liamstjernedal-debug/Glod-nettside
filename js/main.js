@@ -314,8 +314,8 @@
     form.hidden = true;
     if (successText) {
       successText.textContent = viaMail
-        ? "E-postprogrammet ditt skal nå ha åpnet seg med meldingen ferdig utfylt. Trykk send der, så tar vi kontakt."
-        : "Vi tar kontakt med deg så snart vi kan.";
+        ? "E-postprogrammet ditt skal nå ha åpnet seg med meldingen ferdig utfylt. Trykk send der, så svarer vi innen [SVARTID]."
+        : "Vi svarer innen [SVARTID].";
     }
     success.hidden = false;
     success.focus();
@@ -380,7 +380,7 @@
       })
       .then(function () {
         submitBtn.removeAttribute("aria-busy");
-        submitBtn.textContent = "Send henvendelsen";
+        submitBtn.textContent = "Jeg vil se et utkast";
       });
   });
 
