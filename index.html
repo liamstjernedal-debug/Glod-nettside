@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Glød – ferdige nettsider til nye bedrifter</title>
+  <meta name="description" content="Glød lager ferdige nettsider til nye og små bedrifter. Du får se hvordan siden kan se ut, før du bestemmer deg.">
+  <link rel="canonical" href="https://[DOMENE]/">
+  <meta name="theme-color" content="#FCFFFF">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="nb_NO">
+  <meta property="og:site_name" content="Glød">
+  <meta property="og:title" content="Glød – ferdige nettsider til nye bedrifter">
+  <meta property="og:description" content="Vi lager ferdige nettsider til nye og små bedrifter. Du får se hvordan den kan se ut, før du bestemmer deg.">
+  <meta property="og:url" content="https://[DOMENE]/">
+  <meta property="og:image" content="https://[DOMENE]/assets/og-bilde.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Glød-logoen på mørk bakgrunn med en myk lysglød">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#innhold">Hopp til innholdet</a>
+
+  <!-- ============ TOPPLINJE ============ -->
+  <header class="topbar" id="topp">
+    <div class="topbar__inner container">
+      <a class="topbar__logo" href="#topp" aria-label="Glød, til toppen av siden">
+        <img src="assets/logo-lys.svg" alt="Glød" width="86" height="36">
+      </a>
+
+      <nav class="nav" id="hovedmeny" aria-label="Hovedmeny">
+        <ul class="nav__list">
+          <li><a href="#slik-jobber-vi">Slik jobber vi</a></li>
+          <li><a href="#pakker">Pakker</a></li>
+          <li><a href="#eksempler">Eksempler</a></li>
+          <li><a href="#sporsmal">Spørsmål</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+      </nav>
+
+      <div class="topbar__actions">
+        <a class="btn btn--primary btn--sm" href="#kontakt">Ta kontakt</a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="hovedmeny">
+          <span class="menu-toggle__bars" aria-hidden="true"></span>
+          <span class="visually-hidden">Meny</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="innhold">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" aria-labelledby="hero-tittel">
+      <div class="hero__glow" aria-hidden="true">
+        <div class="hero__glow-layer" data-parallax>
+          <span class="orb orb--blue"></span>
+          <span class="orb orb--pink"></span>
+          <span class="orb orb--soft"></span>
+        </div>
+      </div>
+      <div class="hero__grid-lines" aria-hidden="true"></div>
+
+      <div class="container hero__inner">
+        <div class="hero__copy">
+          <p class="eyebrow hero__eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span>Nettsider for nye og små bedrifter</p>
+          <h1 id="hero-tittel" class="hero__title">Nettsiden din, <span class="glow-text">ferdig</span> før du rekker å tenke på den.</h1>
+          <p class="hero__lead">Vi lager ferdige nettsider til nye og små bedrifter. Du får se hvordan den kan se ut, før du bestemmer deg.</p>
+          <div class="hero__cta">
+            <a class="btn btn--primary btn--lg" href="#pakker">Se pakkene</a>
+            <a class="btn btn--ghost btn--lg" href="#kontakt">Ta kontakt</a>
+          </div>
+        </div>
+
+        <!-- Mockup: en fiktiv eksempelside som bygger seg opp stegvis -->
+        <div class="hero__visual" aria-label="Illustrasjon: eksempel på en ferdig nettside for et fiktivt bakeri, vist i et nettleservindu og på mobil" role="img">
+          <div class="browser" aria-hidden="true">
+            <div class="browser__bar">
+              <span class="browser__dots"><i></i><i></i><i></i></span>
+              <span class="browser__url"><svg viewBox="0 0 16 16" width="10" height="10"><path d="M4.5 7V5a3.5 3.5 0 0 1 7 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="3" y="7" width="10" height="7" rx="1.6" fill="currentColor"/></svg>morgengry-bakeri.eksempel</span>
+              <span class="tag-example">Eksempel</span>
+            </div>
+            <div class="site site--bakery">
+              <div class="site__nav build" style="--d:.25s">
+                <span class="site__brand"><i class="site__mark"></i>Morgengry Bakeri</span>
+                <span class="site__links"><i></i><i></i><i></i></span>
+              </div>
+              <div class="site__hero">
+                <div class="site__text">
+                  <p class="site__kicker build" style="--d:.55s">Åpent fra kl. 07</p>
+                  <p class="site__h build" style="--d:.7s">Ferskt brød, hver eneste morgen.</p>
+                  <span class="site__line build" style="--d:.9s"></span>
+                  <span class="site__line site__line--short build" style="--d:.95s"></span>
+                  <span class="site__btn build build--pop" style="--d:1.6s">Se dagens utvalg</span>
+                </div>
+                <div class="site__img build build--img" style="--d:1.15s">
+                  <span class="bake-sun"></span>
+                  <span class="bake-loaf bake-loaf--1"></span>
+                  <span class="bake-loaf bake-loaf--2"></span>
+                  <span class="bake-board"></span>
+                </div>
+              </div>
+              <div class="site__cards">
+                <span class="build" style="--d:1.85s"></span>
+                <span class="build" style="--d:1.95s"></span>
+                <span class="build" style="--d:2.05s"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="phone" aria-hidden="true">
+            <div class="phone__notch"></div>
+            <div class="site site--bakery site--mobile">
+              <div class="site__nav build" style="--d:2.3s">
+                <span class="site__brand"><i class="site__mark"></i>Morgengry</span>
+                <span class="site__burger"><i></i><i></i></span>
+              </div>
+              <div class="site__img build build--img" style="--d:2.45s">
+                <span class="bake-sun"></span>
+                <span class="bake-loaf bake-loaf--1"></span>
+                <span class="bake-board"></span>
+              </div>
+              <p class="site__h build" style="--d:2.6s">Ferskt brød, hver eneste morgen.</p>
+              <span class="site__line build" style="--d:2.7s"></span>
+              <span class="site__btn build build--pop" style="--d:2.9s">Se dagens utvalg</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROBLEM OG LØSNING ============ -->
+    <section class="section section--light problem" aria-labelledby="problem-tittel">
+      <div class="container problem__grid">
+        <div class="problem__head" data-reveal>
+          <p class="eyebrow">Hvorfor nettside</p>
+          <h2 id="problem-tittel" class="h2">Mange nye bedrifter har ingen nettside. Eller en som ikke gjør jobben.</h2>
+        </div>
+
+        <div class="problem__body">
+          <ul class="problem__list" data-stagger>
+            <li class="problem__item" data-reveal>
+              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></span>
+              <p>Kunder sjekker på nett før de ringer.</p>
+            </li>
+            <li class="problem__item" data-reveal>
+              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              <p>Finner de ingenting, eller en side som ser gammel ut, går de videre.</p>
+            </li>
+            <li class="problem__item" data-reveal>
+              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span>
+              <p>Du har ikke tid til å sette deg inn i domene, design og publisering.</p>
+            </li>
+          </ul>
+
+          <div class="solution-card" data-reveal>
+            <span class="solution-card__glow" aria-hidden="true"></span>
+            <p class="solution-card__label">Løsningen</p>
+            <p class="solution-card__text">Vi tar jobben fra start til ferdig.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIK JOBBER VI + PAKKER (mørkt felt) ============ -->
+    <div class="dark-band">
+      <div class="dark-band__glow" aria-hidden="true"></div>
+
+      <section class="section section--dark steps" id="slik-jobber-vi" aria-labelledby="steg-tittel">
+        <div class="container">
+          <div class="section-head" data-reveal>
+            <p class="eyebrow eyebrow--dark">Slik jobber vi</p>
+            <h2 id="steg-tittel" class="h2">Fire steg. Du ser siden før du bestemmer deg.</h2>
+          </div>
+
+          <ol class="steps__list" data-stagger>
+            <li class="steps__line" aria-hidden="true" data-reveal><span></span></li>
+            <li class="step" data-reveal>
+              <span class="step__num" aria-hidden="true">1</span>
+              <h3 class="step__title">Vi snakker kort om bedriften din.</h3>
+              <p class="step__text">Hva du driver med, hvem kundene dine er, og hva siden skal hjelpe deg med.</p>
+            </li>
+            <li class="step" data-reveal>
+              <span class="step__num" aria-hidden="true">2</span>
+              <h3 class="step__title">Vi lager et utkast til siden.</h3>
+              <p class="step__text">Du ser hvordan siden kan se ut, før du bestemmer deg.</p>
+            </li>
+            <li class="step" data-reveal>
+              <span class="step__num" aria-hidden="true">3</span>
+              <h3 class="step__title">Du sier hva du vil endre.</h3>
+              <p class="step__text">Vi justerer etter tilbakemeldingene dine.</p>
+            </li>
+            <li class="step" data-reveal>
+              <span class="step__num step__num--live" aria-hidden="true">4</span>
+              <h3 class="step__title">Siden går live på ditt eget domene.</h3>
+              <p class="step__text">Domenet registreres i ditt navn.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section section--dark packages" id="pakker" aria-labelledby="pakker-tittel">
+        <div class="container">
+          <div class="section-head" data-reveal>
+            <p class="eyebrow eyebrow--dark">Pakker</p>
+            <h2 id="pakker-tittel" class="h2">Velg hvor mye vi skal gjøre etter at siden er ute.</h2>
+            <p class="section-head__lead">Alle priser er eks. mva. Engangspris for siden, pluss en fast pris per måned.</p>
+          </div>
+
+          <div class="packages__grid" data-stagger>
+            <article class="pkg" data-reveal data-tilt aria-labelledby="pkg-enkel">
+              <div class="pkg__inner">
+                <h3 class="pkg__name" id="pkg-enkel">Enkel</h3>
+                <p class="pkg__desc">For deg som vil ha en god side på plass.</p>
+                <p class="pkg__price"><span class="pkg__amount">5&nbsp;990&nbsp;kr</span><span class="pkg__monthly">+ 199&nbsp;kr/mnd</span></p>
+                <ul class="pkg__list">
+                  <li>En ferdig nettside (opptil <span class="ph">[ANTALL]</span> sider)</li>
+                  <li>Domene og hosting</li>
+                  <li>Grunnleggende SEO-oppsett</li>
+                  <li>Endringer faktureres separat etter avtale</li>
+                </ul>
+                <a class="btn btn--glass pkg__btn" href="#kontakt" data-pakke="Enkel">Velg Enkel</a>
+              </div>
+            </article>
+
+            <article class="pkg pkg--featured" data-reveal data-tilt aria-labelledby="pkg-standard">
+              <span class="pkg__halo" aria-hidden="true"></span>
+              <div class="pkg__inner">
+                <p class="pkg__badge">Mest valgt</p>
+                <h3 class="pkg__name" id="pkg-standard">Standard</h3>
+                <p class="pkg__desc">For deg som vil at noen passer på siden.</p>
+                <p class="pkg__price"><span class="pkg__amount">9&nbsp;990&nbsp;kr</span><span class="pkg__monthly">+ 399&nbsp;kr/mnd</span></p>
+                <ul class="pkg__list">
+                  <li><strong>Alt i Enkel, pluss:</strong></li>
+                  <li>Drift og sikkerhet</li>
+                  <li>Inntil to mindre endringer per år</li>
+                </ul>
+                <a class="btn btn--primary pkg__btn" href="#kontakt" data-pakke="Standard">Velg Standard</a>
+              </div>
+            </article>
+
+            <article class="pkg" data-reveal data-tilt aria-labelledby="pkg-pluss">
+              <div class="pkg__inner">
+                <h3 class="pkg__name" id="pkg-pluss">Pluss</h3>
+                <p class="pkg__desc">For deg som vil at siden blir litt bedre hver måned.</p>
+                <p class="pkg__price"><span class="pkg__amount">12&nbsp;000&nbsp;kr</span><span class="pkg__monthly">+ 999&nbsp;kr/mnd</span></p>
+                <ul class="pkg__list">
+                  <li><strong>Alt i Standard, pluss:</strong></li>
+                  <li>Én oppdatering hver måned</li>
+                  <li>Kort månedsrapport over besøk</li>
+                  <li>Én konkret forbedring av siden hver måned</li>
+                </ul>
+                <a class="btn btn--glass pkg__btn" href="#kontakt" data-pakke="Pluss">Velg Pluss</a>
+              </div>
+            </article>
+          </div>
+
+          <div class="packages__notes" data-reveal>
+            <p><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg>Vi kan ikke garantere plassering på Google. Vi setter siden opp slik at den er klar til å bli funnet.</p>
+            <p><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9c-2.6-2.6-3.8-5.6-3.8-9S9.4 5.6 12 3Z"/></svg>Domenet registreres i ditt navn.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============ DETTE FÅR DU ALLTID ============ -->
+    <section class="section section--light always" aria-labelledby="alltid-tittel">
+      <div class="container">
+        <div class="section-head section-head--center" data-reveal>
+          <p class="eyebrow">I alle pakkene</p>
+          <h2 id="alltid-tittel" class="h2">Dette får du alltid.</h2>
+        </div>
+
+        <ul class="always__grid" data-stagger>
+          <li class="feature" data-reveal>
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg></span>
+            <h3 class="feature__title">Mobiltilpasset side</h3>
+            <p class="feature__text">Siden ser riktig ut på telefon, nettbrett og PC.</p>
+          </li>
+          <li class="feature" data-reveal>
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>
+            <h3 class="feature__title">Sikker tilkobling (https)</h3>
+            <p class="feature__text">Hengelåsen i adressefeltet er på plass fra første dag.</p>
+          </li>
+          <li class="feature" data-reveal>
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9c-2.6-2.6-3.8-5.6-3.8-9S9.4 5.6 12 3Z"/></svg></span>
+            <h3 class="feature__title">Eget domene i ditt navn</h3>
+            <p class="feature__text">Adressen er registrert på deg, ikke på oss.</p>
+          </li>
+          <li class="feature" data-reveal>
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5M8 10.5h5M10.5 8v5"/></svg></span>
+            <h3 class="feature__title">Grunnleggende SEO-oppsett</h3>
+            <p class="feature__text">Gjør det enklere for Google å forstå og finne innholdet på siden.</p>
+          </li>
+          <li class="feature" data-reveal>
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></span>
+            <h3 class="feature__title">Kontaktskjema</h3>
+            <p class="feature__text">Kundene kan nå deg rett fra siden.</p>
+          </li>
+          <li class="feature" data-reveal>
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4.5 5.5h15a1.5 1.5 0 0 1 1.5 1.5v9a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 3.5V17.5h-1A1.5 1.5 0 0 1 3 16V7a1.5 1.5 0 0 1 1.5-1.5Z"/><path d="M8 10.5h8M8 13.5h5"/></svg></span>
+            <h3 class="feature__title">Norsk kundekontakt</h3>
+            <p class="feature__text">Du snakker med et menneske, på norsk.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ EKSEMPLER ============ -->
+    <!--
+      MERK: Dette er FIKTIVE eksempelsider (mappen eksempler/). Hver kort viser en
+      levende forhåndsvisning (skalert iframe) av siden.
+      Bytt dem ut med ekte kundesider når dere har det, og bare med kundens tillatelse.
+      Fjern da merket «Eksempel».
+    -->
+    <section class="section section--dark examples" id="eksempler" aria-labelledby="eksempler-tittel">
+      <div class="examples__glow" aria-hidden="true"></div>
+      <div class="container">
+        <div class="examples__head">
+          <div class="section-head" data-reveal>
+            <p class="eyebrow eyebrow--dark">Eksempler</p>
+            <h2 id="eksempler-tittel" class="h2">Slik kan det se ut.</h2>
+            <p class="section-head__lead">Fire eksempelsider for fiktive bedrifter i ulike bransjer. Åpne dem og prøv: alt fungerer, men ingenting sendes.</p>
+          </div>
+          <div class="gallery-nav" data-reveal>
+            <button class="gallery-nav__btn" type="button" data-gallery="prev" aria-controls="galleri" aria-label="Forrige eksempel">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+            </button>
+            <button class="gallery-nav__btn" type="button" data-gallery="next" aria-controls="galleri" aria-label="Neste eksempel">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="gallery" id="galleri" tabindex="0" role="region" aria-label="Galleri med eksempelsider, kan rulles sidelengs">
+        <ul class="gallery__track" data-stagger>
+          <li class="example" data-reveal>
+            <div class="example__frame">
+              <a class="example__lenke" href="eksempler/bakeri.html" target="_blank" rel="noopener" aria-label="Åpne eksempelsiden for Morgengry Bakeri i ny fane"></a>
+              <span class="mini-bar" aria-hidden="true"><i></i><i></i><i></i><span class="mini-bar__url">bakeri.eksempel</span><span class="tag-example tag-example--sm">Eksempel</span></span>
+              <span class="preview" style="--preview-bg:#FFF8EF">
+                <iframe src="eksempler/bakeri.html" title="Forhåndsvisning av eksempelsiden for Morgengry Bakeri" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+              </span>
+            </div>
+            <div class="example__meta">
+              <h3 class="example__title">Morgengry Bakeri</h3>
+              <p class="example__kind">Bakeri · fiktivt firma</p>
+              <p class="example__feat">Fra ovnen i dag, kurv og forhåndsbestilling</p>
+              <div class="example__actions">
+                <a class="btn btn--glass btn--sm" href="eksempler/bakeri.html" target="_blank" rel="noopener">Åpne siden<span class="visually-hidden"> for Morgengry Bakeri (ny fane)</span> <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8M9 8h7v7"/></svg></a>
+                <button class="btn btn--glass btn--sm" type="button" data-mobil="eksempler/bakeri.html" data-navn="Morgengry Bakeri">Åpne som mobil<span class="visually-hidden"> for Morgengry Bakeri</span></button>
+              </div>
+            </div>
+          </li>
+          <li class="example" data-reveal>
+            <div class="example__frame">
+              <a class="example__lenke" href="eksempler/blomster.html" target="_blank" rel="noopener" aria-label="Åpne eksempelsiden for Kvist og Kløver i ny fane"></a>
+              <span class="mini-bar" aria-hidden="true"><i></i><i></i><i></i><span class="mini-bar__url">blomster.eksempel</span><span class="tag-example tag-example--sm">Eksempel</span></span>
+              <span class="preview" style="--preview-bg:#F6F1E9">
+                <iframe src="eksempler/blomster.html" title="Forhåndsvisning av eksempelsiden for Kvist og Kløver" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+              </span>
+            </div>
+            <div class="example__meta">
+              <h3 class="example__title">Kvist &amp; Kløver</h3>
+              <p class="example__kind">Blomsterbutikk · fiktivt firma</p>
+              <p class="example__feat">Bukettbygger og sesonghjul</p>
+              <div class="example__actions">
+                <a class="btn btn--glass btn--sm" href="eksempler/blomster.html" target="_blank" rel="noopener">Åpne siden<span class="visually-hidden"> for Kvist og Kløver (ny fane)</span> <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8M9 8h7v7"/></svg></a>
+                <button class="btn btn--glass btn--sm" type="button" data-mobil="eksempler/blomster.html" data-navn="Kvist og Kløver">Åpne som mobil<span class="visually-hidden"> for Kvist og Kløver</span></button>
+              </div>
+            </div>
+          </li>
+          <li class="example" data-reveal>
+            <div class="example__frame">
+              <a class="example__lenke" href="eksempler/snekker.html" target="_blank" rel="noopener" aria-label="Åpne eksempelsiden for Nordvegg Snekkerservice i ny fane"></a>
+              <span class="mini-bar" aria-hidden="true"><i></i><i></i><i></i><span class="mini-bar__url">snekker.eksempel</span><span class="tag-example tag-example--sm">Eksempel</span></span>
+              <span class="preview" style="--preview-bg:#16181B">
+                <iframe src="eksempler/snekker.html" title="Forhåndsvisning av eksempelsiden for Nordvegg Snekkerservice" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+              </span>
+            </div>
+            <div class="example__meta">
+              <h3 class="example__title">Nordvegg Snekkerservice</h3>
+              <p class="example__kind">Håndverker · fiktivt firma</p>
+              <p class="example__feat">Før/etter og terrassekalkulator</p>
+              <div class="example__actions">
+                <a class="btn btn--glass btn--sm" href="eksempler/snekker.html" target="_blank" rel="noopener">Åpne siden<span class="visually-hidden"> for Nordvegg Snekkerservice (ny fane)</span> <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8M9 8h7v7"/></svg></a>
+                <button class="btn btn--glass btn--sm" type="button" data-mobil="eksempler/snekker.html" data-navn="Nordvegg Snekkerservice">Åpne som mobil<span class="visually-hidden"> for Nordvegg Snekkerservice</span></button>
+              </div>
+            </div>
+          </li>
+          <li class="example" data-reveal>
+            <div class="example__frame">
+              <a class="example__lenke" href="eksempler/fysio.html" target="_blank" rel="noopener" aria-label="Åpne eksempelsiden for Rolig Fysio i ny fane"></a>
+              <span class="mini-bar" aria-hidden="true"><i></i><i></i><i></i><span class="mini-bar__url">fysio.eksempel</span><span class="tag-example tag-example--sm">Eksempel</span></span>
+              <span class="preview" style="--preview-bg:#F2F6F4">
+                <iframe src="eksempler/fysio.html" title="Forhåndsvisning av eksempelsiden for Rolig Fysio" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+              </span>
+            </div>
+            <div class="example__meta">
+              <h3 class="example__title">Rolig Fysio</h3>
+              <p class="example__kind">Helse · fiktivt firma</p>
+              <p class="example__feat">Kroppskart, timebestilling og pusteøvelse</p>
+              <div class="example__actions">
+                <a class="btn btn--glass btn--sm" href="eksempler/fysio.html" target="_blank" rel="noopener">Åpne siden<span class="visually-hidden"> for Rolig Fysio (ny fane)</span> <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8M9 8h7v7"/></svg></a>
+                <button class="btn btn--glass btn--sm" type="button" data-mobil="eksempler/fysio.html" data-navn="Rolig Fysio">Åpne som mobil<span class="visually-hidden"> for Rolig Fysio</span></button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Telefonramme: viser en eksempelside slik den ser ut på mobil -->
+      <dialog class="phone-modal" id="mobilvisning" aria-labelledby="mobilvisning-tittel">
+        <div class="phone-modal__top">
+          <p class="phone-modal__title" id="mobilvisning-tittel">Eksempel på mobil</p>
+          <div class="phone-modal__actions">
+            <a class="btn btn--glass btn--sm" id="mobilvisning-lenke" href="#" target="_blank" rel="noopener">Åpne i ny fane</a>
+            <button class="phone-modal__close" type="button" id="mobilvisning-lukk" aria-label="Lukk mobilvisningen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+          </div>
+        </div>
+        <div class="phone-modal__stage">
+          <div class="phone-modal__device">
+            <span class="phone-modal__notch" aria-hidden="true"></span>
+            <iframe id="mobilvisning-ramme" title="Eksempelside vist som på mobil" src="about:blank"></iframe>
+          </div>
+        </div>
+      </dialog>
+    </section>
+
+    <!-- ============ OM OSS ============ -->
+    <section class="section section--light about" aria-labelledby="om-tittel">
+      <div class="container about__grid">
+        <div class="about__copy" data-reveal>
+          <p class="eyebrow">Om oss</p>
+          <h2 id="om-tittel" class="h2">Vi er to. Du vet alltid hvem du snakker med.</h2>
+          <p class="about__text">Glød er <span class="ph">[NAVN 1]</span> og <span class="ph">[NAVN 2]</span>. <span class="ph">[NAVN 1]</span> bygger sidene. <span class="ph">[NAVN 2]</span> snakker med kundene.</p>
+          <p class="about__text">Vi viser heller enn å love. Derfor får du se et utkast før du bestemmer deg.</p>
+        </div>
+
+        <ul class="about__people" data-stagger>
+          <li class="person" data-reveal>
+            <!-- Bytt plassholderen med et bilde: <img src="assets/navn1.jpg" alt="[NAVN 1]" width="480" height="560"> -->
+            <div class="person__photo" role="img" aria-label="Plass til bilde av [NAVN 1]">
+              <span class="person__photo-label">Bilde av<br><span class="ph">[NAVN 1]</span></span>
+            </div>
+            <h3 class="person__name"><span class="ph">[NAVN 1]</span></h3>
+            <p class="person__role">Bygger sidene</p>
+            <p class="person__bio"><span class="ph">[KORT OM NAVN 1]</span></p>
+          </li>
+          <li class="person" data-reveal>
+            <!-- Bytt plassholderen med et bilde: <img src="assets/navn2.jpg" alt="[NAVN 2]" width="480" height="560"> -->
+            <div class="person__photo person__photo--alt" role="img" aria-label="Plass til bilde av [NAVN 2]">
+              <span class="person__photo-label">Bilde av<br><span class="ph">[NAVN 2]</span></span>
+            </div>
+            <h3 class="person__name"><span class="ph">[NAVN 2]</span></h3>
+            <p class="person__role">Snakker med kundene</p>
+            <p class="person__bio"><span class="ph">[KORT OM NAVN 2]</span></p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ VANLIGE SPØRSMÅL ============ -->
+    <section class="section section--tint faq" id="sporsmal" aria-labelledby="faq-tittel">
+      <div class="container faq__grid">
+        <div class="faq__head" data-reveal>
+          <p class="eyebrow">Spørsmål</p>
+          <h2 id="faq-tittel" class="h2">Vanlige spørsmål.</h2>
+          <p class="faq__more">Lurer du på noe annet? <a href="#kontakt">Spør oss direkte.</a></p>
+        </div>
+
+        <div class="faq__list" data-stagger>
+          <details class="faq-item" data-reveal>
+            <summary><span>Hvor lang tid tar det?</span><i aria-hidden="true"></i></summary>
+            <div class="faq-item__body"><p><span class="ph">[LEVERINGSTID]</span></p></div>
+          </details>
+          <details class="faq-item" data-reveal>
+            <summary><span>Hvem eier siden og domenet?</span><i aria-hidden="true"></i></summary>
+            <div class="faq-item__body"><p>Domenet står i ditt navn. <span class="ph">[FYLL INN FOR SIDEN]</span></p></div>
+          </details>
+          <details class="faq-item" data-reveal>
+            <summary><span>Hva om jeg vil si opp?</span><i aria-hidden="true"></i></summary>
+            <div class="faq-item__body"><p><span class="ph">[FYLL INN]</span></p></div>
+          </details>
+          <details class="faq-item" data-reveal>
+            <summary><span>Kan jeg endre selv?</span><i aria-hidden="true"></i></summary>
+            <div class="faq-item__body"><p><span class="ph">[FYLL INN]</span></p></div>
+          </details>
+          <details class="faq-item" data-reveal>
+            <summary><span>Garanterer dere topplassering på Google?</span><i aria-hidden="true"></i></summary>
+            <div class="faq-item__body"><p>Nei, ingen kan love det. Vi setter opp siden slik at Google kan forstå og finne den.</p></div>
+          </details>
+          <details class="faq-item" data-reveal>
+            <summary><span>Hva koster endringer utenom pakken?</span><i aria-hidden="true"></i></summary>
+            <div class="faq-item__body"><p><span class="ph">[TIMEPRIS]</span></p></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ KONTAKT ============ -->
+    <section class="section section--dark contact" id="kontakt" aria-labelledby="kontakt-tittel">
+      <div class="contact__glow" aria-hidden="true"></div>
+      <div class="container contact__grid">
+        <div class="contact__copy" data-reveal>
+          <p class="eyebrow eyebrow--dark">Kontakt</p>
+          <h2 id="kontakt-tittel" class="h2">Fortell oss om bedriften din.</h2>
+          <p class="contact__lead">Skriv noen linjer om hva du driver med. Vi tar kontakt, og du får se et utkast før du bestemmer deg.</p>
+          <dl class="contact__direct">
+            <div><dt>E-post</dt><dd><a href="mailto:[E-POST]"><span class="ph">[E-POST]</span></a></dd></div>
+            <div><dt>Telefon</dt><dd><a href="tel:[TELEFON]"><span class="ph">[TELEFON]</span></a></dd></div>
+          </dl>
+        </div>
+
+        <div class="form-card" data-reveal>
+          <!--
+            Skjemaet har ingen backend. Bytt [SKJEMA-URL] med adressen fra en skjematjeneste
+            (se README). Til det er gjort, åpner skjemaet brukerens e-postprogram (mailto)
+            med utfylt melding til adressen i data-epost.
+          -->
+          <form class="form" id="kontaktskjema" action="[SKJEMA-URL]" method="POST" data-epost="[E-POST]" novalidate>
+            <div class="form__row">
+              <div class="field">
+                <label for="f-navn">Navn</label>
+                <input id="f-navn" name="navn" type="text" autocomplete="name" required aria-describedby="f-navn-feil">
+                <p class="field__error" id="f-navn-feil" aria-live="polite"></p>
+              </div>
+              <div class="field">
+                <label for="f-firma">Firmanavn</label>
+                <input id="f-firma" name="firmanavn" type="text" autocomplete="organization" required aria-describedby="f-firma-feil">
+                <p class="field__error" id="f-firma-feil" aria-live="polite"></p>
+              </div>
+            </div>
+            <div class="form__row">
+              <div class="field">
+                <label for="f-epost">E-post</label>
+                <input id="f-epost" name="epost" type="email" autocomplete="email" inputmode="email" required aria-describedby="f-epost-feil">
+                <p class="field__error" id="f-epost-feil" aria-live="polite"></p>
+              </div>
+              <div class="field">
+                <label for="f-tlf">Telefon <span class="field__opt">(valgfri)</span></label>
+                <input id="f-tlf" name="telefon" type="tel" autocomplete="tel" inputmode="tel" aria-describedby="f-tlf-feil">
+                <p class="field__error" id="f-tlf-feil" aria-live="polite"></p>
+              </div>
+            </div>
+            <div class="field">
+              <label for="f-pakke">Pakke</label>
+              <div class="select">
+                <select id="f-pakke" name="pakke">
+                  <option value="Vet ikke ennå">Vet ikke ennå</option>
+                  <option value="Enkel">Enkel</option>
+                  <option value="Standard">Standard</option>
+                  <option value="Pluss">Pluss</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="f-melding">Melding</label>
+              <textarea id="f-melding" name="melding" rows="5" required aria-describedby="f-melding-feil" placeholder="Hva driver bedriften med, og hva ønsker du deg av siden?"></textarea>
+              <p class="field__error" id="f-melding-feil" aria-live="polite"></p>
+            </div>
+
+            <!-- Felle for spam-roboter. Skjult for mennesker. -->
+            <div class="hp" aria-hidden="true">
+              <label for="f-nettsted">Ikke fyll ut dette feltet</label>
+              <input id="f-nettsted" name="nettsted" type="text" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div class="field field--check">
+              <input id="f-samtykke" name="samtykke" type="checkbox" value="ja" required aria-describedby="f-samtykke-feil">
+              <label for="f-samtykke">Jeg samtykker til at Glød kontakter meg om henvendelsen min, og har lest <a href="personvern.html">personvernerklæringen</a>.</label>
+              <p class="field__error" id="f-samtykke-feil" aria-live="polite"></p>
+            </div>
+
+            <button class="btn btn--primary btn--lg form__submit" type="submit">Send henvendelsen</button>
+            <noscript><p class="form__note">Skjemaet trenger JavaScript. Du kan også sende e-post direkte til <span class="ph">[E-POST]</span>.</p></noscript>
+          </form>
+
+          <div class="form-success" id="skjema-takk" tabindex="-1" hidden>
+            <span class="form-success__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>
+            <h3 class="form-success__title">Takk, vi har fått meldingen din.</h3>
+            <p class="form-success__text" id="skjema-takk-tekst">Vi tar kontakt med deg så snart vi kan.</p>
+            <button class="btn btn--glass" type="button" id="skjema-ny">Send en ny melding</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ BUNN ============ -->
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <img src="assets/logo-mork.svg" alt="Glød" width="96" height="40">
+        <p>Ferdige nettsider til nye og små bedrifter.</p>
+      </div>
+      <div class="footer__info">
+        <p>Glød <span class="ph">[ORGANISASJONSFORM]</span><br>Org.nr. <span class="ph">[ORGNR]</span></p>
+        <p><a href="mailto:[E-POST]"><span class="ph">[E-POST]</span></a><br><a href="tel:[TELEFON]"><span class="ph">[TELEFON]</span></a></p>
+      </div>
+      <nav class="footer__links" aria-label="Juridisk">
+        <a href="personvern.html">Personvern</a>
+        <a href="vilkar.html">Vilkår</a>
+      </nav>
+    </div>
+    <div class="container footer__bottom">
+      <p>© <span data-year>2026</span> Glød</p>
+      <p>Ingen sporing. Ingen informasjonskapsler.</p>
+    </div>
+  </footer>
+
+  <div class="grain" aria-hidden="true"></div>
+  <script src="js/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rolig Fysio – eksempelside laget av Glød</title>
+  <meta name="description" content="Eksempelside laget av Glød for en fiktiv fysioterapeut. Vis hvor det gjør vondt, bestill time og ta et rolig pust.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#F2F6F4">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%231F7A7A'/%3E%3Ccircle cx='16' cy='16' r='8' fill='none' stroke='%23F2F6F4' stroke-width='2.5'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="felles/felles.css">
+  <style>
+    /* =========================================================
+       Rolig Fysio – designspråk: ro og luft.
+       Lys, kjølig grønnhvit bakgrunn, dyp blågrønn tekst, sand og
+       en varm korall som eneste kontrast. Lette, store overskrifter,
+       myke former og langsom, pustende bevegelse.
+       ========================================================= */
+    :root {
+      --dis: #F2F6F4;
+      --dis-2: #E4EDEA;
+      --hav: #173B3F;
+      --hav-2: #44666A;
+      --teal: #1F7A7A;         /* hvit tekst: 5,1:1 */
+      --teal-lys: #CFE6E2;
+      --sand: #EADFCF;
+      --korall: #E58F6F;
+      --korall-mork: #B4553A;
+      --side-bg: var(--dis);
+      --side-ink: var(--hav);
+      --side-focus: var(--teal);
+      --side-font: "Avenir Next", Avenir, "Segoe UI", "Nunito Sans", "Helvetica Neue", system-ui, sans-serif;
+      --dlg-bg: #FBFDFC; --dlg-ink: var(--hav); --dlg-accent: var(--teal); --dlg-radius: 32px;
+      --gutter: clamp(18px, 4vw, 48px);
+      --ease: cubic-bezier(.32, .72, 0, 1);
+    }
+    body { font-size: clamp(16px, 15px + .25vw, 18px); font-weight: 400; }
+    .wrap { max-width: 1180px; margin-inline: auto; padding-inline: var(--gutter); }
+    .liten { font-size: .82rem; font-weight: 600; letter-spacing: .04em; color: var(--teal); }
+    .h2 { font-weight: 300; font-size: clamp(2.2rem, 1.5rem + 3vw, 4rem); line-height: 1.05; letter-spacing: -.035em; text-wrap: balance; }
+    .h2 b { font-weight: 600; }
+    .ingress { font-size: clamp(1.05rem, 1rem + .3vw, 1.22rem); color: var(--hav-2); max-width: 34rem; line-height: 1.6; }
+
+    .knapp {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      min-height: 54px; padding: 14px 28px; border: 0; border-radius: 999px;
+      background: var(--teal); color: #fff; font-weight: 600; font-size: 1rem; text-decoration: none;
+      box-shadow: 0 12px 30px -14px rgba(31, 122, 122, .8);
+      transition: transform .6s var(--ease), box-shadow .6s var(--ease), background-color .3s;
+    }
+    .knapp:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -14px rgba(31, 122, 122, .9); }
+    .knapp--lys { background: #fff; color: var(--hav); box-shadow: 0 8px 24px -14px rgba(23, 59, 63, .5); }
+    .knapp:disabled { opacity: .45; pointer-events: none; }
+
+    /* ---------- Topp ---------- */
+    .topp { position: sticky; top: 0; z-index: 50; background: rgba(242, 246, 244, .82); -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4); }
+    .topp__inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 72px; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-size: 1.5rem; font-weight: 300; letter-spacing: -.03em; }
+    .logo svg { width: 30px; height: 30px; }
+    .logo b { font-weight: 600; }
+    .topp__hoyre { display: flex; align-items: center; gap: 8px; }
+    .topp .knapp { min-height: 44px; padding: 10px 18px; font-size: .92rem; }
+    .meny-knapp { width: 44px; height: 44px; border: 0; border-radius: 50%; background: #fff; display: grid; place-items: center; box-shadow: 0 4px 14px -8px rgba(23, 59, 63, .4); }
+    .meny-knapp i, .meny-knapp i::before { display: block; width: 18px; height: 1.6px; background: var(--hav); border-radius: 2px; transition: transform .5s var(--ease); }
+    .meny-knapp i { position: relative; transform: translateY(-3px); }
+    .meny-knapp i::before { content: ""; position: absolute; left: 0; transform: translateY(6px); }
+    .meny-apen .meny-knapp i { transform: rotate(45deg); }
+    .meny-apen .meny-knapp i::before { transform: rotate(-90deg); }
+    .nav { position: fixed; left: 12px; right: 12px; top: 80px; padding: 12px; border-radius: 28px; background: #fff; box-shadow: 0 30px 60px -30px rgba(23, 59, 63, .45); opacity: 0; visibility: hidden; transform: translateY(-8px) scale(.98); transform-origin: top; transition: opacity .4s var(--ease), transform .5s var(--ease), visibility 0s .5s; }
+    .meny-apen .nav { opacity: 1; visibility: visible; transform: none; transition: opacity .4s var(--ease), transform .5s var(--ease); }
+    .nav a { display: block; padding: 14px 16px; border-radius: 18px; font-size: 1.15rem; text-decoration: none; }
+    .nav a:hover { background: var(--dis); }
+    @media (min-width: 1000px) {
+      .meny-knapp { display: none; }
+      .nav { position: static; display: flex; gap: 2px; padding: 4px; border-radius: 999px; background: rgba(255,255,255,.6); box-shadow: none; opacity: 1; visibility: visible; transform: none; }
+      .nav a { padding: 8px 16px; border-radius: 999px; font-size: .92rem; }
+      .nav a:hover { background: #fff; }
+    }
+
+    /* ---------- Hero ---------- */
+    .hero { position: relative; overflow: hidden; padding: clamp(32px, 6vw, 90px) 0 clamp(64px, 9vw, 130px); }
+    .hero__grid { display: grid; gap: clamp(40px, 5vw, 64px); align-items: center; }
+    @media (min-width: 940px) { .hero__grid { grid-template-columns: 1.05fr .95fr; } }
+    .hero h1 { margin-top: 16px; font-weight: 300; font-size: clamp(3rem, 1.6rem + 6vw, 6.4rem); line-height: .98; letter-spacing: -.05em; }
+    .hero h1 span { display: block; color: var(--teal); }
+    .hero .ingress { margin-top: 26px; }
+    .hero__knapper { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+    .hero__notis { display: inline-flex; align-items: center; gap: 10px; margin-top: 30px; padding: 10px 16px 10px 12px; border-radius: 999px; background: #fff; font-size: .9rem; box-shadow: 0 8px 24px -16px rgba(23, 59, 63, .5); }
+    .hero__notis i { width: 10px; height: 10px; border-radius: 50%; background: #5DB38A; box-shadow: 0 0 0 4px rgba(93, 179, 138, .2); }
+    .klode { position: relative; width: min(100%, 500px); aspect-ratio: 1; margin-inline: auto; }
+    .klode__lag { position: absolute; border-radius: 46% 54% 52% 48% / 50% 46% 54% 50%; }
+    .klode__lag--1 { inset: 0; background: linear-gradient(160deg, #CFE6E2, #A9D2CC); animation: puste 11s ease-in-out infinite, rull 40s linear infinite; }
+    .klode__lag--2 { inset: 9%; background: linear-gradient(200deg, #EADFCF, #F5EEE4); border-radius: 54% 46% 48% 52% / 46% 52% 48% 54%; animation: puste 13s ease-in-out -4s infinite, rull 55s linear reverse infinite; }
+    .klode__lag--3 { inset: 22%; background: radial-gradient(circle at 40% 35%, #fff, #F3F7F5); border-radius: 50%; animation: puste 9s ease-in-out -2s infinite; }
+    @keyframes puste { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+    @keyframes rull { to { rotate: 360deg; } }
+    .klode svg { position: absolute; inset: 14%; width: 72%; height: 72%; }
+    /* Figuren er tegnet som kroppskartet: hvite lemmer med tynn kant */
+    .figur path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .figur .kant { stroke: rgba(23, 59, 63, .9); stroke-width: 22; }
+    .figur .fyll { stroke: #fff; stroke-width: 17; }
+    .figur-arm { transform-box: view-box; transform-origin: 120px 142px; animation: strekk 7s ease-in-out infinite; }
+    @keyframes strekk { 0%, 100% { transform: rotate(2deg); } 50% { transform: rotate(-7deg); } }
+    .klode__merke { position: absolute; left: 0; bottom: 2%; padding: 12px 16px; border-radius: 20px; background: #fff; box-shadow: 0 20px 40px -24px rgba(23, 59, 63, .5); font-size: .86rem; line-height: 1.35; animation: flyt 7s ease-in-out infinite; }
+    .klode__merke b { display: block; font-size: 1.1rem; }
+    @keyframes flyt { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+    /* ---------- Seksjoner ---------- */
+    .seksjon { padding-block: clamp(72px, 10vw, 140px); }
+    .hvit { background: #fff; border-radius: clamp(32px, 5vw, 64px); }
+    .topptekst { display: grid; gap: 18px; margin-bottom: clamp(36px, 5vw, 60px); }
+    @media (min-width: 900px) { .topptekst { grid-template-columns: 1fr 1fr; align-items: end; } }
+    .behandlinger { display: grid; gap: 14px; }
+    @media (min-width: 640px) { .behandlinger { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1040px) { .behandlinger { grid-template-columns: repeat(4, 1fr); } }
+    .behandling { display: flex; flex-direction: column; padding: 26px 24px; border-radius: 32px; background: var(--dis); transition: transform .7s var(--ease), background-color .5s; }
+    .behandling:hover { transform: translateY(-6px); background: var(--teal-lys); }
+    .behandling__ikon { width: 56px; height: 56px; border-radius: 50%; background: #fff; display: grid; place-items: center; }
+    .behandling__ikon svg { width: 28px; height: 28px; fill: none; stroke: var(--teal); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .behandling h3 { margin-top: 28px; font-weight: 600; font-size: 1.25rem; letter-spacing: -.02em; }
+    .behandling p { margin-top: 8px; color: var(--hav-2); font-size: .97rem; flex: 1; }
+    .behandling__fot { display: flex; justify-content: space-between; margin-top: 22px; padding-top: 14px; border-top: 1px solid rgba(23, 59, 63, .12); font-size: .9rem; }
+    .behandling__fot span:last-child { font-weight: 600; }
+
+    /* ---------- Kroppskart ---------- */
+    .kart__grid { display: grid; gap: clamp(28px, 4vw, 64px); align-items: center; }
+    @media (min-width: 900px) { .kart__grid { grid-template-columns: .9fr 1.1fr; } }
+    .kropp { position: relative; width: min(100%, 290px); margin-inline: auto; aspect-ratio: 240 / 520; }
+    .kropp svg { width: 100%; height: 100%; }
+    .kropp__del { fill: #fff; stroke: rgba(23, 59, 63, .18); stroke-width: 1.5; }
+    .kropp__lem { fill: none; stroke: #fff; stroke-linecap: round; }
+    .kropp__lem-kant { fill: none; stroke: rgba(23, 59, 63, .18); stroke-linecap: round; }
+    .punkt {
+      position: absolute; left: var(--x); top: var(--y); width: 48px; height: 48px; margin: -24px 0 0 -24px;
+      border: 0; border-radius: 50%; background: transparent; display: grid; place-items: center;
+    }
+    .punkt::before { content: ""; width: 18px; height: 18px; border-radius: 50%; background: var(--korall); box-shadow: 0 0 0 4px rgba(229, 143, 111, .25); transition: transform .5s var(--ease), background-color .3s; }
+    .punkt::after { content: ""; position: absolute; inset: 6px; border-radius: 50%; border: 2px solid var(--korall); opacity: 0; animation: ring 3.2s ease-out infinite; animation-delay: var(--f, 0s); }
+    @keyframes ring { 0% { transform: scale(.5); opacity: .7; } 80%, 100% { transform: scale(1.4); opacity: 0; } }
+    .punkt:hover::before { transform: scale(1.25); }
+    .punkt[aria-pressed="true"]::before { background: var(--teal); box-shadow: 0 0 0 6px rgba(31, 122, 122, .25); transform: scale(1.35); }
+    .punkt[aria-pressed="true"]::after { border-color: var(--teal); }
+    .kart__valg { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+    .kart__valg button { min-height: 44px; padding: 8px 16px; border: 1px solid rgba(23, 59, 63, .2); border-radius: 999px; background: #fff; font-size: .95rem; transition: background-color .3s, color .3s, border-color .3s; }
+    .kart__valg button[aria-pressed="true"] { background: var(--hav); border-color: var(--hav); color: #fff; }
+    .svar { margin-top: 26px; padding: 26px; border-radius: 32px; background: #fff; box-shadow: 0 30px 60px -40px rgba(23, 59, 63, .5); }
+    .svar.ny { animation: eks-inn .6s var(--ease) both; }
+    .svar h3 { font-weight: 300; font-size: 2rem; letter-spacing: -.03em; line-height: 1.1; }
+    .svar ul { display: grid; gap: 6px; margin-top: 14px; }
+    .svar li { display: flex; gap: 10px; color: var(--hav-2); }
+    .svar li::before { content: ""; flex: none; width: 6px; height: 6px; margin-top: .6em; border-radius: 50%; background: var(--korall); }
+    .svar__anbefalt { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-top: 20px; padding-top: 18px; border-top: 1px solid rgba(23, 59, 63, .1); }
+    .svar__anbefalt p { font-size: .92rem; color: var(--hav-2); }
+    .svar__anbefalt b { display: block; color: var(--hav); font-size: 1.05rem; }
+    .merk { display: flex; gap: 8px; align-items: flex-start; margin-top: 14px; font-size: .82rem; color: var(--hav-2); }
+    .merk b { flex: none; padding: 1px 7px; border-radius: 999px; background: #D83995; color: #fff; font: 800 .62rem/1.7 system-ui, sans-serif; letter-spacing: .08em; }
+
+    /* ---------- Timebestiller ---------- */
+    .bestill { background: var(--hav); color: #F2F6F4; border-radius: clamp(32px, 5vw, 64px); }
+    .bestill .liten { color: #8FD1C8; }
+    .bestill .ingress { color: rgba(242, 246, 244, .75); }
+    .boks { display: grid; gap: 14px; }
+    @media (min-width: 980px) { .boks { grid-template-columns: 1.4fr 1fr; align-items: start; } .oppsummering { position: sticky; top: 96px; } }
+    .trinn { padding: 24px; border-radius: 28px; background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .08); }
+    .trinn + .trinn { margin-top: 14px; }
+    .trinn legend { display: flex; align-items: center; gap: 12px; padding: 0; margin-bottom: 16px; font-size: 1.1rem; font-weight: 600; }
+    .trinn fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+    .trinn__nr { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid rgba(242, 246, 244, .35); font-size: .85rem; transition: background-color .4s, border-color .4s, color .4s; }
+    .trinn.ferdig .trinn__nr { background: #8FD1C8; border-color: #8FD1C8; color: var(--hav); }
+    .valgkort { display: grid; gap: 8px; }
+    @media (min-width: 560px) { .valgkort { grid-template-columns: 1fr 1fr; } }
+    .valgkort label { position: relative; cursor: pointer; }
+    .valgkort input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+    .valgkort span { display: block; height: 100%; padding: 14px 16px; border-radius: 20px; border: 1.5px solid rgba(242, 246, 244, .16); transition: border-color .3s, background-color .3s; }
+    .valgkort b { display: block; font-weight: 600; }
+    .valgkort small { font-size: .85rem; opacity: .75; }
+    .valgkort input:checked + span { border-color: #8FD1C8; background: rgba(143, 209, 200, .14); }
+    .valgkort input:focus-visible + span, .dag:focus-visible, .tid:focus-visible { outline: 3px solid #8FD1C8; outline-offset: 2px; }
+    .dager { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+    .dag { min-height: 64px; padding: 8px 2px; border-radius: 18px; border: 1.5px solid rgba(242, 246, 244, .16); background: transparent; color: inherit; line-height: 1.2; transition: background-color .3s, border-color .3s, color .3s; }
+    .dag small { display: block; font-size: .72rem; opacity: .7; text-transform: capitalize; }
+    .dag b { font-size: 1.2rem; font-weight: 600; }
+    .dag[aria-pressed="true"] { background: #8FD1C8; border-color: #8FD1C8; color: var(--hav); }
+    .dag[aria-pressed="true"] small { opacity: .9; }
+    .tider { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    @media (min-width: 560px) { .tider { grid-template-columns: repeat(5, 1fr); } }
+    .tid { min-height: 46px; border-radius: 999px; border: 1.5px solid rgba(242, 246, 244, .16); background: transparent; color: inherit; font-weight: 600; font-variant-numeric: tabular-nums; transition: background-color .3s, border-color .3s, color .3s; }
+    .tid:disabled { opacity: .3; text-decoration: line-through; cursor: not-allowed; }
+    .tid[aria-pressed="true"] { background: #fff; border-color: #fff; color: var(--hav); }
+    .tider__tom { grid-column: 1 / -1; opacity: .7; font-size: .95rem; }
+    .felter { display: grid; gap: 12px; }
+    @media (min-width: 560px) { .felter { grid-template-columns: 1fr 1fr; } .felter .hel { grid-column: 1 / -1; } }
+    .felt label { display: block; margin-bottom: 6px; font-size: .88rem; opacity: .8; }
+    .felt input, .felt textarea { width: 100%; min-height: 52px; padding: 13px 16px; border-radius: 18px; border: 1.5px solid rgba(242, 246, 244, .18); background: rgba(0, 0, 0, .14); color: #fff; font-size: 1rem; }
+    .felt textarea { min-height: 96px; resize: vertical; }
+    .felt input:focus, .felt textarea:focus { outline: none; border-color: #8FD1C8; box-shadow: 0 0 0 4px rgba(143, 209, 200, .2); }
+    .felt [aria-invalid="true"] { border-color: #FFB4A0; }
+    .feil { margin-top: 6px; font-size: .86rem; font-weight: 600; color: #FFC2B2; }
+    .feil:empty { display: none; }
+    .oppsummering { padding: 26px; border-radius: 28px; background: #F2F6F4; color: var(--hav); }
+    .oppsummering h3 { font-weight: 300; font-size: 1.8rem; letter-spacing: -.03em; }
+    .oppsummering dl { display: grid; gap: 0; margin-top: 16px; }
+    .oppsummering dl div { display: flex; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(23, 59, 63, .1); }
+    .oppsummering dt { color: var(--hav-2); }
+    .oppsummering dd { font-weight: 600; text-align: right; }
+    .oppsummering dd.tom { font-weight: 400; color: var(--hav-2); opacity: .7; }
+    .oppsummering .knapp { width: 100%; margin-top: 20px; }
+
+    /* ---------- Pust ---------- */
+    .pust__grid { display: grid; gap: clamp(28px, 4vw, 64px); align-items: center; }
+    @media (min-width: 900px) { .pust__grid { grid-template-columns: 1fr 1fr; } }
+    .pust { position: relative; width: min(100%, 420px); aspect-ratio: 1; margin-inline: auto; display: grid; place-items: center; }
+    .pust__ring { position: absolute; inset: 0; border-radius: 50%; border: 1px dashed rgba(23, 59, 63, .22); }
+    .pust__sirkel { position: absolute; inset: 18%; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #E6F3F0, #A9D2CC); box-shadow: 0 40px 80px -40px rgba(31, 122, 122, .7); transform: scale(.6); transition-property: transform; transition-timing-function: cubic-bezier(.45, 0, .55, 1); }
+    .pust__tekst { position: relative; text-align: center; }
+    .pust__tekst p:first-child { font-size: clamp(1.6rem, 1.2rem + 1.5vw, 2.2rem); font-weight: 300; letter-spacing: -.03em; }
+    .pust__tekst p:last-child { margin-top: 4px; font-size: .9rem; color: var(--hav-2); font-variant-numeric: tabular-nums; }
+    .pust__knapper { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+
+    /* ---------- Om ---------- */
+    .om__grid { display: grid; gap: clamp(36px, 5vw, 72px); align-items: center; }
+    @media (min-width: 900px) { .om__grid { grid-template-columns: 1fr 1fr; } }
+    .om p.tekst { margin-top: 18px; color: var(--hav-2); max-width: 32rem; }
+    .verdier { display: grid; gap: 10px; margin-top: 28px; }
+    .verdier li { display: flex; gap: 14px; align-items: center; padding: 14px 18px; border-radius: 22px; background: var(--dis); }
+    .verdier svg { flex: none; width: 26px; height: 26px; fill: none; stroke: var(--teal); stroke-width: 1.8; stroke-linecap: round; }
+    .rom { width: 100%; max-width: 500px; margin-inline: auto; border-radius: 50% 50% 40px 40px / 40% 40% 40px 40px; overflow: hidden; }
+
+    /* ---------- Kontakt / bunn ---------- */
+    .kontakt__grid { display: grid; gap: 14px; }
+    @media (min-width: 900px) { .kontakt__grid { grid-template-columns: repeat(3, 1fr); } }
+    .kontakt__kort { padding: 28px; border-radius: 32px; background: #fff; }
+    .kontakt__kort h3 { font-size: .82rem; font-weight: 600; letter-spacing: .04em; color: var(--teal); }
+    .kontakt__kort p { margin-top: 10px; font-size: 1.2rem; font-weight: 300; line-height: 1.45; }
+    .kontakt__kort .knapp { margin-top: 18px; }
+    .bunn { padding: 40px 0 36px; }
+    .bunn__grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; align-items: center; font-size: .9rem; color: var(--hav-2); }
+    .bunn__eks b { padding: 2px 8px; margin-right: 8px; border-radius: 999px; background: #D83995; color: #fff; font-size: .64rem; letter-spacing: .1em; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .klode__lag, .figur-arm, .klode__merke, .punkt::after { animation: none !important; }
+      .pust__sirkel { transform: scale(.8) !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="hopp" href="#innhold">Hopp til innholdet</a>
+
+  <div class="eks-bar" role="note">
+    <span class="eks-bar__merke">EKSEMPEL</span>
+    <span>Eksempelside laget av Glød for et fiktivt firma.</span>
+    <a href="../index.html#eksempler">Til Glød</a>
+  </div>
+
+  <header class="topp">
+    <div class="wrap topp__inner">
+      <a class="logo" href="#innhold" aria-label="Rolig Fysio, til toppen">
+        <svg viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="14" fill="#1F7A7A"/><circle cx="15" cy="15" r="7.5" fill="none" stroke="#F2F6F4" stroke-width="2.2"/><circle cx="15" cy="15" r="2.2" fill="#E58F6F"/></svg>
+        <span>rolig <b>fysio</b></span>
+      </a>
+      <div class="topp__hoyre">
+        <nav class="nav" id="meny" aria-label="Hovedmeny">
+          <a href="#behandlinger">Behandlinger</a>
+          <a href="#kart">Hvor gjør det vondt?</a>
+          <a href="#bestill">Bestill time</a>
+          <a href="#pust">Ta et pust</a>
+          <a href="#kontakt">Kontakt</a>
+        </nav>
+        <a class="knapp" href="#bestill">Bestill time</a>
+        <button class="meny-knapp" type="button" data-meny-knapp aria-expanded="false" aria-controls="meny"><i aria-hidden="true"></i><span class="vh">Meny</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="innhold">
+    <!-- ============ HERO ============ -->
+    <section class="hero" aria-labelledby="hero-tittel">
+      <div class="wrap hero__grid">
+        <div>
+          <p class="liten" data-r>Fysioterapi i Eksempelby</p>
+          <h1 id="hero-tittel" data-r>Kom deg tilbake. <span>I ditt tempo.</span></h1>
+          <p class="ingress" data-r>Vi finner ut hva som er galt, forklarer det på vanlig norsk, og lager en plan du faktisk klarer å følge.</p>
+          <div class="hero__knapper" data-r>
+            <a class="knapp" href="#bestill">Bestill time</a>
+            <a class="knapp knapp--lys" href="#kart">Hvor gjør det vondt?</a>
+          </div>
+          <p class="hero__notis" data-r><i aria-hidden="true"></i><span id="ledig-tekst">Se ledige timer de neste to ukene</span></p>
+        </div>
+
+        <div class="klode" data-r role="img" aria-label="Illustrasjon: en person som tøyer armen rolig opp mot himmelen, i en myk, pustende sirkel">
+          <span class="klode__lag klode__lag--1" aria-hidden="true"></span>
+          <span class="klode__lag klode__lag--2" aria-hidden="true"></span>
+          <span class="klode__lag klode__lag--3" aria-hidden="true"></span>
+          <svg viewBox="0 0 240 240" aria-hidden="true">
+            <ellipse cx="120" cy="224" rx="56" ry="6" fill="#173B3F" opacity=".08"/>
+            <g class="figur">
+              <g class="kant"><path d="M120 142 L102 218"/><path d="M120 142 L140 218"/></g><g class="fyll"><path d="M120 142 L102 218"/><path d="M120 142 L140 218"/></g>
+              <g class="figur-arm">
+                <g class="kant"><path d="M120 142 C118 124 116 108 112 92"/><path d="M110 96 C100 108 94 120 96 138"/><path d="M116 94 C152 80 150 40 114 26"/></g><g class="fyll"><path d="M120 142 C118 124 116 108 112 92"/><path d="M110 96 C100 108 94 120 96 138"/><path d="M116 94 C152 80 150 40 114 26"/></g>
+                <circle cx="100" cy="70" r="14" fill="#fff" stroke="#173B3F" stroke-width="3"/>
+              </g>
+            </g>
+          </svg>
+          <p class="klode__merke" aria-hidden="true"><b>God tid</b>i hver eneste time</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BEHANDLINGER ============ -->
+    <section class="seksjon hvit" id="behandlinger" aria-labelledby="beh-tittel">
+      <div class="wrap">
+        <div class="topptekst">
+          <div data-r>
+            <p class="liten">Behandlinger</p>
+            <h2 id="beh-tittel" class="h2" style="margin-top:12px">Hjelp med det <b>som stopper deg</b>.</h2>
+          </div>
+          <p class="ingress" data-r>Alle behandlinger starter med en samtale og en undersøkelse. Prisene er eksempler for et fiktivt firma.</p>
+        </div>
+        <ul class="behandlinger" data-r-gruppe>
+          <li class="behandling" data-r>
+            <span class="behandling__ikon" aria-hidden="true"><svg viewBox="0 0 28 28"><circle cx="14" cy="7" r="3.5"/><path d="M14 11v8M8 14l6-2 6 2M10 26l4-7 4 7"/></svg></span>
+            <h3>Første konsultasjon</h3><p>Samtale, undersøkelse og en plan. Du får med deg øvelser hjem.</p>
+            <p class="behandling__fot"><span>60 min</span><span>Eks. 790 kr</span></p>
+          </li>
+          <li class="behandling" data-r>
+            <span class="behandling__ikon" aria-hidden="true"><svg viewBox="0 0 28 28"><path d="M6 20c3-8 13-8 16 0M14 6v6M9 9l2 3M19 9l-2 3"/></svg></span>
+            <h3>Rygg og nakke</h3><p>For deg som sitter mye, sover dårlig eller har vondt etter lange dager.</p>
+            <p class="behandling__fot"><span>45 min</span><span>Eks. 620 kr</span></p>
+          </li>
+          <li class="behandling" data-r>
+            <span class="behandling__ikon" aria-hidden="true"><svg viewBox="0 0 28 28"><circle cx="18" cy="6" r="3"/><path d="M8 26l5-8 4 3 2 5M13 18l2-7 5 3 3-2M15 11l-6 1-3 4"/></svg></span>
+            <h3>Idrettsskader</h3><p>Kne, ankel, skulder. Vi hjelper deg trygt tilbake til trening.</p>
+            <p class="behandling__fot"><span>45 min</span><span>Eks. 620 kr</span></p>
+          </li>
+          <li class="behandling" data-r>
+            <span class="behandling__ikon" aria-hidden="true"><svg viewBox="0 0 28 28"><circle cx="8" cy="8" r="3"/><circle cx="20" cy="8" r="3"/><path d="M3 24c0-6 2-10 5-10s5 4 5 10M15 24c0-6 2-10 5-10s5 4 5 10"/></svg></span>
+            <h3>Rolig trening i gruppe</h3><p>Små grupper med fokus på styrke, balanse og bevegelighet.</p>
+            <p class="behandling__fot"><span>60 min</span><span>Eks. 250 kr</span></p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ KROPPSKART ============ -->
+    <section class="seksjon" id="kart" aria-labelledby="kart-tittel">
+      <div class="wrap kart__grid">
+        <div class="kropp" data-r>
+          <svg viewBox="0 0 240 520" role="img" aria-label="Enkel tegning av en kropp sett forfra, med punkter du kan trykke på">
+            <defs><radialGradient id="glod" cx="50%" cy="40%" r="60%"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#E4EDEA" stop-opacity="0"/></radialGradient></defs>
+            <ellipse cx="120" cy="250" rx="130" ry="250" fill="url(#glod)"/>
+            <g class="kropp__lem-kant" stroke-width="30"><path d="M84 122 C70 160 62 200 58 250 C56 272 54 290 52 304"/><path d="M156 122 C170 160 178 200 182 250 C184 272 186 290 188 304"/><path d="M102 282 C100 340 98 400 96 480"/><path d="M138 282 C140 340 142 400 144 480"/></g>
+            <g class="kropp__lem" stroke-width="27"><path d="M84 122 C70 160 62 200 58 250 C56 272 54 290 52 304"/><path d="M156 122 C170 160 178 200 182 250 C184 272 186 290 188 304"/><path d="M102 282 C100 340 98 400 96 480"/><path d="M138 282 C140 340 142 400 144 480"/></g>
+            <path class="kropp__del" d="M80 108 C96 98 144 98 160 108 C172 116 168 160 160 200 C156 230 162 262 158 292 C140 304 100 304 82 292 C78 262 84 230 80 200 C72 160 68 116 80 108 Z"/>
+            <rect class="kropp__del" x="108" y="78" width="24" height="26" rx="10"/>
+            <ellipse class="kropp__del" cx="120" cy="52" rx="27" ry="32"/>
+            <ellipse class="kropp__del" cx="90" cy="494" rx="20" ry="9"/><ellipse class="kropp__del" cx="150" cy="494" rx="20" ry="9"/>
+          </svg>
+          <!-- Punktene plasseres i prosent av tegningen -->
+          <button class="punkt" type="button" data-sone="nakke" style="--x:50%;--y:17.5%;--f:0s" aria-label="Nakke"></button>
+          <button class="punkt" type="button" data-sone="skulder" style="--x:35%;--y:22%;--f:.4s" aria-label="Skulder"></button>
+          <button class="punkt" type="button" data-sone="albue" style="--x:72.5%;--y:40%;--f:.8s" aria-label="Albue og håndledd"></button>
+          <button class="punkt" type="button" data-sone="rygg" style="--x:50%;--y:47%;--f:1.2s" aria-label="Korsrygg"></button>
+          <button class="punkt" type="button" data-sone="hofte" style="--x:41.5%;--y:55%;--f:1.6s" aria-label="Hofte"></button>
+          <button class="punkt" type="button" data-sone="kne" style="--x:58.5%;--y:74%;--f:2s" aria-label="Kne"></button>
+          <button class="punkt" type="button" data-sone="ankel" style="--x:40%;--y:91%;--f:2.4s" aria-label="Ankel og fot"></button>
+        </div>
+
+        <div>
+          <p class="liten" data-r>Hvor gjør det vondt?</p>
+          <h2 id="kart-tittel" class="h2" style="margin-top:12px" data-r>Trykk der det <b>kjennes</b>.</h2>
+          <p class="ingress" style="margin-top:16px" data-r>Velg et område, så forteller vi hva vi ofte hjelper med der, og hvilken time som passer å starte med.</p>
+          <div class="kart__valg" id="kart-valg" data-r></div>
+          <div class="svar" id="svar" aria-live="polite" data-r>
+            <h3 id="svar-tittel">Velg et område</h3>
+            <ul id="svar-liste"><li>Trykk på et punkt på kroppen, eller på en knapp over.</li></ul>
+            <div class="svar__anbefalt" id="svar-anbefalt" hidden>
+              <p>Vi starter ofte med<b id="svar-time"></b></p>
+              <a class="knapp" href="#bestill" id="svar-knapp">Bestill denne timen</a>
+            </div>
+            <p class="merk"><b>EKSEMPEL</b><span>Eksempeltekst for et fiktivt firma. Ikke medisinske råd.</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TIMEBESTILLING ============ -->
+    <section class="seksjon bestill" id="bestill" aria-labelledby="bestill-tittel">
+      <div class="wrap">
+        <div class="topptekst">
+          <div data-r>
+            <p class="liten">Bestill time</p>
+            <h2 id="bestill-tittel" class="h2" style="margin-top:12px">Finn en tid <b>som passer</b>.</h2>
+          </div>
+          <p class="ingress" data-r>Velg behandling, dag og tid. Tidene under er bare eksempler.</p>
+        </div>
+
+        <form class="boks" id="timeskjema" novalidate>
+          <div data-r>
+            <div class="trinn" id="trinn-1">
+              <fieldset>
+                <legend><span class="trinn__nr" aria-hidden="true">1</span>Hva trenger du?</legend>
+                <div class="valgkort" id="behandling-valg">
+                  <label><input type="radio" name="behandling" value="Første konsultasjon" data-min="60" data-pris="790"><span><b>Første konsultasjon</b><small>60 min · eks. 790 kr</small></span></label>
+                  <label><input type="radio" name="behandling" value="Rygg og nakke" data-min="45" data-pris="620"><span><b>Rygg og nakke</b><small>45 min · eks. 620 kr</small></span></label>
+                  <label><input type="radio" name="behandling" value="Idrettsskade" data-min="45" data-pris="620"><span><b>Idrettsskade</b><small>45 min · eks. 620 kr</small></span></label>
+                  <label><input type="radio" name="behandling" value="Oppfølging" data-min="30" data-pris="490"><span><b>Oppfølging</b><small>30 min · eks. 490 kr</small></span></label>
+                </div>
+              </fieldset>
+            </div>
+            <div class="trinn" id="trinn-2">
+              <fieldset>
+                <legend><span class="trinn__nr" aria-hidden="true">2</span>Hvilken dag?</legend>
+                <div class="dager" id="dager"></div>
+              </fieldset>
+            </div>
+            <div class="trinn" id="trinn-3">
+              <fieldset>
+                <legend><span class="trinn__nr" aria-hidden="true">3</span>Hvilken tid?</legend>
+                <div class="tider" id="tider" aria-live="polite"><p class="tider__tom">Velg en dag først.</p></div>
+              </fieldset>
+            </div>
+            <div class="trinn" id="trinn-4">
+              <fieldset>
+                <legend><span class="trinn__nr" aria-hidden="true">4</span>Hvem er du?</legend>
+                <div class="felter">
+                  <div class="felt">
+                    <label for="t-navn">Navn</label>
+                    <input id="t-navn" name="navn" autocomplete="name" required data-feil="Skriv inn navnet ditt." aria-describedby="t-navn-feil">
+                    <p class="feil" id="t-navn-feil" aria-live="polite"></p>
+                  </div>
+                  <div class="felt">
+                    <label for="t-tlf">Mobil</label>
+                    <input id="t-tlf" name="telefon" type="tel" autocomplete="tel" inputmode="tel" required data-feil="Skriv inn mobilnummeret ditt." aria-describedby="t-tlf-feil">
+                    <p class="feil" id="t-tlf-feil" aria-live="polite"></p>
+                  </div>
+                  <div class="felt hel">
+                    <label for="t-merknad">Kort om plagen (valgfritt)</label>
+                    <textarea id="t-merknad" name="merknad"></textarea>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+
+          <aside class="oppsummering" data-r aria-labelledby="opps-tittel">
+            <h3 id="opps-tittel">Din time</h3>
+            <dl>
+              <div><dt>Behandling</dt><dd id="o-beh" class="tom">Ikke valgt</dd></div>
+              <div><dt>Dag</dt><dd id="o-dag" class="tom">Ikke valgt</dd></div>
+              <div><dt>Tid</dt><dd id="o-tid" class="tom">Ikke valgt</dd></div>
+              <div><dt>Pris</dt><dd id="o-pris" class="tom">–</dd></div>
+            </dl>
+            <button class="knapp" type="submit" id="bestill-knapp" disabled>Bestill timen</button>
+            <p class="merk"><b>EKSEMPEL</b><span id="o-hjelp">Velg behandling, dag og tid for å bestille.</span></p>
+          </aside>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============ PUST ============ -->
+    <section class="seksjon" id="pust" aria-labelledby="pust-tittel">
+      <div class="wrap pust__grid">
+        <div>
+          <p class="liten" data-r>Mens du venter</p>
+          <h2 id="pust-tittel" class="h2" style="margin-top:12px" data-r>Ta et <b>rolig pust</b>.</h2>
+          <p class="ingress" style="margin-top:16px" data-r>Pust inn i fire sekunder, hold litt, og pust ut i seks. Følg sirkelen. Ett minutt er nok til å kjenne forskjell.</p>
+          <div class="pust__knapper" data-r>
+            <button class="knapp" type="button" id="pust-start" aria-controls="pust-status">Start</button>
+            <button class="knapp knapp--lys" type="button" id="pust-stopp" disabled>Stopp</button>
+          </div>
+        </div>
+        <div class="pust" data-r>
+          <span class="pust__ring" aria-hidden="true"></span>
+          <span class="pust__sirkel" id="pust-sirkel" aria-hidden="true"></span>
+          <div class="pust__tekst" id="pust-status" aria-live="polite">
+            <p id="pust-fase">Klar?</p>
+            <p id="pust-tid">Trykk start</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ OM ============ -->
+    <section class="seksjon hvit om" aria-labelledby="om-tittel">
+      <div class="wrap om__grid">
+        <div data-r>
+          <svg class="rom" viewBox="0 0 500 560" role="img" aria-label="Illustrasjon av et lyst behandlingsrom med benk, plante og sol gjennom vinduet">
+            <rect width="500" height="560" fill="#E4EDEA"/>
+            <circle cx="360" cy="150" r="90" fill="#F5EEE4"/>
+            <rect x="290" y="80" width="150" height="190" rx="75" fill="none" stroke="#fff" stroke-width="10"/>
+            <path d="M365 80 V270 M290 175 H440" stroke="#fff" stroke-width="6"/>
+            <rect x="0" y="420" width="500" height="140" fill="#D7E3DF"/>
+            <rect x="60" y="330" width="260" height="34" rx="17" fill="#1F7A7A"/>
+            <rect x="60" y="322" width="70" height="20" rx="10" fill="#CFE6E2"/>
+            <path d="M90 364 V440 M290 364 V440" stroke="#173B3F" stroke-width="8" stroke-linecap="round"/>
+            <path d="M400 460 h56 l-8 60 h-40 z" fill="#EADFCF"/>
+            <g fill="#5E9A84"><path d="M428 460 C400 420 390 380 404 340 C420 380 426 420 428 460Z"/><path d="M428 460 C440 410 470 380 490 372 C480 410 460 440 428 460Z"/><path d="M428 460 C420 430 390 410 360 404 C380 436 404 452 428 460Z"/><path d="M428 460 C432 420 440 380 452 350 C462 390 450 430 428 460Z"/></g>
+            <circle cx="160" cy="250" r="34" fill="none" stroke="#E58F6F" stroke-width="3" opacity=".7"/>
+            <circle cx="160" cy="250" r="12" fill="#E58F6F" opacity=".7"/>
+          </svg>
+        </div>
+        <div>
+          <p class="liten" data-r>Om oss</p>
+          <h2 id="om-tittel" class="h2" style="margin-top:12px" data-r>Tid til å <b>lytte</b>.</h2>
+          <p class="tekst" data-r>Rolig Fysio er en liten klinikk drevet av Sara (fiktiv person), fysioterapeut. Hun liker å forklare hva som skjer i kroppen, og å lage planer som passer inn i en vanlig uke.</p>
+          <ul class="verdier" data-r-gruppe>
+            <li data-r><svg viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="10"/><path d="M13 7v6l4 2"/></svg>God tid i hver time</li>
+            <li data-r><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M4 6h18v12H10l-5 4V6z"/></svg>Forklaringer på vanlig norsk</li>
+            <li data-r><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M5 14l5 5L21 7"/></svg>Øvelser du klarer å gjøre hjemme</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ KONTAKT ============ -->
+    <section class="seksjon" id="kontakt" aria-labelledby="kontakt-tittel">
+      <div class="wrap">
+        <div class="topptekst">
+          <div data-r>
+            <p class="liten">Kontakt</p>
+            <h2 id="kontakt-tittel" class="h2" style="margin-top:12px">Vi er <b>her</b>.</h2>
+          </div>
+        </div>
+        <div class="kontakt__grid" data-r-gruppe>
+          <div class="kontakt__kort" data-r><h3>Adresse</h3><p>Eksempelveien 9, 2. etasje<br>0000 Eksempelby</p><a class="knapp knapp--lys" href="#" data-demo="På en ekte side åpner denne knappen veibeskrivelse i kartappen din." data-demo-tittel="Veibeskrivelse">Veibeskrivelse</a></div>
+          <div class="kontakt__kort" data-r><h3>Åpent</h3><p>Mandag–torsdag 08–18<br>Fredag 08–15</p></div>
+          <div class="kontakt__kort" data-r><h3>Telefon</h3><p>000 00 000</p><a class="knapp" href="#" data-demo="På en ekte side ringer denne knappen klinikken direkte. Her er nummeret oppdiktet." data-demo-tittel="Ring 000 00 000">Ring oss</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bunn">
+    <div class="wrap bunn__grid">
+      <p>© <span data-aar>2026</span> Rolig Fysio (fiktivt firma) · Eksempelveien 9, 0000 Eksempelby</p>
+      <p class="bunn__eks"><b>EKSEMPEL</b>Eksempelside laget av Glød for et fiktivt firma.</p>
+    </div>
+  </footer>
+
+  <script src="felles/felles.js"></script>
+  <script>
+  (function () {
+    "use strict";
+    Eks.start();
+
+    /* ===================== Kroppskart ===================== */
+    var SONER = {
+      nakke:   { navn: "Nakke", liste: ["Stiv nakke etter mye skjermarbeid", "Hodepine som starter i nakken", "Vondt når du snur hodet"], time: "Rygg og nakke" },
+      skulder: { navn: "Skulder", liste: ["Vondt når du løfter armen", "Smerter om natten når du ligger på siden", "Skulder som har «låst seg»"], time: "Første konsultasjon" },
+      albue:   { navn: "Albue og håndledd", liste: ["Musearm og vondt i underarmen", "Smerter etter mye løfting eller verktøy", "Svakhet i grepet"], time: "Første konsultasjon" },
+      rygg:    { navn: "Korsrygg", liste: ["Vondt i ryggen etter lange dager", "Stivhet om morgenen", "Smerter som stråler ned i beinet"], time: "Rygg og nakke" },
+      hofte:   { navn: "Hofte", liste: ["Vondt når du går i trapper", "Stiv hofte etter å ha sittet lenge", "Smerter på utsiden av hofta"], time: "Første konsultasjon" },
+      kne:     { navn: "Kne", liste: ["Vondt i kneet når du løper", "Hevelse etter trening", "Kne som føles ustabilt"], time: "Idrettsskade" },
+      ankel:   { navn: "Ankel og fot", liste: ["Overtråkk som ikke blir bra", "Vondt under foten om morgenen", "Stiv ankel etter skade"], time: "Idrettsskade" }
+    };
+    var punkter = document.querySelectorAll(".punkt");
+    var valg = document.getElementById("kart-valg");
+    var svar = document.getElementById("svar");
+    var valgt = null;
+    Object.keys(SONER).forEach(function (k) {
+      var b = document.createElement("button");
+      b.type = "button"; b.textContent = SONER[k].navn; b.setAttribute("data-sone", k); b.setAttribute("aria-pressed", "false");
+      valg.appendChild(b);
+    });
+    function velgSone(k) {
+      valgt = k;
+      var s = SONER[k];
+      document.querySelectorAll("[data-sone]").forEach(function (el) { el.setAttribute("aria-pressed", String(el.getAttribute("data-sone") === k)); });
+      document.getElementById("svar-tittel").textContent = s.navn;
+      document.getElementById("svar-liste").innerHTML = s.liste.map(function (l) { return "<li>" + l + "</li>"; }).join("");
+      document.getElementById("svar-time").textContent = s.time;
+      document.getElementById("svar-anbefalt").hidden = false;
+      svar.classList.remove("ny"); void svar.offsetWidth; svar.classList.add("ny");
+    }
+    document.querySelectorAll("[data-sone]").forEach(function (el) {
+      el.addEventListener("click", function () { velgSone(el.getAttribute("data-sone")); });
+    });
+    document.getElementById("svar-knapp").addEventListener("click", function () {
+      if (!valgt) return;
+      var s = SONER[valgt];
+      var r = document.querySelector('#behandling-valg input[value="' + s.time + '"]');
+      if (r) { r.checked = true; r.dispatchEvent(new Event("change", { bubbles: true })); }
+      var m = document.getElementById("t-merknad");
+      if (!m.value) m.value = "Vondt i " + s.navn.toLowerCase() + ".";
+    });
+
+    /* ===================== Timebestilling ===================== */
+    var form = document.getElementById("timeskjema");
+    var dagerEl = document.getElementById("dager");
+    var tiderEl = document.getElementById("tider");
+    var valgtDag = null, valgtTid = null;
+    var dagFmt = new Intl.DateTimeFormat("nb-NO", { weekday: "short" });
+    var langFmt = new Intl.DateTimeFormat("nb-NO", { weekday: "long", day: "numeric", month: "long" });
+
+    // De neste ti hverdagene fra i morgen
+    var dager = [];
+    var d = new Date(); d.setHours(12, 0, 0, 0);
+    while (dager.length < 10) {
+      d.setDate(d.getDate() + 1);
+      if (d.getDay() !== 0 && d.getDay() !== 6) dager.push(new Date(d));
+    }
+    // Ledige tider er tilfeldige, men faste for hver dato (samme svar hver gang)
+    function tilfeldig(seed) { var x = Math.sin(seed) * 10000; return x - Math.floor(x); }
+    function tiderFor(dato) {
+      var slutt = dato.getDay() === 5 ? 15 : 18;
+      var liste = [];
+      for (var m = 8 * 60; m + 45 <= slutt * 60; m += 45) {
+        var seed = dato.getFullYear() * 1000 + dato.getMonth() * 50 + dato.getDate() + m;
+        liste.push({ tid: String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0"), ledig: tilfeldig(seed) > 0.45 });
+      }
+      return liste;
+    }
+    var antallLedige = 0;
+    dager.forEach(function (dato, i) {
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "dag"; b.setAttribute("aria-pressed", "false");
+      b.setAttribute("aria-label", langFmt.format(dato));
+      b.innerHTML = "<small>" + dagFmt.format(dato).replace(".", "") + "</small><b>" + dato.getDate() + "</b>";
+      b.addEventListener("click", function () { velgDag(i, b); });
+      dagerEl.appendChild(b);
+      antallLedige += tiderFor(dato).filter(function (t) { return t.ledig; }).length;
+    });
+    document.getElementById("ledig-tekst").textContent = antallLedige + " ledige eksempeltimer de neste to ukene";
+
+    function velgDag(i, knapp) {
+      valgtDag = dager[i]; valgtTid = null;
+      dagerEl.querySelectorAll(".dag").forEach(function (b) { b.setAttribute("aria-pressed", String(b === knapp)); });
+      tiderEl.innerHTML = "";
+      tiderFor(valgtDag).forEach(function (t) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "tid"; b.textContent = t.tid; b.disabled = !t.ledig; b.setAttribute("aria-pressed", "false");
+        if (!t.ledig) b.setAttribute("aria-label", t.tid + ", opptatt");
+        b.addEventListener("click", function () {
+          valgtTid = t.tid;
+          tiderEl.querySelectorAll(".tid").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+          oppdater();
+        });
+        tiderEl.appendChild(b);
+      });
+      oppdater();
+    }
+
+    function sett(id, tekst) { var el = document.getElementById(id); el.textContent = tekst || (id === "o-pris" ? "–" : "Ikke valgt"); el.classList.toggle("tom", !tekst); }
+    function oppdater() {
+      var r = form.querySelector('input[name="behandling"]:checked');
+      sett("o-beh", r ? r.value + " (" + r.getAttribute("data-min") + " min)" : "");
+      sett("o-dag", valgtDag ? langFmt.format(valgtDag) : "");
+      sett("o-tid", valgtTid ? "kl. " + valgtTid : "");
+      sett("o-pris", r ? "eks. " + Eks.kr(+r.getAttribute("data-pris")) : "");
+      document.getElementById("trinn-1").classList.toggle("ferdig", !!r);
+      document.getElementById("trinn-2").classList.toggle("ferdig", !!valgtDag);
+      document.getElementById("trinn-3").classList.toggle("ferdig", !!valgtTid);
+      var navnOk = form.navn.value.trim() && form.telefon.value.trim();
+      document.getElementById("trinn-4").classList.toggle("ferdig", !!navnOk);
+      var klar = r && valgtDag && valgtTid;
+      document.getElementById("bestill-knapp").disabled = !klar;
+      document.getElementById("o-hjelp").textContent = klar ? "Timene er bare eksempler. Ingenting blir bestilt." : "Velg behandling, dag og tid for å bestille.";
+    }
+    form.addEventListener("change", oppdater);
+    form.addEventListener("input", oppdater);
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var forste = null;
+      ["t-navn", "t-tlf"].forEach(function (id) {
+        var f = document.getElementById(id);
+        var feil = !f.value.trim();
+        f.setAttribute("aria-invalid", String(feil));
+        document.getElementById(id + "-feil").textContent = feil ? f.getAttribute("data-feil") : "";
+        if (feil && !forste) forste = f;
+      });
+      if (forste) { forste.focus(); return; }
+      var r = form.querySelector('input[name="behandling"]:checked');
+      Eks.bekreft({
+        tittel: "Timen din er klar!",
+        tekst: "På en ekte side ville du fått en bekreftelse på SMS nå.",
+        linjer: [["Behandling", r.value], ["Dag", langFmt.format(valgtDag)], ["Tid", "kl. " + valgtTid], ["Navn", form.navn.value.trim()]],
+        merk: "Dette er en eksempelside for et fiktivt firma. Ingen time er bestilt."
+      });
+    });
+    oppdater();
+
+    /* ===================== Pusteøvelse ===================== */
+    var FASER = [["Pust inn", 4, 1], ["Hold", 2, 1], ["Pust ut", 6, 0.6]];
+    var sirkel = document.getElementById("pust-sirkel");
+    var faseEl = document.getElementById("pust-fase");
+    var tidEl = document.getElementById("pust-tid");
+    var start = document.getElementById("pust-start");
+    var stopp = document.getElementById("pust-stopp");
+    var timer = null, nedtelling = null, runde = 0;
+    function fase(i) {
+      var f = FASER[i];
+      faseEl.textContent = f[0];
+      if (!Eks.rolig) { sirkel.style.transitionDuration = f[1] + "s"; sirkel.style.transform = "scale(" + f[2] + ")"; }
+      var igjen = f[1];
+      tidEl.textContent = igjen + " sek";
+      clearInterval(nedtelling);
+      nedtelling = setInterval(function () { igjen--; if (igjen > 0) tidEl.textContent = igjen + " sek"; }, 1000);
+      timer = setTimeout(function () {
+        var neste = (i + 1) % FASER.length;
+        if (neste === 0) runde++;
+        if (runde >= 5) { avslutt("Godt jobbet.", "Fem rolige pust"); return; }
+        fase(neste);
+      }, f[1] * 1000);
+    }
+    function avslutt(tittel, tekst) {
+      clearTimeout(timer); clearInterval(nedtelling);
+      faseEl.textContent = tittel; tidEl.textContent = tekst;
+      sirkel.style.transitionDuration = "1.5s"; sirkel.style.transform = "scale(.6)";
+      start.disabled = false; stopp.disabled = true; start.textContent = "Start igjen";
+    }
+    start.addEventListener("click", function () { runde = 0; start.disabled = true; stopp.disabled = false; fase(0); stopp.focus(); });
+    stopp.addEventListener("click", function () { avslutt("Pause", "Trykk start når du vil"); start.focus(); });
+  })();
+  </script>
+</body>
+</html>

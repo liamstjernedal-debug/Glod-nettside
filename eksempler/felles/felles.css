@@ -1,0 +1,117 @@
+/* =========================================================
+   Felles grunnlag for Gløds eksempelsider.
+   Hver side har sitt eget designspråk i sin egen <style>.
+   Denne fila har bare det som er likt: nullstilling, Glød-merket
+   øverst, bekreftelsesdialog, innglidning og redusert bevegelse.
+
+   Sidene overstyrer disse variablene:
+   --side-bg, --side-ink, --side-accent, --side-on-accent,
+   --side-focus, --side-font, --side-radius
+   ========================================================= */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--side-bg, #fff);
+  color: var(--side-ink, #111);
+  font-family: var(--side-font, system-ui, sans-serif);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+@supports (overflow: clip) { body { overflow-x: clip; } }
+img, svg, canvas { display: block; max-width: 100%; }
+h1, h2, h3, h4, p, ul, ol, figure, blockquote, dl, dd { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+a { color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 3px solid var(--side-focus, #0593C6); outline-offset: 3px; border-radius: 4px; }
+
+.vh {
+  position: absolute !important; width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+.hopp {
+  position: fixed; left: 12px; top: 12px; z-index: 300;
+  padding: 10px 16px; border-radius: 999px;
+  background: #0B1620; color: #FCFFFF; font: 600 15px/1.2 system-ui, sans-serif; text-decoration: none;
+  transform: translateY(-200%); transition: transform .2s;
+}
+.hopp:focus { transform: none; }
+
+/* ---------- Glød-merket: viser at siden er et eksempel ---------- */
+.eks-bar {
+  position: relative; z-index: 60;
+  display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
+  gap: 6px 10px;
+  padding: 8px 16px;
+  background: #0B1620; color: rgba(252, 255, 255, .82);
+  font: 500 12.5px/1.35 system-ui, -apple-system, "Segoe UI", sans-serif;
+  text-align: center;
+}
+.eks-bar__merke {
+  padding: 2px 8px; border-radius: 999px;
+  background: #D83995; color: #fff;
+  font-weight: 800; font-size: 10.5px; letter-spacing: .1em;
+}
+.eks-bar a { color: #5CC8F0; font-weight: 600; text-underline-offset: 2px; }
+.eks-bar :focus-visible { outline-color: #5CC8F0; }
+
+/* ---------- Bekreftelsesdialog ---------- */
+.eks-dialog {
+  width: min(440px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  padding: 0; border: 0;
+  border-radius: var(--dlg-radius, 20px);
+  background: var(--dlg-bg, #fff); color: var(--dlg-ink, #111);
+  font-family: var(--dlg-font, var(--side-font, system-ui, sans-serif));
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, .45);
+  overflow: auto;
+}
+.eks-dialog::backdrop { background: rgba(10, 14, 18, .55); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+.eks-dialog[open] { animation: eks-inn .45s cubic-bezier(.22, 1, .36, 1) both; }
+.eks-dialog__innhold { padding: 28px 24px 24px; }
+.eks-dialog__ikon {
+  display: grid; place-items: center;
+  width: 52px; height: 52px; margin-bottom: 16px; border-radius: 50%;
+  background: var(--dlg-accent, #111); color: var(--dlg-on-accent, #fff);
+}
+.eks-dialog__ikon svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.eks-dialog h2 { font-size: 1.45rem; line-height: 1.2; letter-spacing: -.01em; }
+.eks-dialog__tekst { margin-top: 8px; opacity: .85; }
+.eks-dialog__liste { margin-top: 16px; padding: 14px 16px; border-radius: 12px; background: rgba(127, 127, 127, .1); font-size: .95rem; }
+.eks-dialog__liste li { display: flex; justify-content: space-between; gap: 12px; padding: 3px 0; }
+.eks-dialog__liste li span:last-child { font-weight: 650; text-align: right; }
+.eks-dialog__merk {
+  display: flex; gap: 8px; align-items: flex-start;
+  margin-top: 16px; font-size: .875rem; opacity: .8;
+}
+.eks-dialog__merk b { flex: none; padding: 1px 7px; border-radius: 999px; background: #D83995; color: #fff; font: 800 10px/1.6 system-ui, sans-serif; letter-spacing: .08em; margin-top: 2px; }
+.eks-dialog__lukk {
+  width: 100%; min-height: 50px; margin-top: 20px;
+  border: 0; border-radius: var(--dlg-btn-radius, 999px);
+  background: var(--dlg-accent, #111); color: var(--dlg-on-accent, #fff);
+  font-weight: 700; font-size: 1rem;
+}
+@keyframes eks-inn { from { opacity: 0; transform: translateY(16px) scale(.97); } to { opacity: 1; transform: none; } }
+
+/* ---------- Innglidning ved scrolling ---------- */
+.js [data-r] {
+  opacity: 0; transform: translateY(var(--r-y, 24px));
+  transition: opacity .9s cubic-bezier(.22, 1, .36, 1), transform .9s cubic-bezier(.22, 1, .36, 1);
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+.js [data-r].inn { opacity: 1; transform: none; }
+
+/* ---------- Redusert bevegelse ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important; animation-iteration-count: 1 !important;
+    animation-delay: 0s !important;
+    transition-duration: .01ms !important; transition-delay: 0s !important;
+  }
+  .js [data-r] { opacity: 1; transform: none; }
+}

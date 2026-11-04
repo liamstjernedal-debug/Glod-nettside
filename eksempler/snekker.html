@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nordvegg Snekkerservice – eksempelside laget av Glød</title>
+  <meta name="description" content="Eksempelside laget av Glød for en fiktiv snekker. Se før og etter, og regn ut hva en ny terrasse kan koste.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#16181B">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2316181B'/%3E%3Cpath d='M8 24V8l16 16V8' fill='none' stroke='%23F07A1F' stroke-width='4'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="felles/felles.css">
+  <style>
+    /* =========================================================
+       Nordvegg Snekkerservice – designspråk: byggetegning.
+       Kullsvart og hvitkalket papir, varmt treverk og signaloransje.
+       Rette kanter, målestreker, monospace-etiketter og store,
+       geometriske versaler.
+       ========================================================= */
+    :root {
+      --kull: #16181B;
+      --kull-2: #202328;
+      --papir: #F1EEE8;
+      --papir-2: #E6E1D8;
+      --tre: #C98F55;
+      --tre-mork: #8A5A2E;
+      --oransje: #F07A1F;      /* på kull: 6,9:1 */
+      --oransje-mork: #B4520A; /* tekst på lyst papir: 4,8:1 */
+      --strek: rgba(22, 24, 27, .16);
+      --strek-lys: rgba(241, 238, 232, .14);
+      --side-bg: var(--papir);
+      --side-ink: var(--kull);
+      --side-focus: var(--oransje);
+      --side-font: "Helvetica Neue", Helvetica, Arial, "Nimbus Sans", sans-serif;
+      --tittel: Futura, "Futura PT", "Century Gothic", "Avenir Next", "Trebuchet MS", sans-serif;
+      --mono: ui-monospace, "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+      --dlg-bg: var(--papir); --dlg-ink: var(--kull); --dlg-accent: var(--kull); --dlg-on-accent: var(--papir); --dlg-radius: 4px; --dlg-btn-radius: 2px;
+      --gutter: clamp(18px, 4vw, 48px);
+      --ease: cubic-bezier(.22, 1, .36, 1);
+    }
+    body { font-size: clamp(16px, 15px + .25vw, 18px); }
+    .wrap { max-width: 1240px; margin-inline: auto; padding-inline: var(--gutter); }
+    .mono { font-family: var(--mono); font-size: .76rem; letter-spacing: .08em; text-transform: uppercase; }
+    .h2 { font-family: var(--tittel); font-weight: 700; font-size: clamp(2.1rem, 1.3rem + 3.6vw, 4.4rem); line-height: .98; letter-spacing: -.01em; text-transform: uppercase; text-wrap: balance; }
+    .h2 span { color: var(--oransje-mork); }
+    .mork .h2 span { color: var(--oransje); }
+    .ingress { font-size: clamp(1.05rem, 1rem + .3vw, 1.22rem); max-width: 36rem; opacity: .85; }
+    .etikett { display: inline-flex; align-items: center; gap: 10px; }
+    .etikett::before { content: ""; width: 28px; height: 2px; background: currentColor; }
+
+    .knapp {
+      position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+      min-height: 54px; padding: 14px 24px; border: 2px solid currentColor; border-radius: 2px;
+      background: transparent; font-family: var(--tittel); font-weight: 700; font-size: .95rem; letter-spacing: .06em; text-transform: uppercase; text-decoration: none;
+      overflow: hidden; isolation: isolate; transition: color .35s var(--ease);
+    }
+    .knapp::before { content: ""; position: absolute; inset: 0; z-index: -1; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform .45s var(--ease); }
+    .knapp--oransje { background: var(--oransje); border-color: var(--oransje); color: var(--kull); }
+    .knapp--oransje::before { background: #fff; }
+    .knapp:hover::before { transform: scaleX(1); }
+    .knapp--strek:hover { color: var(--kull); }
+    .mork .knapp--strek { color: var(--papir); }
+    .mork .knapp--strek::before { background: var(--papir); }
+    .knapp--strek::before { background: var(--kull); }
+    .lys .knapp--strek:hover { color: var(--papir); }
+    .knapp svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: square; transition: transform .4s var(--ease); }
+    .knapp:hover svg { transform: translateX(4px); }
+
+    .mork { background: var(--kull); color: var(--papir); }
+    .rutenett {
+      background-image: linear-gradient(var(--strek) 1px, transparent 1px), linear-gradient(90deg, var(--strek) 1px, transparent 1px);
+      background-size: 32px 32px; background-position: -1px -1px;
+    }
+    .mork.rutenett { background-image: linear-gradient(var(--strek-lys) 1px, transparent 1px), linear-gradient(90deg, var(--strek-lys) 1px, transparent 1px); }
+
+    /* ---------- Topp ---------- */
+    .topp { position: sticky; top: 0; z-index: 50; background: var(--kull); color: var(--papir); border-bottom: 1px solid var(--strek-lys); }
+    .topp__inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 68px; }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo svg { width: 34px; height: 34px; flex: none; }
+    .logo b { display: block; font-family: var(--tittel); font-weight: 700; font-size: 1.2rem; letter-spacing: .1em; line-height: 1; }
+    .logo small { display: block; margin-top: 4px; font-family: var(--mono); font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; opacity: .7; }
+    .topp__hoyre { display: flex; align-items: center; gap: 8px; }
+    .topp .knapp { min-height: 44px; padding: 10px 14px; font-size: .78rem; }
+    .meny-knapp { width: 44px; height: 44px; border: 2px solid var(--strek-lys); border-radius: 2px; background: transparent; color: var(--papir); display: grid; place-items: center; }
+    .meny-knapp i, .meny-knapp i::before, .meny-knapp i::after { display: block; width: 18px; height: 2px; background: currentColor; transition: transform .35s var(--ease), background-color .2s; }
+    .meny-knapp i { position: relative; } .meny-knapp i::before, .meny-knapp i::after { content: ""; position: absolute; left: 0; }
+    .meny-knapp i::before { transform: translateY(-6px); } .meny-knapp i::after { transform: translateY(6px); }
+    .meny-apen .meny-knapp i { background: transparent; }
+    .meny-apen .meny-knapp i::before { transform: rotate(45deg); } .meny-apen .meny-knapp i::after { transform: rotate(-45deg); }
+    .nav { position: fixed; inset: 68px 0 auto; padding: 8px var(--gutter) 28px; background: var(--kull); border-bottom: 2px solid var(--oransje); opacity: 0; visibility: hidden; transform: translateY(-8px); transition: opacity .3s var(--ease), transform .35s var(--ease), visibility 0s .35s; }
+    .meny-apen .nav { opacity: 1; visibility: visible; transform: none; transition: opacity .3s var(--ease), transform .35s var(--ease); }
+    .nav a { display: flex; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid var(--strek-lys); font-family: var(--tittel); font-weight: 700; font-size: 1.3rem; text-transform: uppercase; letter-spacing: .04em; text-decoration: none; }
+    .nav a::after { content: attr(data-nr); font-family: var(--mono); font-size: .75rem; color: var(--oransje); font-weight: 400; }
+    @media (min-width: 1000px) {
+      .meny-knapp { display: none; }
+      .nav { position: static; display: flex; gap: 4px; padding: 0; background: none; border: 0; opacity: 1; visibility: visible; transform: none; }
+      .nav a { padding: 10px 12px; border: 0; font-family: var(--mono); font-weight: 400; font-size: .78rem; letter-spacing: .08em; }
+      .nav a::after { content: none; }
+      .nav a:hover { color: var(--oransje); }
+    }
+    @media (max-width: 400px) { .logo small { display: none; } }
+
+    /* ---------- Hero ---------- */
+    .hero { position: relative; overflow: hidden; padding: clamp(40px, 7vw, 100px) 0 clamp(48px, 7vw, 96px); }
+    .hero__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(36px, 5vw, 64px); align-items: center; }
+    @media (min-width: 980px) { .hero__grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); } }
+    .hero .mono { color: var(--oransje); }
+    .hero h1 { margin-top: 20px; font-family: var(--tittel); font-weight: 700; font-size: clamp(2.5rem, 1.2rem + 5.6vw, 4.5rem); line-height: .92; letter-spacing: -.015em; text-transform: uppercase; }
+    .hero h1 .ut { display: block; font-size: .72em; line-height: 1.12; color: transparent; -webkit-text-stroke: 1.5px var(--papir); }
+    .hero h1 .o { color: var(--oransje); }
+    .hero .ingress { margin-top: 24px; }
+    .hero__knapper { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+    .fakta { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 44px; border-top: 1px solid var(--strek-lys); }
+    .fakta li { padding: 14px 12px 0 0; font-size: .86rem; line-height: 1.35; }
+    .fakta li + li { padding-left: 12px; border-left: 1px solid var(--strek-lys); }
+    .fakta b { display: block; margin-bottom: 4px; font-family: var(--mono); font-weight: 400; font-size: .7rem; color: var(--oransje); letter-spacing: .08em; }
+    .tegning { position: relative; width: 100%; max-width: 560px; margin-inline: auto; }
+    .tegning svg { width: 100%; height: auto; overflow: visible; }
+    .tegning .linje { fill: none; stroke: var(--papir); stroke-width: 2; stroke-dasharray: 1; stroke-dashoffset: 1; animation: tegn 2.2s var(--ease) forwards; animation-delay: var(--d, 0s); }
+    .tegning .tynn { stroke-width: 1; opacity: .55; }
+    .tegning .oransje { stroke: var(--oransje); }
+    .tegning text { font-family: var(--mono); font-size: 11px; fill: var(--papir); opacity: 0; animation: fram .6s ease forwards; animation-delay: var(--d, 2s); letter-spacing: .06em; }
+    .tegning .flate { opacity: 0; animation: fram 1.2s ease forwards; animation-delay: var(--d, 2s); }
+    @keyframes tegn { to { stroke-dashoffset: 0; } }
+    @keyframes fram { to { opacity: 1; } }
+
+    /* ---------- Tjenester ---------- */
+    .seksjon { padding-block: clamp(72px, 10vw, 140px); }
+    .topptekst { display: grid; gap: 20px; margin-bottom: clamp(36px, 5vw, 64px); }
+    @media (min-width: 900px) { .topptekst { grid-template-columns: 1.2fr 1fr; align-items: end; } }
+    .topptekst .mono { color: var(--oransje-mork); margin-bottom: 16px; }
+    .mork .topptekst .mono { color: var(--oransje); }
+    .tjenester { display: grid; border-top: 2px solid var(--kull); border-left: 1px solid var(--strek); }
+    @media (min-width: 640px) { .tjenester { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1000px) { .tjenester { grid-template-columns: repeat(3, 1fr); } }
+    .tjeneste { position: relative; padding: 28px 24px 30px; border-right: 1px solid var(--strek); border-bottom: 1px solid var(--strek); overflow: hidden; isolation: isolate; }
+    .tjeneste::before {   /* trepanel som glir inn ved hover */
+      content: ""; position: absolute; inset: 0; z-index: -1;
+      background:
+        repeating-linear-gradient(90deg, rgba(0,0,0,.07) 0 1px, transparent 1px 74px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 2px, transparent 2px 9px),
+        linear-gradient(180deg, #D19A62, #B87E46);
+      transform: translateY(101%); transition: transform .6s var(--ease);
+    }
+    .tjeneste:hover::before, .tjeneste:focus-within::before { transform: none; }
+    .tjeneste__nr { font-family: var(--mono); font-size: .72rem; color: var(--oransje-mork); transition: color .3s; }
+    .tjeneste svg { width: 56px; height: 56px; margin-top: 22px; fill: none; stroke: var(--kull); stroke-width: 1.8; stroke-linecap: square; transition: transform .6s var(--ease); }
+    .tjeneste:hover svg { transform: translateY(-4px) rotate(-4deg); }
+    .tjeneste h3 { margin-top: 18px; font-family: var(--tittel); font-weight: 700; font-size: 1.35rem; text-transform: uppercase; letter-spacing: .02em; line-height: 1.1; }
+    .tjeneste p { margin-top: 10px; font-size: .97rem; opacity: .82; }
+    .tjeneste:hover .tjeneste__nr { color: var(--kull); }
+
+    /* ---------- Før / etter ---------- */
+    .fe { position: relative; margin-top: 8px; border: 2px solid var(--papir); user-select: none; -webkit-user-select: none; touch-action: pan-y; cursor: ew-resize; background: #222; }
+    .fe { aspect-ratio: 1 / 1; }
+    @media (min-width: 640px) { .fe { aspect-ratio: 5 / 3; } }
+    .fe svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .fe__for { position: absolute; inset: 0; clip-path: inset(0 calc(100% - var(--x, 50%)) 0 0); }
+    .fe__skille { position: absolute; top: 0; bottom: 0; left: var(--x, 50%); width: 2px; margin-left: -1px; background: var(--oransje); pointer-events: none; }
+    .fe__hank {
+      position: absolute; top: 50%; left: 50%; width: 52px; height: 52px; margin: -26px 0 0 -26px;
+      display: grid; place-items: center; border-radius: 50%; background: var(--oransje); color: var(--kull);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, .35); transition: transform .3s var(--ease);
+    }
+    .fe:active .fe__hank { transform: scale(.92); }
+    .fe__hank svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 2.4; }
+    .fe__merke { position: absolute; top: 12px; padding: 6px 10px; background: var(--kull); color: var(--papir); pointer-events: none; }
+    .fe__merke--for { left: 12px; } .fe__merke--etter { right: 12px; background: var(--oransje); color: var(--kull); }
+    .fe input { position: absolute; inset: auto 0 0; width: 100%; height: 1px; opacity: 0; }
+    .fe:has(input:focus-visible) .fe__hank { outline: 3px solid #fff; outline-offset: 3px; }
+    .fe__tekst { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 20px; margin-top: 16px; color: rgba(241, 238, 232, .75); }
+
+    /* ---------- Prisestimat ---------- */
+    .estimat__grid { display: grid; gap: clamp(28px, 4vw, 56px); align-items: start; }
+    .estimat__grid { grid-template-columns: minmax(0, 1fr); }
+    @media (min-width: 980px) {
+      .estimat__grid { grid-template-columns: 1fr 1fr; column-gap: clamp(28px, 4vw, 56px); row-gap: 0; }
+      .kontroller { grid-column: 1; grid-row: 1 / span 2; }
+      .plan { grid-column: 2; grid-row: 1; }
+      .estimat__cta { grid-column: 2; grid-row: 2; }
+    }
+    @media (max-width: 979px) {
+      /* På mobil står tegning og pris øverst mens du justerer */
+      .plan { order: -1; position: sticky; top: 68px; z-index: 5; padding: 12px 16px; box-shadow: 0 14px 30px -18px rgba(0,0,0,.6); }
+      .plan > svg { max-height: 22vh; margin-block: 6px; }
+      .plan__sum { padding-top: 10px; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+      .plan__tall { margin-top: 0; font-size: 1.45rem; }
+      .kontroll, .bryter { scroll-margin-top: 48vh; }
+    }
+    .estimat__cta { background: var(--kull); color: var(--papir); padding: 0 20px 20px; }
+    @media (max-width: 979px) { .estimat__cta { padding-top: 20px; } }
+    .kontroller { display: grid; gap: 26px; }
+    .kontroll__topp, .kontroll legend { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 12px; padding: 0; }
+    .kontroll fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+    .kontroll output { font-family: var(--tittel); font-weight: 700; font-size: 1.5rem; }
+    input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 44px; background: transparent; cursor: pointer; }
+    input[type="range"]::-webkit-slider-runnable-track { height: 4px; background: linear-gradient(90deg, var(--kull) var(--p, 50%), var(--papir-2) var(--p, 50%)); }
+    input[type="range"]::-moz-range-track { height: 4px; background: var(--papir-2); }
+    input[type="range"]::-moz-range-progress { height: 4px; background: var(--kull); }
+    input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 30px; height: 30px; margin-top: -13px; border-radius: 2px; background: var(--oransje); border: 3px solid var(--kull); transform: rotate(45deg); }
+    input[type="range"]::-moz-range-thumb { width: 24px; height: 24px; border-radius: 2px; background: var(--oransje); border: 3px solid var(--kull); }
+    .skala { display: flex; justify-content: space-between; margin-top: -2px; color: rgba(22, 24, 27, .6); }
+    .materialer { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .materialer label { position: relative; display: block; margin: 0; cursor: pointer; }
+    .materialer input { position: absolute; opacity: 0; inset: 0; }
+    .materialer span { display: grid; gap: 8px; height: 100%; padding: 10px 10px 12px; border: 2px solid var(--strek); background: #fff; font-size: .88rem; font-weight: 600; line-height: 1.2; transition: border-color .25s, transform .3s var(--ease); }
+    .materialer i { display: block; height: 34px; }
+    .materialer input:checked + span { border-color: var(--kull); transform: translateY(-3px); box-shadow: 0 6px 0 var(--kull); }
+    .materialer input:focus-visible + span { outline: 3px solid var(--oransje); outline-offset: 2px; }
+    .brytere { display: grid; gap: 8px; }
+    .bryter { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 14px; border: 2px solid var(--strek); background: #fff; cursor: pointer; }
+    .bryter input { -webkit-appearance: none; appearance: none; position: relative; flex: none; width: 52px; height: 30px; margin: 0; border-radius: 2px; background: var(--papir-2); border: 2px solid var(--kull); cursor: pointer; transition: background-color .25s; }
+    .bryter input::after { content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; background: var(--kull); transition: transform .3s var(--ease); }
+    .bryter input:checked { background: var(--oransje); }
+    .bryter input:checked::after { transform: translateX(22px); }
+    .bryter small { display: block; font-size: .82rem; opacity: .7; }
+    .plan { background: var(--kull); color: var(--papir); padding: 20px; }
+    .plan__topp { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--strek-lys); color: rgba(241, 238, 232, .7); }
+    .plan > svg { width: 100%; height: auto; margin-block: 12px; }
+    .plan__dekke { transform-box: fill-box; transform-origin: 0 0; transition: transform .6s var(--ease); }
+    .plan__sum { padding-top: 16px; border-top: 1px solid var(--strek-lys); }
+    .plan__sum p:first-child { color: var(--oransje); }
+    .plan__tall { margin-top: 6px; font-family: var(--tittel); font-weight: 700; font-size: clamp(1.8rem, 1.3rem + 2vw, 2.6rem); line-height: 1.05; letter-spacing: -.01em; }
+    .plan__merk { display: flex; gap: 10px; align-items: flex-start; margin-top: 12px; font-size: .84rem; color: rgba(241, 238, 232, .75); }
+    .plan__merk b { flex: none; padding: 2px 6px; background: #D83995; color: #fff; font-family: system-ui, sans-serif; font-size: .62rem; letter-spacing: .1em; }
+    .estimat__cta .knapp { width: 100%; margin-top: 18px; }
+
+    /* ---------- Slik jobber vi ---------- */
+    .linjal { position: relative; height: 34px; margin-bottom: 28px; border-bottom: 2px solid var(--papir); }
+    .linjal::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, var(--papir) 0 1px, transparent 1px 10px); -webkit-mask: linear-gradient(transparent 70%, #000 70%); mask: linear-gradient(transparent 70%, #000 70%); opacity: .5; }
+    .linjal::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, var(--papir) 0 1px, transparent 1px 100px); -webkit-mask: linear-gradient(transparent 30%, #000 30%); mask: linear-gradient(transparent 30%, #000 30%); opacity: .7; }
+    .linjal__fyll { position: absolute; left: 0; right: 0; bottom: -2px; height: 6px; background: var(--oransje); transform-origin: left; transform: scaleX(var(--fremdrift, 0)); }
+    .steg { display: grid; gap: 18px; counter-reset: steg; }
+    @media (min-width: 760px) { .steg { grid-template-columns: repeat(4, 1fr); gap: 24px; } }
+    .steg li { padding-top: 18px; border-top: 1px solid var(--strek-lys); }
+    .steg .mono { color: var(--oransje); }
+    .steg h3 { margin-top: 10px; font-family: var(--tittel); font-weight: 700; font-size: 1.4rem; text-transform: uppercase; line-height: 1.1; }
+    .steg p { margin-top: 8px; color: rgba(241, 238, 232, .78); }
+
+    /* ---------- Om ---------- */
+    .om__grid { display: grid; gap: clamp(36px, 5vw, 72px); align-items: center; }
+    @media (min-width: 900px) { .om__grid { grid-template-columns: .9fr 1.1fr; } }
+    .om p.tekst { margin-top: 20px; max-width: 34rem; }
+    .verktoy { width: 100%; max-width: 520px; margin-inline: auto; background: var(--papir-2); border: 2px solid var(--kull); }
+    .om__liste { display: grid; gap: 0; margin-top: 28px; border-top: 2px solid var(--kull); }
+    .om__liste li { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--strek); }
+    .om__liste span:last-child { font-family: var(--mono); font-size: .8rem; text-align: right; color: var(--oransje-mork); padding-top: 3px; }
+
+    /* ---------- Kontakt ---------- */
+    .kontakt__grid { display: grid; gap: clamp(36px, 5vw, 72px); }
+    @media (min-width: 980px) { .kontakt__grid { grid-template-columns: .85fr 1.15fr; } }
+    .telefon { display: inline-block; margin-top: 28px; font-family: var(--tittel); font-weight: 700; font-size: clamp(2.2rem, 1.5rem + 3vw, 3.6rem); letter-spacing: .02em; color: var(--oransje); text-decoration: none; border-bottom: 3px solid currentColor; line-height: 1.1; }
+    .kontakt dl { display: grid; gap: 14px; margin-top: 28px; }
+    .kontakt dt { color: var(--oransje); }
+    .kontakt dd { margin-top: 2px; }
+    .skjema { display: grid; gap: 18px; padding: clamp(20px, 4vw, 36px); background: var(--papir); color: var(--kull); }
+    .skjema__rad { display: grid; gap: 18px; }
+    @media (min-width: 600px) { .skjema__rad { grid-template-columns: 1fr 1fr; } }
+    .felt label { display: block; margin-bottom: 8px; font-family: var(--mono); font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; }
+    .felt input, .felt select, .felt textarea { width: 100%; min-height: 52px; padding: 12px 14px; border: 2px solid var(--kull); border-radius: 0; background: #fff; font-size: 1rem; -webkit-appearance: none; appearance: none; }
+    .felt select { background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2316181B' stroke-width='2'/%3E%3C/svg%3E") right 14px center / 12px no-repeat; padding-right: 40px; }
+    .felt textarea { min-height: 130px; resize: vertical; }
+    .felt input:focus, .felt select:focus, .felt textarea:focus { outline: none; box-shadow: 6px 6px 0 var(--oransje); }
+    .felt [aria-invalid="true"] { border-color: #B3261E; }
+    .feil { margin-top: 6px; font-size: .88rem; font-weight: 700; color: #B3261E; }
+    .feil:empty { display: none; }
+    .skjema .knapp { color: var(--papir); background: var(--kull); border-color: var(--kull); }
+    .skjema .knapp::before { background: var(--oransje); }
+    .skjema .knapp:hover { color: var(--kull); }
+
+    /* ---------- Bunn ---------- */
+    .bunn { padding: 48px 0 36px; border-top: 1px solid var(--strek-lys); }
+    .bunn__grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px; align-items: flex-end; }
+    .bunn p { font-size: .88rem; color: rgba(241, 238, 232, .7); }
+    .bunn__eks b { padding: 2px 7px; margin-right: 8px; background: #D83995; color: #fff; font-family: system-ui, sans-serif; font-size: .62rem; letter-spacing: .1em; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .tegning .linje { stroke-dashoffset: 0; animation: none; }
+      .tegning text, .tegning .flate { opacity: 1; animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="hopp" href="#innhold">Hopp til innholdet</a>
+
+  <div class="eks-bar" role="note">
+    <span class="eks-bar__merke">EKSEMPEL</span>
+    <span>Eksempelside laget av Glød for et fiktivt firma.</span>
+    <a href="../index.html#eksempler">Til Glød</a>
+  </div>
+
+  <header class="topp">
+    <div class="wrap topp__inner">
+      <a class="logo" href="#innhold" aria-label="Nordvegg Snekkerservice, til toppen">
+        <svg viewBox="0 0 34 34" aria-hidden="true"><rect x="1" y="1" width="32" height="32" fill="none" stroke="#F1EEE8" stroke-width="2"/><path d="M9 26V8l16 18V8" fill="none" stroke="#F07A1F" stroke-width="3.4" stroke-linecap="square"/></svg>
+        <span><b>NORDVEGG</b><small>Snekkerservice</small></span>
+      </a>
+      <div class="topp__hoyre">
+        <nav class="nav" id="meny" aria-label="Hovedmeny">
+          <a href="#tjenester" data-nr="01">Tjenester</a>
+          <a href="#for-etter" data-nr="02">Før og etter</a>
+          <a href="#pris" data-nr="03">Pris på terrasse</a>
+          <a href="#slik" data-nr="04">Slik jobber vi</a>
+          <a href="#kontakt" data-nr="05">Kontakt</a>
+        </nav>
+        <a class="knapp knapp--oransje" href="#kontakt">Befaring</a>
+        <button class="meny-knapp" type="button" data-meny-knapp aria-expanded="false" aria-controls="meny"><i aria-hidden="true"></i><span class="vh">Meny</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="innhold">
+    <!-- ============ HERO ============ -->
+    <section class="hero mork rutenett" aria-labelledby="hero-tittel">
+      <div class="wrap hero__grid">
+        <div>
+          <p class="mono etikett" data-r>Tømrer og snekker · Eksempelby</p>
+          <h1 id="hero-tittel" data-r>Små og store<span class="ut">snekkerjobber.</span>Gjort <span class="o">skikkelig.</span></h1>
+          <p class="ingress" data-r>Terrasser, kjøkken, vinduer og tilbygg. Vi kommer på befaring, gir deg en fast pris, og rydder etter oss når vi er ferdige.</p>
+          <div class="hero__knapper" data-r>
+            <a class="knapp knapp--oransje" href="#kontakt">Be om befaring <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+            <a class="knapp knapp--strek" href="#pris">Regn ut terrassepris</a>
+          </div>
+          <ul class="fakta" data-r>
+            <li><b>01</b>Gratis befaring</li>
+            <li><b>02</b>Fast pris før vi starter</li>
+            <li><b>03</b>Vi rydder etter oss</li>
+          </ul>
+        </div>
+
+        <div class="tegning" role="img" aria-label="Arbeidstegning av et lite hus med saltak, dør, vindu og terrasse, med målestreker">
+          <svg viewBox="0 0 520 440" aria-hidden="true">
+            <rect class="flate" x="96" y="200" width="240" height="160" fill="rgba(201,143,85,.12)" style="--d:1.8s"/>
+            <path class="linje" pathLength="1" d="M76 200 L216 96 L356 200" style="--d:.1s"/>
+            <path class="linje" pathLength="1" d="M96 200 V360 H336 V200" style="--d:.4s"/>
+            <path class="linje tynn" pathLength="1" d="M96 200 H336 M216 96 V200" style="--d:.8s"/>
+            <path class="linje" pathLength="1" d="M136 360 V280 H184 V360" style="--d:1s"/>
+            <path class="linje" pathLength="1" d="M236 240 H300 V300 H236 Z M268 240 V300 M236 270 H300" style="--d:1.1s"/>
+            <path class="linje" pathLength="1" d="M286 120 V86 H312 V140" style="--d:1.2s"/>
+            <path class="linje oransje" pathLength="1" d="M336 336 H470 V360 H336" style="--d:1.4s"/>
+            <path class="linje oransje tynn" pathLength="1" d="M352 336 V360 M372 336 V360 M392 336 V360 M412 336 V360 M432 336 V360 M452 336 V360" style="--d:1.6s"/>
+            <path class="linje oransje" pathLength="1" d="M350 336 V300 M456 336 V300 M350 304 H456" style="--d:1.7s"/>
+            <path class="linje tynn" pathLength="1" d="M40 360 H500" style="--d:.2s"/>
+            <path class="linje tynn" pathLength="1" d="M96 396 H336 M96 388 V404 M336 388 V404" style="--d:1.9s"/>
+            <path class="linje tynn" pathLength="1" d="M336 396 H470 M470 388 V404" style="--d:2s"/>
+            <path class="linje tynn" pathLength="1" d="M56 200 V360 M48 200 H64 M48 360 H64" style="--d:2s"/>
+            <text x="190" y="420" style="--d:2.2s">8 400</text>
+            <text x="380" y="420" style="--d:2.3s">TERRASSE</text>
+            <text x="14" y="285" style="--d:2.3s" transform="rotate(-90 30 285)">3 200</text>
+            <text x="508" y="96" text-anchor="end" style="--d:2.4s">SNITT A–A · 1:50</text>
+            <path class="linje oransje tynn" pathLength="1" d="M360 100 L318 128" style="--d:2.4s"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TJENESTER ============ -->
+    <section class="seksjon lys" id="tjenester" aria-labelledby="tj-tittel">
+      <div class="wrap">
+        <div class="topptekst">
+          <div data-r>
+            <p class="mono etikett">01 / Tjenester</p>
+            <h2 id="tj-tittel" class="h2">Det vi <span>bygger</span>.</h2>
+          </div>
+          <p class="ingress" data-r>Fra én ny dør til et helt tilbygg. Er du usikker på om jobben passer for oss, så ring. Vi sier ærlig fra.</p>
+        </div>
+        <ul class="tjenester" data-r-gruppe>
+          <li class="tjeneste" data-r><span class="tjeneste__nr">01</span>
+            <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M4 40h48M8 40v10M48 40v10M4 32h48M10 32V18M46 32V18M10 22h36"/></svg>
+            <h3>Terrasse og platting</h3><p>Nye terrasser, utvidelser og nytt rekkverk. Også riving av den gamle.</p></li>
+          <li class="tjeneste" data-r><span class="tjeneste__nr">02</span>
+            <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M6 50V20h44v30M6 30h44M18 20V8h20v12M24 38h8"/></svg>
+            <h3>Kjøkken og innredning</h3><p>Montering av kjøkken, garderober og innredning, tilpasset rommet.</p></li>
+          <li class="tjeneste" data-r><span class="tjeneste__nr">03</span>
+            <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M10 6h36v44H10zM28 6v44M10 28h36"/></svg>
+            <h3>Vinduer og dører</h3><p>Bytte av vinduer, ytterdører og innerdører, med lister og tetting.</p></li>
+          <li class="tjeneste" data-r><span class="tjeneste__nr">04</span>
+            <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M4 26L22 10l18 16M8 22v28h28V22M40 30h12v20H36"/></svg>
+            <h3>Tilbygg og påbygg</h3><p>Mer plass til familien. Vi hjelper også med tegninger og søknad.</p></li>
+          <li class="tjeneste" data-r><span class="tjeneste__nr">05</span>
+            <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M8 6v44M18 6v44M28 6v44M38 6v44M48 6v44"/></svg>
+            <h3>Kledning og panel</h3><p>Ny kledning ute, panel inne, og utbedring av råteskader.</p></li>
+          <li class="tjeneste" data-r><span class="tjeneste__nr">06</span>
+            <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M14 42L36 20M30 14l12 12M8 48l6-6M40 10l6 6-4 4-6-6z"/></svg>
+            <h3>Småjobber</h3><p>Listverk, en skjev dør, en hylle som skal opp. Også de små jobbene.</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ FØR / ETTER ============ -->
+    <section class="seksjon mork" id="for-etter" aria-labelledby="fe-tittel">
+      <div class="wrap">
+        <div class="topptekst">
+          <div data-r>
+            <p class="mono etikett">02 / Før og etter</p>
+            <h2 id="fe-tittel" class="h2">Samme hus. <span>Ny terrasse.</span></h2>
+          </div>
+          <p class="ingress" data-r>Dra i bryteren og se forskjellen. Illustrasjonen viser et typisk oppdrag: en gammel terrasse som er revet og bygd opp på nytt.</p>
+        </div>
+
+        <div class="fe" id="fe" data-r>
+          <!-- ETTER (ligger under) -->
+          <svg viewBox="0 0 800 480" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Etter: ny terrasse i varmt treverk med rekkverk, blomsterkasser, lyslenke og en stol">
+            <rect width="800" height="300" fill="#E9E3D6"/>
+            <g stroke="#D3CBBB" stroke-width="2">
+              <path d="M0 30H800M0 60H800M0 90H800M0 120H800M0 150H800M0 180H800M0 210H800M0 240H800M0 270H800"/>
+            </g>
+            <rect x="110" y="70" width="170" height="150" fill="#2F3A40"/><rect x="118" y="78" width="154" height="134" fill="#A9C3CC"/><path d="M195 78V212M118 145H272" stroke="#F4F1EA" stroke-width="6"/>
+            <path d="M118 78 L200 78 L118 170 Z" fill="#fff" opacity=".25"/>
+            <rect x="420" y="50" width="120" height="250" fill="#2E4A3F"/><circle cx="520" cy="180" r="5" fill="#E8C27A"/>
+            <rect x="436" y="66" width="88" height="60" fill="#A9C3CC" opacity=".85"/>
+            <path d="M40 40 Q200 70 360 40 Q520 70 760 40" fill="none" stroke="#3A3A3A" stroke-width="1.5"/>
+            <g fill="#FFD58A"><circle cx="80" cy="48" r="5"/><circle cx="140" cy="57" r="5"/><circle cx="200" cy="60" r="5"/><circle cx="260" cy="57" r="5"/><circle cx="320" cy="48" r="5"/><circle cx="400" cy="50" r="5"/><circle cx="480" cy="57" r="5"/><circle cx="560" cy="60" r="5"/><circle cx="640" cy="55" r="5"/><circle cx="720" cy="46" r="5"/></g>
+            <g fill="#FFD58A" opacity=".25"><circle cx="140" cy="57" r="14"/><circle cx="260" cy="57" r="14"/><circle cx="400" cy="50" r="14"/><circle cx="560" cy="60" r="14"/><circle cx="720" cy="46" r="14"/></g>
+            <path d="M40 300 H760 L800 480 H0 Z" fill="#C98F55"/>
+            <g stroke="#A8713D" stroke-width="2">
+              <path d="M85 300 L44 480M130 300 L89 480M175 300 L133 480M220 300 L178 480M265 300 L222 480M310 300 L267 480M355 300 L311 480M400 300 L400 480M445 300 L489 480M490 300 L533 480M535 300 L578 480M580 300 L622 480M625 300 L667 480M670 300 L711 480M715 300 L756 480"/>
+            </g>
+            <path d="M40 300 H760" stroke="#8A5A2E" stroke-width="4"/>
+            <g stroke="#7C5129" stroke-width="5" stroke-linecap="square"><path d="M20 300 V196 M780 300 V196 M14 200 H786"/></g>
+            <g stroke="#8A5A2E" stroke-width="3"><path d="M50 296V204M80 296V204M110 296V204M140 296V204M170 296V204M200 296V204M230 296V204M260 296V204M290 296V204M320 296V204M350 296V204M380 296V204M410 296V204M440 296V204M470 296V204M500 296V204M530 296V204M560 296V204M590 296V204M620 296V204M650 296V204M680 296V204M710 296V204M740 296V204"/></g>
+            <rect x="80" y="392" width="140" height="44" fill="#6B4423"/>
+            <g fill="#4E7A55"><circle cx="100" cy="384" r="18"/><circle cx="130" cy="372" r="22"/><circle cx="166" cy="380" r="20"/><circle cx="198" cy="386" r="16"/></g>
+            <g fill="#F2A3B0"><circle cx="118" cy="368" r="6"/><circle cx="160" cy="372" r="6"/><circle cx="188" cy="378" r="5"/></g>
+            <g transform="translate(560 330)"><path d="M0 0 H110 L120 90 H100 L95 50 H15 L10 90 H-10 Z" fill="#2F3A40"/><rect x="-6" y="-60" width="18" height="70" fill="#2F3A40"/><rect x="5" y="20" width="100" height="14" fill="#E8C27A"/></g>
+          </svg>
+
+          <!-- FØR (klippes av bryteren) -->
+          <div class="fe__for" aria-hidden="true">
+            <svg viewBox="0 0 800 480" preserveAspectRatio="xMidYMid slice">
+              <rect width="800" height="300" fill="#BFC1BC"/>
+              <g stroke="#A6A9A3" stroke-width="2"><path d="M0 30H800M0 60H800M0 90H800M0 120H800M0 150H800M0 180H800M0 210H800M0 240H800M0 270H800"/></g>
+              <g fill="#9A9C95"><path d="M40 110 h70 v26 h-50 z"/><path d="M600 200 h90 v30 h-70 z"/><path d="M320 30 h40 v40 h-30 z"/></g>
+              <rect x="110" y="70" width="170" height="150" fill="#5B5F5C"/><rect x="118" y="78" width="154" height="134" fill="#8E9A9C"/><path d="M195 78V212M118 145H272" stroke="#D9D6CC" stroke-width="6"/>
+              <path d="M150 90 L176 128 M240 160 L260 196" stroke="#6E7576" stroke-width="2"/>
+              <rect x="420" y="50" width="120" height="250" fill="#6E6A62"/><circle cx="520" cy="180" r="5" fill="#8A877E"/>
+              <path d="M40 300 H760 L800 480 H0 Z" fill="#8E8C86"/>
+              <g stroke="#6F6D67" stroke-width="4">
+                <path d="M85 300 L44 480M130 300 L89 480M175 300 L133 480M220 300 L178 480M265 300 L222 480M310 300 L267 480M355 300 L311 480M400 300 L400 480M445 300 L489 480M490 300 L533 480M535 300 L578 480M580 300 L622 480M625 300 L667 480M670 300 L711 480M715 300 L756 480"/>
+              </g>
+              <path d="M310 300 L355 300 L311 480 L267 480 Z" fill="#3B3A36"/>
+              <path d="M580 300 L625 300 L612 360 L568 360 Z" fill="#4A4843"/>
+              <g fill="#7B8A5A"><path d="M290 480 l6 -26 l4 22 l6 -30 l3 34 z"/><path d="M520 480 l5 -20 l4 16 l6 -24 l2 28 z"/><path d="M150 480 l4 -18 l5 14 l3 -20 l3 24 z"/><path d="M700 480 l6 -22 l3 18 l5 -18 l2 22 z"/></g>
+              <g stroke="#6B6A64" stroke-width="5" stroke-linecap="square"><path d="M20 300 V206 M300 300 V214 M560 300 V200 M780 300 V230"/><path d="M14 210 L300 222"/><path d="M560 204 L700 196"/></g>
+              <path d="M700 196 L740 260" stroke="#6B6A64" stroke-width="5"/>
+              <g transform="translate(620 380)"><path d="M0 0 h50 l-6 60 h-38 z" fill="#5F6A6E"/><ellipse cx="25" cy="0" rx="25" ry="6" fill="#4B5458"/></g>
+            </svg>
+          </div>
+          <div class="fe__skille" aria-hidden="true"><span class="fe__hank"><svg viewBox="0 0 24 24"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span></div>
+          <span class="fe__merke fe__merke--for mono" aria-hidden="true">Før</span>
+          <span class="fe__merke fe__merke--etter mono" aria-hidden="true">Etter</span>
+          <label class="vh" for="fe-bryter">Sammenlign før og etter. Bruk piltastene.</label>
+          <input id="fe-bryter" type="range" min="0" max="100" value="50" step="1">
+        </div>
+        <p class="fe__tekst mono"><span>← Før: råte, løse bord, skjevt rekkverk</span><span>Etter: nytt dekke og rekkverk →</span></p>
+      </div>
+    </section>
+
+    <!-- ============ PRISESTIMAT ============ -->
+    <section class="seksjon rutenett lys" id="pris" aria-labelledby="pris-tittel">
+      <div class="wrap">
+        <div class="topptekst">
+          <div data-r>
+            <p class="mono etikett">03 / Prisestimat</p>
+            <h2 id="pris-tittel" class="h2">Hva koster en <span>ny terrasse</span>?</h2>
+          </div>
+          <p class="ingress" data-r>Still inn størrelse og materiale, så tegner vi terrassen og gir deg et grovt anslag. Den endelige prisen får du etter befaring.</p>
+        </div>
+
+        <div class="estimat__grid">
+          <div class="kontroller" id="estimat" role="group" aria-label="Velg terrasse" data-r>
+            <div class="kontroll">
+              <div class="kontroll__topp"><label for="areal" class="mono">Størrelse</label><output id="areal-ut" for="areal">20 m²</output></div>
+              <input id="areal" name="areal" type="range" min="6" max="60" step="1" value="20">
+              <div class="skala mono" aria-hidden="true"><span>6 m²</span><span>60 m²</span></div>
+            </div>
+            <div class="kontroll">
+              <fieldset>
+                <legend><span class="mono">Materiale</span></legend>
+                <div class="materialer">
+                  <label><input type="radio" name="materiale" value="imp" checked><span><i style="background:repeating-linear-gradient(90deg,#B99A6B 0 18px,#A98A5D 18px 20px)"></i>Impregnert furu</span></label>
+                  <label><input type="radio" name="materiale" value="beis"><span><i style="background:repeating-linear-gradient(90deg,#7E5A3C 0 18px,#6B4A30 18px 20px)"></i>Brunbeiset</span></label>
+                  <label><input type="radio" name="materiale" value="hard"><span><i style="background:repeating-linear-gradient(90deg,#9C6440 0 18px,#844F30 18px 20px)"></i>Hardtre</span></label>
+                </div>
+              </fieldset>
+            </div>
+            <div class="kontroll">
+              <div class="kontroll__topp"><label for="rekkverk" class="mono">Rekkverk</label><output id="rekkverk-ut" for="rekkverk">8 m</output></div>
+              <input id="rekkverk" name="rekkverk" type="range" min="0" max="30" step="1" value="8">
+              <div class="skala mono" aria-hidden="true"><span>Ingen</span><span>30 m</span></div>
+            </div>
+            <div class="brytere">
+              <label class="bryter"><span>Trapp ned til hagen<small>Opptil fem trinn</small></span><input type="checkbox" name="trapp" checked></label>
+              <label class="bryter"><span>Riving av gammel terrasse<small>Inkludert bortkjøring</small></span><input type="checkbox" name="riving"></label>
+            </div>
+          </div>
+
+          <div class="plan" data-r>
+            <div class="plan__topp mono"><span>Sett ovenfra</span><span id="plan-mal" style="white-space:nowrap">5,5 × 3,6 m</span></div>
+            <svg id="plan-svg" viewBox="0 0 480 340" role="img" aria-labelledby="plan-beskrivelse">
+              <desc id="plan-beskrivelse">Terrassen sett ovenfra.</desc>
+              <defs><pattern id="ruter" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="rgba(241,238,232,.08)"/></pattern></defs>
+              <rect width="480" height="340" fill="url(#ruter)"/>
+              <rect x="20" y="20" width="440" height="22" fill="#3A3E44"/>
+              <text x="240" y="35" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="10" fill="#F1EEE8" opacity=".7" letter-spacing="1">HUSVEGG</text>
+              <g id="plan-tegning"></g>
+            </svg>
+            <div class="plan__sum">
+              <p class="mono">Grovt anslag</p>
+              <p class="plan__tall" id="pris-ut" aria-live="polite">–</p>
+            </div>
+          </div>
+          <div class="estimat__cta" data-r>
+            <p class="plan__merk" style="margin-top:0"><b>EKSEMPEL</b><span>Eksempelpriser for et fiktivt firma, inkl. mva. Ikke et tilbud.</span></p>
+            <a class="knapp knapp--oransje" href="#kontakt" id="send-estimat">Få et ekte tilbud <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIK JOBBER VI ============ -->
+    <section class="seksjon mork" id="slik" aria-labelledby="slik-tittel">
+      <div class="wrap">
+        <div class="topptekst">
+          <div data-r>
+            <p class="mono etikett">04 / Slik jobber vi</p>
+            <h2 id="slik-tittel" class="h2">Fra befaring til <span>ferdig</span>.</h2>
+          </div>
+        </div>
+        <div class="linjal" aria-hidden="true"><span class="linjal__fyll" id="linjal"></span></div>
+        <ol class="steg" data-r-gruppe>
+          <li data-r><p class="mono">Steg 01</p><h3>Befaring</h3><p>Vi kommer hjem til deg, måler opp og hører hva du ønsker deg.</p></li>
+          <li data-r><p class="mono">Steg 02</p><h3>Fast pris</h3><p>Du får et skriftlig tilbud med fast pris og en plan for når vi starter.</p></li>
+          <li data-r><p class="mono">Steg 03</p><h3>Vi bygger</h3><p>Du får beskjed underveis. Blir noe annerledes enn planlagt, tar vi det med deg først.</p></li>
+          <li data-r><p class="mono">Steg 04</p><h3>Ryddig overlevering</h3><p>Vi går gjennom jobben sammen, og rydder og kjører bort avfall.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ OM ============ -->
+    <section class="seksjon lys om" aria-labelledby="om-tittel">
+      <div class="wrap om__grid">
+        <div data-r>
+          <svg class="verktoy" viewBox="0 0 520 440" role="img" aria-label="Illustrasjon av en arbeidsbenk med hammer, vinkel, tommestokk og blyant">
+            <rect width="520" height="440" fill="#E6E1D8"/>
+            <g stroke="rgba(22,24,27,.08)"><path d="M0 40H520M0 80H520M0 120H520M0 160H520M0 200H520M0 240H520M0 280H520"/></g>
+            <rect x="0" y="300" width="520" height="140" fill="#C98F55"/>
+            <g stroke="#A8713D" stroke-width="2"><path d="M0 330H520M0 362H520M0 394H520M0 426H520"/></g>
+            <path d="M0 300H520" stroke="#8A5A2E" stroke-width="6"/>
+            <g transform="translate(90 120) rotate(-18)"><rect x="0" y="0" width="200" height="22" fill="#16181B"/><rect x="190" y="-34" width="54" height="90" rx="4" fill="#3A3E44"/><rect x="0" y="0" width="80" height="22" fill="#F07A1F"/></g>
+            <g transform="translate(300 90)"><path d="M0 0 H24 V160 H140 V184 H0 Z" fill="#9AA0A6"/><g stroke="#16181B" stroke-width="2"><path d="M4 20H14M4 40H18M4 60H14M4 80H18M4 100H14M4 120H18M4 140H14"/></g></g>
+            <g transform="translate(60 250) rotate(-4)"><rect width="300" height="26" fill="#F2D06B"/><g stroke="#16181B" stroke-width="1.5"><path d="M20 0v10M40 0v6M60 0v10M80 0v6M100 0v14M120 0v6M140 0v10M160 0v6M180 0v10M200 0v14M220 0v6M240 0v10M260 0v6M280 0v10"/></g><text x="96" y="22" font-family="ui-monospace, Menlo, monospace" font-size="9" fill="#16181B">1</text><text x="196" y="22" font-family="ui-monospace, Menlo, monospace" font-size="9" fill="#16181B">2</text></g>
+            <g transform="translate(380 260) rotate(28)"><rect width="110" height="12" fill="#F07A1F"/><path d="M110 0 L128 6 L110 12 Z" fill="#E6C9A0"/><path d="M122 4 L128 6 L122 8 Z" fill="#16181B"/></g>
+            <g fill="rgba(201,143,85,.6)"><circle cx="420" cy="350" r="3"/><circle cx="432" cy="356" r="2"/><circle cx="410" cy="362" r="2.5"/><path d="M380 340 q14 -8 28 2 q-10 6 -28 -2z"/></g>
+          </svg>
+        </div>
+        <div>
+          <p class="mono etikett" style="color:var(--oransje-mork)" data-r>05 / Om oss</p>
+          <h2 id="om-tittel" class="h2" style="margin-top:16px" data-r>To snekkere. <span>Ett</span> ansvar.</h2>
+          <p class="tekst" data-r>Nordvegg drives av Ola og Marte (fiktive personer). Vi er et lite firma, og det er meningen: den som gir deg prisen, er den som står på jobben.</p>
+          <p class="tekst" data-r>Vi tar oppdrag i Eksempelby og omegn, både for privatpersoner og borettslag.</p>
+          <ul class="om__liste" data-r>
+            <li><span>Fagbrev</span><span>Tømrerfaget</span></li>
+            <li><span>Område</span><span>Eksempelby og omegn</span></li>
+            <li><span>Kunder</span><span>Private og borettslag</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ KONTAKT ============ -->
+    <section class="seksjon mork rutenett kontakt" id="kontakt" aria-labelledby="kontakt-tittel">
+      <div class="wrap kontakt__grid">
+        <div>
+          <p class="mono etikett" style="color:var(--oransje)" data-r>06 / Kontakt</p>
+          <h2 id="kontakt-tittel" class="h2" style="margin-top:16px" data-r>Be om <span>befaring</span>.</h2>
+          <p class="ingress" style="margin-top:20px" data-r>Fortell kort hva du tenker på. Vi ringer deg tilbake og avtaler et tidspunkt.</p>
+          <a class="telefon" href="#" data-demo="På en ekte side ringer denne knappen snekkeren direkte. Her er nummeret oppdiktet." data-demo-tittel="Ring 000 00 000" data-r>000 00 000</a>
+          <dl data-r>
+            <div><dt class="mono">Adresse</dt><dd>Eksempelveien 22, 0000 Eksempelby</dd></div>
+            <div><dt class="mono">Telefontid</dt><dd>Hverdager 07–16</dd></div>
+          </dl>
+        </div>
+
+        <form class="skjema" id="skjema" data-r>
+          <div class="skjema__rad">
+            <div class="felt">
+              <label for="s-navn">Navn</label>
+              <input id="s-navn" name="navn" autocomplete="name" required data-feil="Skriv inn navnet ditt." aria-describedby="s-navn-feil">
+              <p class="feil" id="s-navn-feil" aria-live="polite"></p>
+            </div>
+            <div class="felt">
+              <label for="s-tlf">Telefon</label>
+              <input id="s-tlf" name="telefon" type="tel" autocomplete="tel" inputmode="tel" required data-feil="Skriv inn et telefonnummer vi kan ringe." aria-describedby="s-tlf-feil">
+              <p class="feil" id="s-tlf-feil" aria-live="polite"></p>
+            </div>
+          </div>
+          <div class="skjema__rad">
+            <div class="felt">
+              <label for="s-jobb">Type jobb</label>
+              <select id="s-jobb" name="jobb">
+                <option>Terrasse</option><option>Kjøkken og innredning</option><option>Vinduer og dører</option><option>Tilbygg</option><option>Kledning</option><option>Annet</option>
+              </select>
+            </div>
+            <div class="felt">
+              <label for="s-nar">Når?</label>
+              <select id="s-nar" name="nar">
+                <option>Så snart som mulig</option><option>Innen tre måneder</option><option>Bare undersøker</option>
+              </select>
+            </div>
+          </div>
+          <div class="felt">
+            <label for="s-beskrivelse">Beskriv jobben</label>
+            <textarea id="s-beskrivelse" name="beskrivelse" required data-feil="Skriv noen ord om jobben." aria-describedby="s-beskrivelse-feil"></textarea>
+            <p class="feil" id="s-beskrivelse-feil" aria-live="polite"></p>
+          </div>
+          <button class="knapp" type="submit">Send forespørsel <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bunn mork">
+    <div class="wrap bunn__grid">
+      <div>
+        <a class="logo" href="#innhold" aria-label="Nordvegg Snekkerservice, til toppen">
+          <svg viewBox="0 0 34 34" aria-hidden="true"><rect x="1" y="1" width="32" height="32" fill="none" stroke="#F1EEE8" stroke-width="2"/><path d="M9 26V8l16 18V8" fill="none" stroke="#F07A1F" stroke-width="3.4" stroke-linecap="square"/></svg>
+          <span><b>NORDVEGG</b><small>Snekkerservice</small></span>
+        </a>
+        <p style="margin-top:14px">Eksempelveien 22, 0000 Eksempelby · 000 00 000</p>
+      </div>
+      <div>
+        <p>© <span data-aar>2026</span> Nordvegg Snekkerservice (fiktivt firma)</p>
+        <p class="bunn__eks" style="margin-top:8px"><b>EKSEMPEL</b>Eksempelside laget av Glød for et fiktivt firma.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="felles/felles.js"></script>
+  <script>
+  (function () {
+    "use strict";
+    Eks.start();
+
+    /* ===================== Før / etter ===================== */
+    var fe = document.getElementById("fe");
+    var bryter = document.getElementById("fe-bryter");
+    function settX(prosent) {
+      prosent = Math.max(0, Math.min(100, prosent));
+      fe.style.setProperty("--x", prosent + "%");
+      bryter.value = Math.round(prosent);
+      bryter.setAttribute("aria-valuetext", Math.round(prosent) + " prosent før");
+    }
+    var drar = false;
+    function fraPeker(e) {
+      var r = fe.getBoundingClientRect();
+      settX((e.clientX - r.left) / r.width * 100);
+    }
+    fe.addEventListener("pointerdown", function (e) {
+      drar = true; fe.setPointerCapture(e.pointerId); fraPeker(e);
+    });
+    fe.addEventListener("pointermove", function (e) { if (drar) fraPeker(e); });
+    fe.addEventListener("pointerup", function () { drar = false; });
+    fe.addEventListener("pointercancel", function () { drar = false; });
+    bryter.addEventListener("input", function () { settX(+bryter.value); });
+    settX(50);
+
+    // En liten «vink» første gang feltet vises, så man skjønner at det kan dras
+    if (!Eks.rolig && "IntersectionObserver" in window) {
+      var vist = false;
+      new IntersectionObserver(function (en, obs) {
+        if (en[0].isIntersecting && !vist) {
+          vist = true; obs.disconnect();
+          var t0 = null;
+          (function anim(t) {
+            if (drar) return;
+            if (!t0) t0 = t;
+            var p = Math.min(1, (t - t0) / 1600);
+            settX(50 + Math.sin(p * Math.PI * 2) * 14 * (1 - p));
+            if (p < 1) requestAnimationFrame(anim);
+          })(performance.now());
+        }
+      }, { threshold: 0.6 }).observe(fe);
+    }
+
+    /* ===================== Prisestimat ===================== */
+    // Eksempelpriser for et fiktivt firma. Ikke ekte priser.
+    var PRIS = { imp: 2400, beis: 2800, hard: 4300 };          // kr per m², inkl. arbeid
+    var FARGE = { imp: ["#B99A6B", "#A08257"], beis: ["#7E5A3C", "#634530"], hard: ["#9C6440", "#7C4C2E"] };
+    var NAVN = { imp: "Impregnert furu", beis: "Brunbeiset", hard: "Hardtre" };
+    var REKKVERK = 1150, TRAPP = 6500, RIVING = 260;
+
+    var form = document.getElementById("estimat");
+    function felt(n) { return form.querySelector('[name="' + n + '"]'); }
+    var tegning = document.getElementById("plan-tegning");
+    var NS = "http://www.w3.org/2000/svg";
+    function el(n, a) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); return e; }
+    function komma(n) { return n.toFixed(1).replace(".", ","); }
+    function rundAv(n) { return Math.round(n / 500) * 500; }
+
+    function oppdater() {
+      var areal = +felt("areal").value;
+      var rekk = +felt("rekkverk").value;
+      var mat = form.querySelector('[name="materiale"]:checked').value;
+      var trapp = felt("trapp").checked, riving = felt("riving").checked;
+
+      [felt("areal"), felt("rekkverk")].forEach(function (r) {
+        r.style.setProperty("--p", ((r.value - r.min) / (r.max - r.min) * 100) + "%");
+      });
+      document.getElementById("areal-ut").textContent = areal + " m²";
+      document.getElementById("rekkverk-ut").textContent = rekk ? rekk + " m" : "Ingen";
+
+      // Mål: bredde/dybde ca. 3:2
+      var bredde = Math.sqrt(areal * 1.5), dybde = areal / bredde;
+      document.getElementById("plan-mal").textContent = komma(bredde) + " × " + komma(dybde) + " m";
+
+      // Tegn plan: 60 m² skal fylle tegneflaten
+      var maksB = Math.sqrt(60 * 1.5);
+      var skala = 400 / maksB;                   // px per meter
+      var w = bredde * skala, h = dybde * skala;
+      var x = 240 - w / 2, y = 42;
+      tegning.innerHTML = "";
+      var f = FARGE[mat];
+      tegning.appendChild(el("rect", { x: x, y: y, width: w, height: h, fill: f[0] }));
+      var bord = el("g", { stroke: f[1], "stroke-width": 1.2 });
+      for (var bx = x + 0.145 * skala; bx < x + w - 1; bx += 0.145 * skala) bord.appendChild(el("line", { x1: bx, y1: y, x2: bx, y2: y + h }));
+      tegning.appendChild(bord);
+      // Rekkverk langs kantene (venstre, front, høyre), lengde etter valgt meter
+      if (rekk > 0) {
+        var omkrets = [[x, y, x, y + h], [x, y + h, x + w, y + h], [x + w, y + h, x + w, y]];
+        var igjen = rekk * skala;
+        var trappB = trapp ? 1.2 * skala : 0, trappX = x + w / 2 - trappB / 2;
+        omkrets.forEach(function (s) {
+          if (igjen <= 0) return;
+          var len = Math.hypot(s[2] - s[0], s[3] - s[1]);
+          var del = Math.min(1, igjen / len);
+          var x2 = s[0] + (s[2] - s[0]) * del, y2 = s[1] + (s[3] - s[1]) * del;
+          if (trapp && s[1] === s[3]) {
+            // Åpning i rekkverket der trappen er
+            var aX = Math.min(x2, trappX);
+            if (aX > s[0]) tegning.appendChild(el("line", { x1: s[0], y1: s[1], x2: aX, y2: y2, stroke: "#F07A1F", "stroke-width": 5 }));
+            if (x2 > trappX + trappB) tegning.appendChild(el("line", { x1: trappX + trappB, y1: s[1], x2: x2, y2: y2, stroke: "#F07A1F", "stroke-width": 5 }));
+          } else {
+            tegning.appendChild(el("line", { x1: s[0], y1: s[1], x2: x2, y2: y2, stroke: "#F07A1F", "stroke-width": 5 }));
+          }
+          igjen -= len;
+        });
+      }
+      if (trapp) {
+        var tb = 1.2 * skala, td = 1.1 * skala, tx = x + w / 2 - tb / 2, ty = y + h;
+        tegning.appendChild(el("rect", { x: tx, y: ty, width: tb, height: td, fill: f[1] }));
+        for (var t = 1; t < 5; t++) tegning.appendChild(el("line", { x1: tx, y1: ty + td * t / 5, x2: tx + tb, y2: ty + td * t / 5, stroke: f[0], "stroke-width": 1.5 }));
+      }
+      // Målestreker
+      var m = el("g", { stroke: "#F1EEE8", "stroke-width": 1, opacity: .7 });
+      var my = Math.min(y + h + (trapp ? 1.1 * skala : 0) + 18, 326);
+      m.appendChild(el("line", { x1: x, y1: my, x2: x + w, y2: my }));
+      m.appendChild(el("line", { x1: x, y1: my - 5, x2: x, y2: my + 5 }));
+      m.appendChild(el("line", { x1: x + w, y1: my - 5, x2: x + w, y2: my + 5 }));
+      tegning.appendChild(m);
+      var mt = el("text", { x: 240, y: Math.min(my + 13, 338), "text-anchor": "middle", fill: "#F1EEE8", "font-size": 10, "font-family": "ui-monospace, Menlo, monospace" });
+      mt.textContent = komma(bredde) + " m";
+      tegning.appendChild(mt);
+
+      // Pris (eksempel): spenn ±10 %
+      var sum = areal * PRIS[mat] + rekk * REKKVERK + (trapp ? TRAPP : 0) + (riving ? areal * RIVING : 0);
+      var lav = rundAv(sum * 0.9), hoy = rundAv(sum * 1.1);
+      document.getElementById("pris-ut").textContent = "ca. " + Eks.kr(lav).replace("\u00a0kr", "") + "–" + Eks.kr(hoy);
+      document.getElementById("plan-beskrivelse").textContent = "Terrasse på " + areal + " kvadratmeter i " + NAVN[mat].toLowerCase() + (rekk ? ", med " + rekk + " meter rekkverk" : ", uten rekkverk") + (trapp ? " og trapp." : ".");
+      return { areal: areal, mat: NAVN[mat], rekk: rekk, trapp: trapp, riving: riving, tekst: document.getElementById("pris-ut").textContent };
+    }
+    form.addEventListener("input", oppdater);
+    form.addEventListener("change", oppdater);
+    oppdater();
+
+    // «Få et ekte tilbud» fyller ut skjemaet med valgene
+    document.getElementById("send-estimat").addEventListener("click", function () {
+      var v = oppdater();
+      document.getElementById("s-jobb").value = "Terrasse";
+      document.getElementById("s-beskrivelse").value =
+        "Terrasse på ca. " + v.areal + " m² i " + v.mat.toLowerCase() + ". " +
+        (v.rekk ? v.rekk + " m rekkverk. " : "Uten rekkverk. ") +
+        (v.trapp ? "Med trapp. " : "") + (v.riving ? "Gammel terrasse må rives. " : "") +
+        "(Anslag fra kalkulatoren: " + v.tekst + ")";
+      setTimeout(function () { document.getElementById("s-navn").focus({ preventScroll: true }); }, 600);
+    });
+
+    /* ===================== Linjal som fylles ved scrolling ===================== */
+    var linjal = document.getElementById("linjal");
+    var slik = document.getElementById("slik");
+    if (Eks.rolig) { linjal.style.setProperty("--fremdrift", 1); }
+    else {
+      var venter = false;
+      function maal() {
+        venter = false;
+        var r = slik.getBoundingClientRect();
+        var p = (window.innerHeight - r.top) / (r.height + window.innerHeight * 0.3);
+        linjal.style.setProperty("--fremdrift", Math.max(0, Math.min(1, p)).toFixed(3));
+      }
+      window.addEventListener("scroll", function () { if (!venter) { venter = true; requestAnimationFrame(maal); } }, { passive: true });
+      maal();
+    }
+
+    /* ===================== Skjema ===================== */
+    Eks.skjema(document.getElementById("skjema"), function (d) {
+      return [["Navn", d.get("navn")], ["Telefon", d.get("telefon")], ["Jobb", d.get("jobb")], ["Når", d.get("nar")]];
+    }, "Takk, vi ringer deg!", "På en ekte side ville snekkeren fått forespørselen nå, og ringt deg for å avtale befaring.");
+  })();
+  </script>
+</body>
+</html>

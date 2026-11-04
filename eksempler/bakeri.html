@@ -1,0 +1,712 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Morgengry Bakeri – eksempelside laget av Glød</title>
+  <meta name="description" content="Eksempelside laget av Glød for et fiktivt bakeri. Se hva som kommer ut av ovnen i dag, og forhåndsbestill dagens bakst.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#FFF8EF">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%233B2416'/%3E%3Ccircle cx='16' cy='17' r='7' fill='%23F2B66B'/%3E%3Crect x='5' y='18' width='22' height='9' fill='%233B2416'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="felles/felles.css">
+  <style>
+    /* =========================================================
+       Morgengry Bakeri – designspråk: morgenlys og mel.
+       Varm krem, sjokoladebrun tekst, ristet oransje og sennepsgult.
+       Fet serif med karakter, skrivemaskin-etiketter (som en lapp
+       på disken) og kvitteringspapir. Myke, runde, «deigaktige»
+       former og damp som stiger.
+       ========================================================= */
+    :root {
+      --krem: #FFF8EF;
+      --krem-2: #F8EBDA;
+      --brun: #3B2416;
+      --brun-2: #6B4A35;
+      --sjokolade: #2B1A10;
+      --skorpe: #C2672A;
+      --skorpe-mork: #9B4C18;   /* knapper: hvit tekst 6,1:1 */
+      --sennep: #E3A63B;
+      --fersken: #F6A86B;
+      --side-bg: var(--krem);
+      --side-ink: var(--brun);
+      --side-focus: #9B4C18;
+      --side-font: "Avenir Next", "Segoe UI", "Helvetica Neue", system-ui, sans-serif;
+      --serif: "Hoefler Text", Baskerville, "Baskerville Old Face", "Libre Baskerville", Georgia, "Times New Roman", serif;
+      --maskin: "American Typewriter", "Courier New", Courier, ui-monospace, monospace;
+      --dlg-bg: var(--krem); --dlg-ink: var(--brun); --dlg-accent: var(--skorpe-mork); --dlg-radius: 26px;
+      --gutter: clamp(18px, 4vw, 48px);
+      --ease: cubic-bezier(.34, 1.3, .64, 1);   /* litt sprett, som deig */
+      --ease-rolig: cubic-bezier(.22, 1, .36, 1);
+    }
+    body { font-size: clamp(16px, 15px + .25vw, 18px); }
+    .wrap { max-width: 1200px; margin-inline: auto; padding-inline: var(--gutter); }
+    .maskin { font-family: var(--maskin); font-size: .82rem; letter-spacing: .04em; }
+    .h2 { font-family: var(--serif); font-weight: 700; font-size: clamp(2.2rem, 1.5rem + 3.2vw, 4.2rem); line-height: 1; letter-spacing: -.02em; text-wrap: balance; }
+    .h2 i { font-style: italic; font-weight: 400; color: var(--skorpe-mork); }
+    .ingress { font-size: clamp(1.05rem, 1rem + .3vw, 1.2rem); color: var(--brun-2); max-width: 34rem; }
+
+    .knapp {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      min-height: 54px; padding: 14px 26px; border: 0; border-radius: 999px;
+      background: var(--brun); color: var(--krem); font-weight: 700; font-size: 1rem; text-decoration: none;
+      transition: transform .5s var(--ease), background-color .3s;
+    }
+    .knapp:hover { transform: translateY(-3px) rotate(-1deg); }
+    .knapp:active { transform: scale(.96); }
+    .knapp--skorpe { background: var(--skorpe-mork); color: #fff; }
+    .knapp--lys { background: transparent; color: var(--brun); box-shadow: inset 0 0 0 2px var(--brun); }
+    .knapp svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ---------- Topp ---------- */
+    .topp { position: sticky; top: 0; z-index: 50; background: rgba(255, 248, 239, .9); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1.5px dashed rgba(59, 36, 22, .2); }
+    .topp__inner { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 70px; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo svg { width: 40px; height: 40px; flex: none; }
+    .logo b { display: block; font-family: var(--serif); font-size: 1.45rem; line-height: 1; letter-spacing: -.01em; }
+    .logo small { display: block; margin-top: 3px; font-family: var(--maskin); font-size: .66rem; letter-spacing: .3em; }
+    .topp__hoyre { display: flex; align-items: center; gap: 8px; }
+    .kurvknapp { position: relative; display: grid; place-items: center; width: 48px; height: 48px; border: 0; border-radius: 50%; background: var(--brun); color: var(--krem); }
+    .kurvknapp svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .kurvknapp__tall { position: absolute; top: -3px; right: -3px; min-width: 22px; height: 22px; padding: 0 5px; border-radius: 999px; background: var(--sennep); color: var(--sjokolade); font-size: .75rem; font-weight: 800; display: grid; place-items: center; transform: scale(0); transition: transform .4s var(--ease); }
+    .kurvknapp__tall.vis { transform: scale(1); }
+    .kurvknapp.hopp-inn { animation: dump .5s var(--ease); }
+    @keyframes dump { 30% { transform: scale(1.15) rotate(-6deg); } 60% { transform: scale(.95); } }
+    .meny-knapp { width: 48px; height: 48px; border: 2px solid rgba(59, 36, 22, .25); border-radius: 50%; background: transparent; display: grid; place-items: center; }
+    .meny-knapp i, .meny-knapp i::before, .meny-knapp i::after { display: block; width: 18px; height: 2px; border-radius: 2px; background: var(--brun); transition: transform .4s var(--ease-rolig), background-color .2s; }
+    .meny-knapp i { position: relative; } .meny-knapp i::before, .meny-knapp i::after { content: ""; position: absolute; left: 0; }
+    .meny-knapp i::before { transform: translateY(-6px); } .meny-knapp i::after { transform: translateY(6px); }
+    .meny-apen .meny-knapp i { background: transparent; }
+    .meny-apen .meny-knapp i::before { transform: rotate(45deg); } .meny-apen .meny-knapp i::after { transform: rotate(-45deg); }
+    .nav { position: fixed; inset: 70px 0 auto; padding: 8px var(--gutter) 24px; background: var(--krem); border-bottom: 1.5px dashed rgba(59, 36, 22, .25); opacity: 0; visibility: hidden; transform: translateY(-8px); transition: opacity .3s, transform .4s var(--ease-rolig), visibility 0s .4s; }
+    .meny-apen .nav { opacity: 1; visibility: visible; transform: none; transition: opacity .3s, transform .4s var(--ease-rolig); }
+    .nav a { display: block; padding: 14px 0; font-family: var(--serif); font-weight: 700; font-size: 1.6rem; text-decoration: none; border-bottom: 1px solid rgba(59, 36, 22, .1); }
+    @media (min-width: 960px) {
+      .meny-knapp { display: none; }
+      .nav { position: static; display: flex; gap: 22px; padding: 0; background: none; border: 0; opacity: 1; visibility: visible; transform: none; }
+      .nav a { padding: 6px 0; border: 0; font-family: var(--side-font); font-weight: 600; font-size: .95rem; }
+      .nav a:hover { color: var(--skorpe-mork); }
+    }
+
+    /* ---------- Hero: soloppgang ---------- */
+    .hero { position: relative; overflow: hidden; isolation: isolate; padding: clamp(36px, 6vw, 80px) 0 0; background: linear-gradient(180deg, #FFE7C9 0%, #FFF1DF 45%, var(--krem) 100%); }
+    .sol { position: absolute; z-index: -1; width: min(110vw, 900px); aspect-ratio: 1; left: 50%; top: 8%; margin-left: calc(min(110vw, 900px) / -2); border-radius: 50%; background: radial-gradient(circle, rgba(255, 214, 140, .9) 0%, rgba(255, 190, 120, .45) 35%, rgba(255, 190, 120, 0) 68%); animation: soloppgang 3s var(--ease-rolig) both; }
+    @keyframes soloppgang { from { transform: translateY(18%) scale(.85); opacity: 0; } to { transform: none; opacity: 1; } }
+    .hero__grid { display: grid; gap: clamp(24px, 4vw, 48px); align-items: end; }
+    @media (min-width: 960px) { .hero__grid { grid-template-columns: 1fr 1fr; align-items: center; } }
+    .apent { display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; border-radius: 999px; background: rgba(255, 255, 255, .7); font-family: var(--maskin); font-size: .84rem; }
+    .apent i { width: 9px; height: 9px; border-radius: 50%; background: #5DAA68; box-shadow: 0 0 0 4px rgba(93, 170, 104, .2); }
+    .apent.stengt i { background: var(--skorpe); box-shadow: 0 0 0 4px rgba(194, 103, 42, .2); }
+    .hero h1 { margin-top: 22px; font-family: var(--serif); font-weight: 700; font-size: clamp(3rem, 1.5rem + 6.2vw, 6.4rem); line-height: .94; letter-spacing: -.035em; text-wrap: balance; }
+    .hero h1 i { font-weight: 400; color: var(--skorpe-mork); }
+    .hero .ingress { margin-top: 22px; }
+    .hero__knapper { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .brett { position: relative; width: min(100%, 560px); margin-inline: auto; }
+    .brett svg { width: 100%; height: auto; overflow: visible; }
+    .damp path { fill: none; stroke: rgba(255, 255, 255, .85); stroke-width: 5; stroke-linecap: round; opacity: 0; animation: damp 4.5s ease-in-out infinite; animation-delay: var(--d); }
+    @keyframes damp { 0% { opacity: 0; transform: translateY(14px); } 30% { opacity: .9; } 100% { opacity: 0; transform: translateY(-40px); } }
+    .hero__bunn { height: 34px; margin-top: -1px; background: var(--krem); -webkit-mask: radial-gradient(18px 18px at 18px 0, transparent 98%, #000) -18px 0 / 36px 100% repeat-x; mask: radial-gradient(18px 18px at 18px 0, transparent 98%, #000) -18px 0 / 36px 100% repeat-x; }
+
+    /* ---------- Seksjoner ---------- */
+    .seksjon { padding-block: clamp(72px, 10vw, 140px); }
+    .topptekst { display: grid; gap: 18px; margin-bottom: clamp(32px, 5vw, 56px); }
+    @media (min-width: 900px) { .topptekst { grid-template-columns: 1fr 1fr; align-items: end; } }
+    .topptekst .maskin { color: var(--skorpe-mork); margin-bottom: 14px; }
+
+    /* ---------- Fra ovnen ---------- */
+    .ovn { background: var(--sjokolade); color: var(--krem); border-radius: clamp(28px, 5vw, 56px); margin-inline: clamp(8px, 1.5vw, 20px); }
+    .ovn .h2 i { color: var(--sennep); }
+    .ovn .ingress { color: rgba(255, 248, 239, .75); }
+    .ovn .topptekst .maskin { color: var(--sennep); }
+    .ovn__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 4vw, 56px); align-items: start; }
+    @media (min-width: 940px) { .ovn__grid { grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); } .neste { position: sticky; top: 100px; } }
+    .tidslinje { position: relative; padding-left: 34px; }
+    .tidslinje::before { content: ""; position: absolute; left: 11px; top: 8px; bottom: 8px; width: 2px; background: repeating-linear-gradient(180deg, rgba(255, 248, 239, .3) 0 6px, transparent 6px 12px); }
+    .brett-rad { position: relative; display: grid; grid-template-columns: 58px minmax(0, 1fr); gap: 4px 12px; align-items: center; padding: 14px 16px; border-radius: 20px; transition: background-color .4s; }
+    .brett-rad + .brett-rad { margin-top: 6px; }
+    .brett-rad::before { content: ""; position: absolute; left: -29px; top: 50%; width: 14px; height: 14px; margin-top: -7px; border-radius: 50%; background: var(--sjokolade); border: 2px solid rgba(255, 248, 239, .45); }
+    .brett-rad.ute::before { background: rgba(255, 248, 239, .45); }
+    .brett-rad.fersk { background: rgba(227, 166, 59, .14); }
+    .brett-rad.fersk::before { background: var(--sennep); border-color: var(--sennep); box-shadow: 0 0 0 6px rgba(227, 166, 59, .25); }
+    .brett-rad.neste-rad { background: rgba(255, 248, 239, .06); }
+    .brett-rad__tid { font-family: var(--maskin); font-size: 1.05rem; }
+    .brett-rad h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 700; line-height: 1.15; }
+    .brett-rad small { display: block; font-size: .86rem; color: rgba(255, 248, 239, .65); }
+    .brett-rad .merkelapp { grid-column: 2; justify-self: start; margin-top: 6px; }
+    @media (min-width: 560px) { .brett-rad { grid-template-columns: 64px minmax(0, 1fr) auto; gap: 14px; } .brett-rad .merkelapp { grid-column: auto; margin-top: 0; } }
+    .merkelapp { padding: 4px 10px; border-radius: 999px; font-family: var(--maskin); font-size: .72rem; white-space: nowrap; background: rgba(255, 248, 239, .1); }
+    .fersk .merkelapp { background: var(--sennep); color: var(--sjokolade); font-weight: 700; }
+    .neste { padding: 28px; border-radius: 28px; background: var(--krem); color: var(--brun); }
+    .klokke { width: 120px; height: 120px; }
+    .klokke .viser { transform-box: view-box; transform-origin: 60px 60px; transition: transform 1s var(--ease-rolig); }
+    .neste h3 { margin-top: 18px; font-family: var(--serif); font-size: 1.9rem; line-height: 1.05; }
+    .neste p { margin-top: 10px; color: var(--brun-2); }
+    .neste .maskin { color: var(--skorpe-mork); margin-top: 18px; }
+
+    /* ---------- Dagens utvalg ---------- */
+    .filtre { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .filtre button { min-height: 46px; padding: 10px 20px; border: 2px solid var(--brun); border-radius: 999px; background: transparent; font-weight: 700; transition: background-color .3s, color .3s, transform .4s var(--ease); }
+    .filtre button:hover { transform: translateY(-2px); }
+    .filtre button[aria-pressed="true"] { background: var(--brun); color: var(--krem); }
+    .produkter { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 14px; }
+    .produkt { display: flex; flex-direction: column; padding: 14px 14px 18px; border-radius: 26px; background: #fff; box-shadow: 0 1px 0 rgba(59, 36, 22, .06), 0 20px 40px -30px rgba(59, 36, 22, .4); transition: transform .5s var(--ease), opacity .4s; }
+    .produkt[hidden] { display: none; }
+    .produkt:hover { transform: translateY(-5px); }
+    .produkt__bilde { position: relative; aspect-ratio: 4 / 3; border-radius: 18px; overflow: hidden; background: var(--bg, #F8EBDA); }
+    .produkt__bilde svg { width: 100%; height: 100%; transition: transform .7s var(--ease-rolig); }
+    .produkt:hover .produkt__bilde svg { transform: scale(1.06) rotate(-2deg); }
+    .produkt__tag { position: absolute; left: 10px; top: 10px; padding: 3px 9px; border-radius: 999px; background: rgba(255, 255, 255, .85); font-family: var(--maskin); font-size: .7rem; }
+    .produkt h3 { margin-top: 14px; font-family: var(--serif); font-size: 1.35rem; font-weight: 700; line-height: 1.15; padding-inline: 4px; }
+    .produkt p { margin-top: 4px; font-size: .92rem; color: var(--brun-2); flex: 1; padding-inline: 4px; }
+    .produkt__fot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 14px; padding-inline: 4px; }
+    .pris { font-family: var(--maskin); font-size: 1.05rem; }
+    .pris small { display: block; font-size: .66rem; opacity: .7; }
+    .stepper { display: flex; align-items: center; gap: 2px; padding: 3px; border-radius: 999px; background: var(--krem-2); }
+    .stepper button { width: 44px; height: 44px; border: 0; border-radius: 50%; background: transparent; font-size: 1.3rem; font-weight: 600; line-height: 1; display: grid; place-items: center; transition: background-color .2s, transform .3s var(--ease); }
+    .stepper button:hover { background: #fff; }
+    .stepper button:active { transform: scale(.88); }
+    .stepper output { min-width: 1.4em; text-align: center; font-weight: 800; }
+    @media (max-width: 559px) {
+      /* Smalere kort på mobil: bilde til venstre, tekst til høyre */
+      .produkt { display: grid; grid-template-columns: 104px minmax(0, 1fr); grid-template-rows: auto 1fr auto; column-gap: 14px; padding: 12px; border-radius: 22px; }
+      .produkt__bilde { grid-row: 1 / span 3; align-self: start; aspect-ratio: 1; border-radius: 16px; }
+      .produkt__bilde svg { transform: scale(1.35); }
+      .produkt:hover .produkt__bilde svg { transform: scale(1.42) rotate(-2deg); }
+      .produkt__tag { left: 4px; top: 4px; right: 4px; padding: 2px 4px; font-size: .56rem; text-align: center; white-space: nowrap; }
+      .produkt h3 { margin-top: 2px; font-size: 1.15rem; padding: 0; }
+      .produkt p { font-size: .86rem; padding: 0; }
+      .produkt__fot { margin-top: 10px; padding: 0; }
+      .legg-i { min-height: 44px; padding: 8px 14px; font-size: .9rem; white-space: nowrap; }
+    }
+    .legg-i { min-height: 50px; padding: 10px 18px; border: 0; border-radius: 999px; background: var(--skorpe-mork); color: #fff; font-weight: 700; transition: transform .4s var(--ease); }
+    .legg-i:hover { transform: scale(1.04); }
+    .utvalg__merk { margin-top: 18px; font-size: .85rem; color: var(--brun-2); display: flex; gap: 8px; align-items: center; }
+    .utvalg__merk b, .kvittering__merk b { padding: 1px 7px; border-radius: 999px; background: #D83995; color: #fff; font: 800 .62rem/1.7 system-ui, sans-serif; letter-spacing: .08em; }
+
+    /* Kurvlinje nederst på mobil */
+    .kurvlinje { position: fixed; z-index: 40; left: 12px; right: 12px; bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 10px 10px 20px; border-radius: 999px; background: var(--brun); color: var(--krem); box-shadow: 0 20px 40px -16px rgba(43, 26, 16, .7); transform: translateY(140%); transition: transform .5s var(--ease); }
+    .kurvlinje.vis { transform: none; }
+    .kurvlinje span { font-family: var(--maskin); font-size: .92rem; }
+    .kurvlinje button { min-height: 46px; padding: 8px 18px; border: 0; border-radius: 999px; background: var(--sennep); color: var(--sjokolade); font-weight: 800; }
+    @media (min-width: 960px) { .kurvlinje { left: auto; right: 24px; bottom: 24px; width: 380px; } }
+
+    /* Kurv-skuff: kvitteringspapir */
+    .skuff { width: min(460px, calc(100vw - 20px)); max-height: calc(100dvh - 20px); padding: 0; border: 0; background: transparent; overflow: visible; }
+    .skuff::backdrop { background: rgba(43, 26, 16, .55); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+    .skuff[open] { animation: eks-inn .5s var(--ease-rolig) both; }
+    .kvittering { position: relative; max-height: calc(100dvh - 40px); overflow: auto; padding: 28px 24px 34px; background: #FFFDF8; color: var(--brun); font-family: var(--maskin);
+      -webkit-mask: radial-gradient(9px 9px at 9px 100%, transparent 98%, #000) -9px 0 / 18px 100% repeat-x; mask: radial-gradient(9px 9px at 9px 100%, transparent 98%, #000) -9px 0 / 18px 100% repeat-x; }
+    .kvittering h2 { font-family: var(--serif); font-size: 1.8rem; text-align: center; }
+    .kvittering__adr { text-align: center; font-size: .78rem; opacity: .7; margin-top: 4px; }
+    .kvittering hr { border: 0; border-top: 1.5px dashed rgba(59, 36, 22, .35); margin: 18px 0; }
+    .kvittering__linjer li { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; padding: 6px 0; font-size: .92rem; }
+    .kvittering__linjer .smaa { display: flex; align-items: center; gap: 6px; grid-column: 1 / -1; }
+    .kvittering__linjer .smaa button { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid rgba(59, 36, 22, .3); background: transparent; font-size: 1.1rem; line-height: 1; }
+    .kvittering__sum { display: flex; justify-content: space-between; font-size: 1.15rem; font-weight: 700; }
+    .kvittering label { display: block; font-size: .8rem; margin: 14px 0 6px; }
+    .kvittering select, .kvittering input { width: 100%; min-height: 50px; padding: 10px 14px; border-radius: 12px; border: 1.5px solid rgba(59, 36, 22, .35); background: #fff; font-family: var(--side-font); font-size: 1rem; }
+    .kvittering [aria-invalid="true"] { border-color: #B3261E; }
+    .kvittering .feil { margin-top: 6px; font-size: .82rem; color: #B3261E; font-weight: 700; }
+    .kvittering .feil:empty { display: none; }
+    .kvittering .knapp { width: 100%; margin-top: 20px; font-family: var(--side-font); }
+    .kvittering__lukk { position: absolute; right: 12px; top: 12px; width: 44px; height: 44px; border: 0; border-radius: 50%; background: var(--krem-2); font-size: 1.4rem; line-height: 1; }
+    .kvittering__tom { text-align: center; padding: 20px 0; opacity: .8; }
+    .kvittering__merk { display: flex; gap: 8px; align-items: flex-start; margin-top: 14px; font-family: var(--side-font); font-size: .8rem; opacity: .85; }
+
+    /* ---------- Om bakeriet ---------- */
+    .om__grid { display: grid; gap: clamp(36px, 5vw, 72px); align-items: center; }
+    @media (min-width: 900px) { .om__grid { grid-template-columns: 1fr 1fr; } }
+    .om p.tekst { margin-top: 18px; color: var(--brun-2); max-width: 32rem; }
+    .stempler { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .stempel { display: grid; place-items: center; width: 108px; height: 108px; padding: 10px; border-radius: 50%; border: 2px dashed var(--skorpe); color: var(--skorpe-mork); text-align: center; font-family: var(--maskin); font-size: .74rem; line-height: 1.25; transform: rotate(var(--r, -6deg)); transition: transform .6s var(--ease); }
+    .stempel:hover { transform: rotate(0deg) scale(1.05); }
+    .stempel b { display: block; font-family: var(--serif); font-size: 1.3rem; }
+    .ovnbilde { width: 100%; max-width: 520px; margin-inline: auto; border-radius: 40px; overflow: hidden; }
+    .glod-ild { animation: ild 3.5s ease-in-out infinite alternate; }
+    @keyframes ild { from { opacity: .65; } to { opacity: 1; } }
+
+    /* ---------- Finn oss ---------- */
+    .finn { background: var(--krem-2); border-radius: clamp(28px, 5vw, 56px) clamp(28px, 5vw, 56px) 0 0; }
+    .finn__grid { display: grid; gap: clamp(28px, 4vw, 56px); align-items: start; }
+    @media (min-width: 900px) { .finn__grid { grid-template-columns: 1fr 1.1fr; } }
+    .timer { margin-top: 26px; font-family: var(--maskin); }
+    .timer div { display: flex; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1.5px dashed rgba(59, 36, 22, .25); }
+    .timer .i-dag { color: var(--skorpe-mork); font-weight: 700; }
+    .adresse { margin-top: 24px; font-family: var(--serif); font-size: 1.5rem; line-height: 1.25; }
+    .finn__knapper { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+    .kart { width: 100%; border-radius: 32px; overflow: hidden; background: #F3E3CC; box-shadow: inset 0 0 0 2px rgba(59, 36, 22, .1); }
+    .kart__nal { transform-box: fill-box; transform-origin: 50% 100%; animation: nal 2.6s var(--ease) infinite; }
+    @keyframes nal { 0%, 70%, 100% { transform: translateY(0); } 80% { transform: translateY(-10px); } 90% { transform: translateY(0); } }
+
+    .bunn { padding: 40px 0 110px; background: var(--krem-2); }
+    @media (min-width: 960px) { .bunn { padding-bottom: 40px; } }
+    .bunn__grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; padding-top: 24px; border-top: 1.5px dashed rgba(59, 36, 22, .25); font-size: .9rem; color: var(--brun-2); }
+    .bunn__eks b { padding: 2px 8px; margin-right: 8px; border-radius: 999px; background: #D83995; color: #fff; font-size: .64rem; letter-spacing: .1em; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .damp path { animation: none; opacity: .6; }
+      .glod-ild, .kart__nal, .sol { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="hopp" href="#innhold">Hopp til innholdet</a>
+
+  <div class="eks-bar" role="note">
+    <span class="eks-bar__merke">EKSEMPEL</span>
+    <span>Eksempelside laget av Glød for et fiktivt firma.</span>
+    <a href="../index.html#eksempler">Til Glød</a>
+  </div>
+
+  <header class="topp">
+    <div class="wrap topp__inner">
+      <a class="logo" href="#innhold" aria-label="Morgengry Bakeri, til toppen">
+        <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#3B2416"/><circle cx="20" cy="22" r="9" fill="#F2B66B"/><path d="M20 8v3M9 13l2 2M31 13l-2 2" stroke="#F2B66B" stroke-width="2" stroke-linecap="round"/><path d="M6 24h28v4a6 6 0 0 1-6 6H12a6 6 0 0 1-6-6z" fill="#C2672A"/><path d="M13 27l2 3M19 27l2 3M25 27l2 3" stroke="#FFE2B8" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <span><b>Morgengry</b><small>BAKERI</small></span>
+      </a>
+      <div class="topp__hoyre">
+        <nav class="nav" id="meny" aria-label="Hovedmeny">
+          <a href="#ovnen">Fra ovnen</a>
+          <a href="#utvalg">Dagens utvalg</a>
+          <a href="#om">Om bakeriet</a>
+          <a href="#finn">Finn oss</a>
+        </nav>
+        <button class="kurvknapp" type="button" id="kurvknapp" aria-label="Kurven din, 0 varer" aria-haspopup="dialog">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h18l-2 11H5L3 9z"/><path d="M8 9l4-6 4 6"/></svg>
+          <span class="kurvknapp__tall" id="kurv-tall" aria-hidden="true">0</span>
+        </button>
+        <button class="meny-knapp" type="button" data-meny-knapp aria-expanded="false" aria-controls="meny"><i aria-hidden="true"></i><span class="vh">Meny</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="innhold">
+    <!-- ============ HERO ============ -->
+    <section class="hero" aria-labelledby="hero-tittel">
+      <div class="sol" aria-hidden="true"></div>
+      <div class="wrap hero__grid">
+        <div>
+          <p class="apent" id="apent" data-r><i aria-hidden="true"></i><span id="apent-tekst">Åpent fra kl. 07</span></p>
+          <h1 id="hero-tittel" data-r>Ferskt brød, <i>hver eneste</i> morgen.</h1>
+          <p class="ingress" data-r>Surdeig, grovbrød og boller som er bakt her i natt. Kom innom, eller bestill på forhånd og hent på vei til jobb.</p>
+          <div class="hero__knapper" data-r>
+            <a class="knapp knapp--skorpe" href="#utvalg">Se dagens utvalg</a>
+            <a class="knapp knapp--lys" href="#ovnen">Hva er ferskt nå?</a>
+          </div>
+        </div>
+        <div class="brett" data-r role="img" aria-label="Illustrasjon av et skjærebrett med to brød og kanelboller, med damp som stiger">
+          <svg viewBox="0 0 560 420" aria-hidden="true">
+            <defs>
+              <radialGradient id="g-brod" cx="40%" cy="25%" r="80%"><stop offset="0" stop-color="#ECA766"/><stop offset=".6" stop-color="#BB6A30"/><stop offset="1" stop-color="#8A461C"/></radialGradient>
+              <radialGradient id="g-surdeig" cx="45%" cy="30%" r="75%"><stop offset="0" stop-color="#E9B77E"/><stop offset=".7" stop-color="#B9773E"/><stop offset="1" stop-color="#7E4A22"/></radialGradient>
+              <radialGradient id="g-bolle" cx="40%" cy="30%" r="70%"><stop offset="0" stop-color="#F3C287"/><stop offset="1" stop-color="#C47B3C"/></radialGradient>
+            </defs>
+            <g class="damp"><path d="M170 150 c-14 -20 14 -30 0 -50 c-12 -18 10 -26 0 -42" style="--d:0s"/><path d="M250 140 c-14 -20 14 -30 0 -50 c-12 -18 10 -26 0 -42" style="--d:1.5s"/><path d="M390 170 c-14 -20 14 -30 0 -50 c-12 -18 10 -26 0 -42" style="--d:.8s"/><path d="M450 190 c-14 -20 14 -30 0 -50" style="--d:2.3s"/></g>
+            <ellipse cx="290" cy="372" rx="260" ry="26" fill="#3B2416" opacity=".14"/>
+            <path d="M40 330 h470 a20 20 0 0 1 20 20 v6 a14 14 0 0 1 -14 14 H54 a14 14 0 0 1 -14 -14 z" fill="#8C4F2B"/>
+            <path d="M40 330 h470 a20 20 0 0 1 20 20 H40 z" fill="#A9653A"/>
+            <path d="M80 340 h380 M100 352 h300" stroke="#C07A4A" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+            <circle cx="520" cy="345" r="7" fill="#6E3B1F"/>
+            <path d="M70 330 C60 250 120 190 220 186 C320 182 360 240 350 330 Z" fill="url(#g-brod)"/>
+            <path d="M120 232 q30 -26 52 14 M180 214 q30 -26 52 14 M240 212 q30 -24 50 14" fill="none" stroke="#F8D49B" stroke-width="5" stroke-linecap="round" opacity=".85"/>
+            <g fill="#F5DDB0" opacity=".8"><circle cx="150" cy="270" r="2.5"/><circle cx="210" cy="250" r="2.5"/><circle cx="270" cy="280" r="2.5"/><circle cx="300" cy="240" r="2.5"/><circle cx="120" cy="300" r="2.5"/></g>
+            <path d="M330 330 C326 260 372 220 430 220 C488 220 520 262 512 330 Z" fill="url(#g-surdeig)"/>
+            <path d="M376 248 C400 268 412 300 410 326 M452 244 C436 270 432 300 436 326" fill="none" stroke="#F4DDB5" stroke-width="4.5" stroke-linecap="round"/>
+            <path d="M360 236 q70 -30 130 4" fill="none" stroke="#FFF6E6" stroke-width="10" stroke-linecap="round" opacity=".35"/>
+            <g transform="translate(470 300)"><circle r="34" fill="url(#g-bolle)"/><path d="M0 0 m-4 0 a4 4 0 1 1 8 0 a9 9 0 1 1 -18 0 a14 14 0 1 1 28 0 a20 20 0 1 1 -40 1" fill="none" stroke="#8A461C" stroke-width="3" stroke-linecap="round"/><g fill="#fff"><circle cx="-12" cy="-14" r="1.8"/><circle cx="8" cy="-20" r="1.8"/><circle cx="18" cy="2" r="1.8"/><circle cx="-6" cy="16" r="1.8"/></g></g>
+          </svg>
+        </div>
+      </div>
+      <div class="hero__bunn" aria-hidden="true"></div>
+    </section>
+
+    <!-- ============ FRA OVNEN ============ -->
+    <section class="seksjon ovn" id="ovnen" aria-labelledby="ovn-tittel">
+      <div class="wrap">
+        <div class="topptekst">
+          <div data-r>
+            <p class="maskin">Fra ovnen i dag</p>
+            <h2 id="ovn-tittel" class="h2">Hva er <i>varmt</i> akkurat nå?</h2>
+          </div>
+          <p class="ingress" data-r>Vi baker flere ganger om dagen. Lista følger klokka di, så du ser hva som nettopp kom ut og hva som kommer snart.</p>
+        </div>
+        <div class="ovn__grid">
+          <ol class="tidslinje" id="tidslinje" data-r></ol>
+          <div class="neste" data-r aria-live="polite">
+            <svg class="klokke" viewBox="0 0 120 120" aria-hidden="true">
+              <circle cx="60" cy="60" r="56" fill="#fff" stroke="#3B2416" stroke-width="4"/>
+              <g stroke="#3B2416" stroke-width="3" stroke-linecap="round"><path d="M60 10v8M60 102v8M10 60h8M102 60h8"/></g>
+              <path class="viser" id="viser-t" d="M60 60V34" stroke="#3B2416" stroke-width="5" stroke-linecap="round"/>
+              <path class="viser" id="viser-m" d="M60 60V18" stroke="#C2672A" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="60" cy="60" r="5" fill="#3B2416"/>
+            </svg>
+            <h3 id="neste-tittel">Neste brett</h3>
+            <p id="neste-tekst"></p>
+            <p class="maskin" id="neste-klokke"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DAGENS UTVALG ============ -->
+    <section class="seksjon" id="utvalg" aria-labelledby="utvalg-tittel">
+      <div class="wrap">
+        <div class="topptekst">
+          <div data-r>
+            <p class="maskin">Dagens utvalg</p>
+            <h2 id="utvalg-tittel" class="h2">Bestill nå, <i>hent</i> i morgen tidlig.</h2>
+          </div>
+          <p class="ingress" data-r>Legg det du vil ha i kurven og velg når du vil hente. Vi legger det klart i en pose med navnet ditt på.</p>
+        </div>
+        <div class="filtre" role="group" aria-label="Filtrer utvalget" data-r>
+          <button type="button" data-filter="alle" aria-pressed="true">Alt</button>
+          <button type="button" data-filter="brod" aria-pressed="false">Brød</button>
+          <button type="button" data-filter="sott" aria-pressed="false">Søtt</button>
+          <button type="button" data-filter="lunsj" aria-pressed="false">Lunsj</button>
+        </div>
+        <ul class="produkter" id="produkter" aria-live="polite"></ul>
+        <p class="utvalg__merk"><b>EKSEMPEL</b>Alle priser er eksempelpriser for et fiktivt bakeri.</p>
+      </div>
+    </section>
+
+    <!-- ============ OM BAKERIET ============ -->
+    <section class="seksjon om" id="om" aria-labelledby="om-tittel">
+      <div class="wrap om__grid">
+        <div data-r>
+          <svg class="ovnbilde" viewBox="0 0 520 520" role="img" aria-label="Illustrasjon av en murovn med glødende ild og en bakerspade med et brød">
+            <rect width="520" height="520" fill="#2B1A10"/>
+            <circle cx="260" cy="250" r="240" fill="#3A2416"/>
+            <path d="M80 470 V250 a180 180 0 0 1 360 0 V470 Z" fill="#8C4F2B"/>
+            <g stroke="#6E3B1F" stroke-width="3" opacity=".7"><path d="M80 300H440M80 350H440M80 400H440M80 450H440M160 250V300M260 300V350M360 250V300M200 350V400M320 350V400M150 400V450M260 400V450M370 400V450"/></g>
+            <path d="M160 470 V310 a100 100 0 0 1 200 0 V470 Z" fill="#1A0F08"/>
+            <g class="glod-ild"><ellipse cx="260" cy="450" rx="90" ry="40" fill="#E3A63B" opacity=".35"/><path d="M200 460 C200 420 230 410 226 380 C250 400 246 420 260 430 C262 400 280 390 284 364 C306 396 320 420 316 460 Z" fill="#F08A2B"/><path d="M230 460 C232 436 250 430 252 410 C266 426 270 440 286 444 C290 452 288 458 286 460 Z" fill="#FFD27A"/></g>
+            <path d="M60 330 L330 300" stroke="#C98F55" stroke-width="12" stroke-linecap="round"/>
+            <ellipse cx="370" cy="296" rx="62" ry="16" fill="#C98F55" transform="rotate(-6 370 296)"/>
+            <path d="M330 290 C334 262 360 248 384 250 C408 252 420 270 418 290 Z" fill="#C2672A"/>
+            <path d="M352 266 q12 -8 22 6 M378 260 q12 -8 22 6" fill="none" stroke="#F8D49B" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <p class="maskin" style="color:var(--skorpe-mork)" data-r>Om bakeriet</p>
+          <h2 id="om-tittel" class="h2" style="margin-top:14px" data-r>Vi starter <i>mens</i> du sover.</h2>
+          <p class="tekst" data-r>Morgengry er et lite nabolagsbakeri. Bakeren, Jonas (fiktiv person), er på plass klokka fire hver morgen for å sette deigen.</p>
+          <p class="tekst" data-r>Vi baker med god tid, lite sukker og mye kjærlighet. Det som ikke blir solgt, gir vi bort før vi stenger.</p>
+          <div class="stempler" data-r>
+            <span class="stempel" style="--r:-8deg"><span><b>04:00</b>deigen settes</span></span>
+            <span class="stempel" style="--r:5deg"><span><b>24 t</b>surdeig som hviler</span></span>
+            <span class="stempel" style="--r:-3deg"><span><b>☼</b>bakt før sola står opp</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FINN OSS ============ -->
+    <section class="seksjon finn" id="finn" aria-labelledby="finn-tittel">
+      <div class="wrap finn__grid">
+        <div>
+          <p class="maskin" style="color:var(--skorpe-mork)" data-r>Finn oss</p>
+          <h2 id="finn-tittel" class="h2" style="margin-top:14px" data-r>Rett rundt <i>hjørnet</i>.</h2>
+          <p class="adresse" data-r>Eksempelveien 7<br>0000 Eksempelby</p>
+          <div class="timer" id="timer" data-r>
+            <div data-dag="1"><span>Mandag–fredag</span><span>07–17</span></div>
+            <div data-dag="6"><span>Lørdag</span><span>08–15</span></div>
+            <div data-dag="0"><span>Søndag</span><span>Stengt</span></div>
+          </div>
+          <div class="finn__knapper" data-r>
+            <a class="knapp knapp--skorpe" href="#" data-demo="På en ekte side ringer denne knappen bakeriet direkte. Her er nummeret oppdiktet." data-demo-tittel="Ring 000 00 000">Ring 000 00 000</a>
+            <a class="knapp knapp--lys" href="#" data-demo="På en ekte side åpner denne knappen veibeskrivelse i kartappen din." data-demo-tittel="Veibeskrivelse">Veibeskrivelse</a>
+          </div>
+        </div>
+        <div data-r>
+          <svg class="kart" viewBox="0 0 560 420" role="img" aria-label="Tegnet kart over nabolaget med bakeriet markert på et gatehjørne ved en park">
+            <rect width="560" height="420" fill="#F3E3CC"/>
+            <path d="M380 0 C360 100 420 160 400 260 C390 320 420 380 410 420 H560 V0 Z" fill="#CFE0C4"/>
+            <g fill="#9DBB8C"><circle cx="470" cy="80" r="16"/><circle cx="500" cy="120" r="12"/><circle cx="460" cy="300" r="18"/><circle cx="510" cy="350" r="14"/><circle cx="480" cy="200" r="10"/></g>
+            <g stroke="#FFF8EF" stroke-width="26" stroke-linecap="round" fill="none"><path d="M-10 150 H600"/><path d="M200 -10 V430"/><path d="M-10 330 C120 300 260 320 380 280"/></g>
+            <g stroke="#E6D2B5" stroke-width="2" stroke-dasharray="8 8" fill="none"><path d="M-10 150 H600"/><path d="M200 -10 V430"/></g>
+            <g fill="#E8D3B6"><rect x="40" y="40" width="120" height="80" rx="8"/><rect x="240" y="40" width="110" height="80" rx="8"/><rect x="40" y="190" width="120" height="100" rx="8"/><rect x="240" y="190" width="110" height="60" rx="8"/></g>
+            <rect x="240" y="190" width="70" height="60" rx="8" fill="#C2672A"/>
+            <g class="kart__nal"><path d="M275 178 c-22 0 -36 -16 -36 -34 c0 -22 16 -38 36 -38 s36 16 36 38 c0 18 -14 34 -36 34 z" fill="#3B2416"/><path d="M262 172 L275 198 L288 172 Z" fill="#3B2416"/><circle cx="275" cy="142" r="13" fill="#F2B66B"/></g>
+            <text x="420" y="34" font-family="American Typewriter, Courier New, monospace" font-size="14" fill="#3B2416" opacity=".7">Parken</text>
+            <text x="20" y="140" font-family="American Typewriter, Courier New, monospace" font-size="13" fill="#3B2416" opacity=".7">Eksempelveien</text>
+            <text x="212" y="410" font-family="American Typewriter, Courier New, monospace" font-size="13" fill="#3B2416" opacity=".7" transform="rotate(-90 212 410)">Torggata</text>
+          </svg>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bunn">
+    <div class="wrap bunn__grid">
+      <p>© <span data-aar>2026</span> Morgengry Bakeri (fiktivt firma) · Eksempelveien 7, 0000 Eksempelby · 000 00 000</p>
+      <p class="bunn__eks"><b>EKSEMPEL</b>Eksempelside laget av Glød for et fiktivt firma.</p>
+    </div>
+  </footer>
+
+  <div class="kurvlinje" id="kurvlinje" aria-hidden="true">
+    <span id="kurvlinje-tekst">0 varer · 0 kr</span>
+    <button type="button" id="kurvlinje-knapp" tabindex="-1">Se kurven</button>
+  </div>
+
+  <dialog class="skuff" id="skuff" aria-labelledby="kv-tittel">
+    <form class="kvittering" id="kvittering" method="dialog" novalidate>
+      <button class="kvittering__lukk" type="button" id="skuff-lukk" aria-label="Lukk kurven">×</button>
+      <h2 id="kv-tittel">Morgengry</h2>
+      <p class="kvittering__adr">Eksempelveien 7 · Forhåndsbestilling</p>
+      <hr>
+      <ul class="kvittering__linjer" id="kv-linjer"></ul>
+      <p class="kvittering__tom" id="kv-tom">Kurven er tom. Legg til noe godt!</p>
+      <hr>
+      <p class="kvittering__sum"><span>SUM</span><span id="kv-sum">0 kr</span></p>
+      <div id="kv-hent">
+        <label for="kv-tid">Når vil du hente?</label>
+        <select id="kv-tid" name="tid"></select>
+        <label for="kv-navn">Navn på posen</label>
+        <input id="kv-navn" name="navn" autocomplete="given-name" required aria-describedby="kv-navn-feil">
+        <p class="feil" id="kv-navn-feil" aria-live="polite"></p>
+        <button class="knapp knapp--skorpe" type="submit">Forhåndsbestill</button>
+      </div>
+      <p class="kvittering__merk"><b>EKSEMPEL</b><span>Eksempelpriser for et fiktivt bakeri. Ingenting blir bestilt.</span></p>
+    </form>
+  </dialog>
+
+  <script src="felles/felles.js"></script>
+  <script>
+  (function () {
+    "use strict";
+    Eks.start();
+
+    /* ===================== Tid og åpningstider (fiktive) ===================== */
+    var naa = new Date();
+    var APENT = { 0: null, 1: [7, 17], 2: [7, 17], 3: [7, 17], 4: [7, 17], 5: [7, 17], 6: [8, 15] };
+    function minutter(d) { return d.getHours() * 60 + d.getMinutes(); }
+    function hhmm(m) { return String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0"); }
+
+    function oppdaterApent() {
+      naa = new Date();
+      var t = APENT[naa.getDay()], m = minutter(naa);
+      var el = document.getElementById("apent"), tekst = document.getElementById("apent-tekst");
+      if (t && m >= t[0] * 60 && m < t[1] * 60) { el.classList.remove("stengt"); tekst.textContent = "Åpent nå · stenger kl. " + t[1]; }
+      else { el.classList.add("stengt"); tekst.textContent = t && m < t[0] * 60 ? "Åpner i dag kl. " + String(t[0]).padStart(2, "0") : "Stengt nå · åpner " + nesteApning(); }
+    }
+    function nesteApning() {
+      for (var i = 1; i <= 7; i++) {
+        var d = new Date(naa); d.setDate(d.getDate() + i);
+        var t = APENT[d.getDay()];
+        if (t) return (i === 1 ? "i morgen" : ["søndag", "mandag", "tirsdag", "onsdag", "torsdag", "fredag", "lørdag"][d.getDay()]) + " kl. " + String(t[0]).padStart(2, "0");
+      }
+      return "snart";
+    }
+    var dag = naa.getDay();
+    var rad = document.querySelector('#timer [data-dag="' + (dag === 0 ? 0 : dag === 6 ? 6 : 1) + '"]');
+    if (rad) rad.classList.add("i-dag");
+
+    /* ===================== Fra ovnen ===================== */
+    var BRETT = [
+      [7 * 60, "Grovbrød", "Med havre og solsikkekjerner"],
+      [8 * 60 + 30, "Kanelboller", "Myke, med mye kanel"],
+      [10 * 60, "Surdeigsbrød", "Sprø skorpe, hevet i et døgn"],
+      [11 * 60 + 30, "Skillingsboller", "Store, med sukker på toppen"],
+      [13 * 60, "Focaccia", "Med rosmarin og havsalt"],
+      [14 * 60 + 30, "Kardemommeknuter", "Ettermiddagens favoritt"]
+    ];
+    var liste = document.getElementById("tidslinje");
+    function varighet(min) {
+      var t = Math.floor(min / 60), m = min % 60;
+      return (t ? t + " t " : "") + (m || !t ? m + " min" : "").trim();
+    }
+    function oppdaterOvn() {
+      naa = new Date();
+      var m = minutter(naa), t = APENT[naa.getDay()];
+      var dagensBrett = t ? BRETT.filter(function (b) { return b[0] < t[1] * 60; }) : [];
+      liste.innerHTML = "";
+      var neste = null;
+      (dagensBrett.length ? dagensBrett : BRETT).forEach(function (b) {
+        var li = document.createElement("li");
+        li.className = "brett-rad";
+        var status;
+        if (!dagensBrett.length) { status = "Stengt i dag"; }
+        else if (m >= b[0] && m - b[0] < 45) { li.classList.add("fersk"); status = "Nettopp ut!"; }
+        else if (m >= b[0]) { li.classList.add("ute"); status = "Ute kl. " + hhmm(b[0]); }
+        else { status = "Om " + varighet(b[0] - m); if (!neste) { neste = b; li.classList.add("neste-rad"); } }
+        li.innerHTML = '<span class="brett-rad__tid">' + hhmm(b[0]) + '</span><div><h3>' + b[1] + '</h3><small>' + b[2] + '</small></div><span class="merkelapp">' + status + "</span>";
+        liste.appendChild(li);
+      });
+      // Klokke
+      var vt = (naa.getHours() % 12) * 30 + naa.getMinutes() * 0.5, vm = naa.getMinutes() * 6;
+      document.getElementById("viser-t").style.transform = "rotate(" + vt + "deg)";
+      document.getElementById("viser-m").style.transform = "rotate(" + vm + "deg)";
+      document.getElementById("neste-klokke").textContent = "Klokka er " + hhmm(m);
+      var tittel = document.getElementById("neste-tittel"), tekst = document.getElementById("neste-tekst");
+      var fersk = dagensBrett.filter(function (b) { return m >= b[0] && m - b[0] < 45; })[0];
+      if (!dagensBrett.length) { tittel.textContent = "Ovnen hviler i dag"; tekst.textContent = "Vi har søndagsfri. Bakeriet åpner " + nesteApning() + "."; }
+      else if (fersk) { tittel.textContent = fersk[1] + " er nettopp ute!"; tekst.textContent = "Fortsatt varme. Kom innom før de er borte."; }
+      else if (neste) { tittel.textContent = "Neste brett: " + neste[1]; tekst.textContent = "Kommer ut av ovnen kl. " + hhmm(neste[0]) + ", om " + varighet(neste[0] - m) + "."; }
+      else { tittel.textContent = "Dagens siste brett er ute"; tekst.textContent = "I morgen starter vi med grovbrød kl. 07."; }
+      oppdaterApent();
+    }
+    oppdaterOvn();
+    setInterval(oppdaterOvn, 30000);
+
+    /* ===================== Produkter og kurv ===================== */
+    var BILDER = {
+      grov: '<rect x="30" y="38" width="100" height="54" rx="20" fill="#7E4A22"/><rect x="30" y="38" width="100" height="22" rx="11" fill="#A0602D"/><g fill="#E9CF9B"><circle cx="50" cy="48" r="2.4"/><circle cx="66" cy="44" r="2.4"/><circle cx="82" cy="50" r="2.4"/><circle cx="98" cy="45" r="2.4"/><circle cx="112" cy="50" r="2.4"/><circle cx="58" cy="56" r="2"/><circle cx="90" cy="57" r="2"/></g>',
+      surdeig: '<ellipse cx="80" cy="64" rx="54" ry="38" fill="#B9773E"/><path d="M32 64 a48 32 0 0 1 96 0" fill="#D19456"/><path d="M50 56 C66 40 94 40 110 56 M60 70 C72 60 88 60 100 70" fill="none" stroke="#F4DDB5" stroke-width="4" stroke-linecap="round"/><g fill="#fff" opacity=".5"><circle cx="64" cy="46" r="3"/><circle cx="96" cy="44" r="2"/><circle cx="80" cy="40" r="2.5"/></g>',
+      rundstykker: '<g fill="#C98549"><circle cx="54" cy="52" r="20"/><circle cx="102" cy="52" r="20"/><circle cx="54" cy="92" r="20"/><circle cx="102" cy="92" r="20"/></g><g fill="#E7B479"><circle cx="50" cy="46" r="10"/><circle cx="98" cy="46" r="10"/><circle cx="50" cy="86" r="10"/><circle cx="98" cy="86" r="10"/></g><path d="M44 52h20M92 52h20M44 92h20M92 92h20" stroke="#8A4E22" stroke-width="2.5" stroke-linecap="round"/>',
+      kanel: '<circle cx="80" cy="62" r="40" fill="#D7954F"/><path d="M80 62 m-5 0 a5 5 0 1 1 10 0 a11 11 0 1 1 -22 0 a17 17 0 1 1 34 0 a23 23 0 1 1 -46 0 a29 29 0 1 1 58 1" fill="none" stroke="#7E4219" stroke-width="4" stroke-linecap="round"/>',
+      skilling: '<circle cx="80" cy="62" r="44" fill="#DFA15C"/><path d="M80 62 m-6 0 a6 6 0 1 1 12 0 a13 13 0 1 1 -26 0 a20 20 0 1 1 40 0 a27 27 0 1 1 -54 0" fill="none" stroke="#8A4A1E" stroke-width="4" stroke-linecap="round"/><g fill="#fff"><circle cx="60" cy="40" r="2.6"/><circle cx="96" cy="36" r="2.6"/><circle cx="110" cy="64" r="2.6"/><circle cx="66" cy="88" r="2.6"/><circle cx="98" cy="90" r="2.6"/><circle cx="50" cy="66" r="2.6"/><circle cx="80" cy="30" r="2.6"/></g>',
+      kardemomme: '<path d="M44 74 C30 50 60 30 78 50 C92 30 130 40 116 70 C108 90 80 96 80 74 C70 96 52 92 44 74 Z" fill="#D18D4C"/><path d="M60 62 C70 52 84 52 92 64" fill="none" stroke="#8A4A1E" stroke-width="4" stroke-linecap="round"/><g fill="#fff"><circle cx="58" cy="52" r="2.2"/><circle cx="100" cy="50" r="2.2"/><circle cx="90" cy="76" r="2.2"/><circle cx="66" cy="78" r="2.2"/></g>',
+      baguette: '<g transform="rotate(-18 80 60)"><rect x="8" y="46" width="144" height="34" rx="17" fill="#C98549"/><path d="M8 66 h144" stroke="#F3D7A8" stroke-width="6"/><path d="M20 60 h128" stroke="#E79A8C" stroke-width="6"/><path d="M24 54 h120" stroke="#9BBF6A" stroke-width="3"/><path d="M8 63 a17 17 0 0 1 17 -17 h110 a17 17 0 0 1 17 17" fill="#D9984F"/><path d="M36 52 l12 -6 M64 52 l12 -6 M92 52 l12 -6 M120 52 l12 -6" stroke="#F3D7A8" stroke-width="3" stroke-linecap="round"/></g>',
+      focaccia: '<rect x="22" y="30" width="116" height="66" rx="14" fill="#E2B064"/><rect x="22" y="30" width="116" height="66" rx="14" fill="none" stroke="#B9773E" stroke-width="4"/><g fill="#C68A3E"><circle cx="44" cy="50" r="4"/><circle cx="68" cy="46" r="4"/><circle cx="94" cy="52" r="4"/><circle cx="118" cy="46" r="4"/><circle cx="52" cy="76" r="4"/><circle cx="80" cy="72" r="4"/><circle cx="108" cy="78" r="4"/></g><g stroke="#5E7F3A" stroke-width="2.5" stroke-linecap="round"><path d="M56 60 l10 -6 M86 62 l10 -6 M116 64 l8 -6 M40 66 l8 -6"/></g><g fill="#fff"><circle cx="74" cy="58" r="1.6"/><circle cx="100" cy="66" r="1.6"/><circle cx="48" cy="40" r="1.6"/></g>'
+    };
+    var PRODUKTER = [
+      { id: "grov", navn: "Grovbrød", tekst: "Havre, rug og solsikkekjerner. Holder seg saftig i dagevis.", pris: 59, kat: "brod", bg: "#F3DFC2", tag: "Kl. 07" },
+      { id: "surdeig", navn: "Surdeigsbrød", tekst: "Hevet i et døgn. Sprø skorpe og myk, seig kjerne.", pris: 69, kat: "brod", bg: "#EAD7BD", tag: "Kl. 10" },
+      { id: "rundstykker", navn: "Rundstykker, 4 stk.", tekst: "Lyse og luftige. Perfekt til frokostbordet.", pris: 45, kat: "brod", bg: "#F6E4CB" },
+      { id: "kanel", navn: "Kanelbolle", tekst: "Myk deig, smør, kanel og sukker. Ingen snarveier.", pris: 32, kat: "sott", bg: "#F8DCC0", tag: "Kl. 08.30" },
+      { id: "skilling", navn: "Skillingsbolle", tekst: "Stor og rund, med perlesukker på toppen.", pris: 36, kat: "sott", bg: "#FAE2C6" },
+      { id: "kardemomme", navn: "Kardemommeknute", tekst: "Knyttet for hånd, med nystøtt kardemomme.", pris: 34, kat: "sott", bg: "#F5DDC4", tag: "Kl. 14.30" },
+      { id: "baguette", navn: "Baguette med ost og skinke", tekst: "Dagens lunsj, smurt rett før du kommer.", pris: 79, kat: "lunsj", bg: "#EEDFC7" },
+      { id: "focaccia", navn: "Focaccia", tekst: "Olivenolje, rosmarin og havsalt. Del med noen.", pris: 55, kat: "lunsj", bg: "#F1E2C4", tag: "Kl. 13" }
+    ];
+    var kurv = {};
+    var listeEl = document.getElementById("produkter");
+
+    PRODUKTER.forEach(function (p) {
+      var li = document.createElement("li");
+      li.className = "produkt"; li.setAttribute("data-kat", p.kat); li.id = "p-" + p.id;
+      li.innerHTML =
+        '<div class="produkt__bilde" style="--bg:' + p.bg + '"><svg viewBox="0 0 160 120" role="img" aria-label="Tegning av ' + p.navn.toLowerCase() + '">' + BILDER[p.id] + "</svg>" +
+        (p.tag ? '<span class="produkt__tag">Fersk ' + p.tag.toLowerCase() + "</span>" : "") + "</div>" +
+        "<h3>" + p.navn + "</h3><p>" + p.tekst + "</p>" +
+        '<div class="produkt__fot"><span class="pris">' + p.pris + ' kr<small>eksempelpris</small></span><div class="kontroll"></div></div>';
+      listeEl.appendChild(li);
+      tegnKontroll(p);
+    });
+
+    function tegnKontroll(p, fokus) {
+      var k = document.querySelector("#p-" + p.id + " .kontroll");
+      var n = kurv[p.id] || 0;
+      if (!n) {
+        k.innerHTML = '<button type="button" class="legg-i" aria-label="Legg ' + p.navn.toLowerCase() + ' i kurven">Legg i kurv</button>';
+        k.firstChild.addEventListener("click", function () { endre(p, 1, "pluss"); });
+        if (fokus) k.firstChild.focus();
+      } else {
+        k.innerHTML = '<div class="stepper"><button type="button" data-v="minus" aria-label="Én mindre ' + p.navn.toLowerCase() + '">−</button><output aria-live="polite" aria-label="Antall ' + p.navn.toLowerCase() + '">' + n + '</output><button type="button" data-v="pluss" aria-label="Én til ' + p.navn.toLowerCase() + '">+</button></div>';
+        k.querySelector('[data-v="minus"]').addEventListener("click", function () { endre(p, -1, "minus"); });
+        k.querySelector('[data-v="pluss"]').addEventListener("click", function () { endre(p, 1, "pluss"); });
+        if (fokus) { var f = k.querySelector('[data-v="' + fokus + '"]'); if (f) f.focus(); }
+      }
+    }
+
+    function endre(p, d, fokus) {
+      kurv[p.id] = Math.max(0, (kurv[p.id] || 0) + d);
+      if (!kurv[p.id]) delete kurv[p.id];
+      tegnKontroll(p, kurv[p.id] ? fokus : "legg");
+      oppdaterKurv(d > 0);
+    }
+
+    function totaler() {
+      var antall = 0, sum = 0;
+      PRODUKTER.forEach(function (p) { var n = kurv[p.id] || 0; antall += n; sum += n * p.pris; });
+      return { antall: antall, sum: sum };
+    }
+
+    var kurvknapp = document.getElementById("kurvknapp");
+    function oppdaterKurv(hopp) {
+      var t = totaler();
+      var tall = document.getElementById("kurv-tall");
+      tall.textContent = t.antall; tall.classList.toggle("vis", t.antall > 0);
+      kurvknapp.setAttribute("aria-label", "Kurven din, " + t.antall + (t.antall === 1 ? " vare" : " varer"));
+      if (hopp && !Eks.rolig) { kurvknapp.classList.remove("hopp-inn"); void kurvknapp.offsetWidth; kurvknapp.classList.add("hopp-inn"); }
+      var linje = document.getElementById("kurvlinje");
+      linje.classList.toggle("vis", t.antall > 0);
+      linje.setAttribute("aria-hidden", String(!t.antall));
+      document.getElementById("kurvlinje-knapp").tabIndex = t.antall ? 0 : -1;
+      document.getElementById("kurvlinje-tekst").textContent = t.antall + (t.antall === 1 ? " vare" : " varer") + " · " + Eks.kr(t.sum);
+      tegnKvittering();
+    }
+
+    // Filtre
+    document.querySelectorAll("[data-filter]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var f = b.getAttribute("data-filter");
+        document.querySelectorAll("[data-filter]").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+        document.querySelectorAll(".produkt").forEach(function (li) { li.hidden = f !== "alle" && li.getAttribute("data-kat") !== f; });
+      });
+    });
+
+    /* ----- Kvittering / kurv-skuff ----- */
+    var skuff = document.getElementById("skuff");
+    var linjerEl = document.getElementById("kv-linjer");
+    function tegnKvittering() {
+      var t = totaler();
+      linjerEl.innerHTML = "";
+      PRODUKTER.forEach(function (p) {
+        var n = kurv[p.id]; if (!n) return;
+        var li = document.createElement("li");
+        li.innerHTML = "<span>" + n + " × " + p.navn + "</span><span>" + Eks.kr(n * p.pris) + "</span>" +
+          '<span class="smaa"><button type="button" aria-label="Én mindre ' + p.navn.toLowerCase() + '">−</button><button type="button" aria-label="Én til ' + p.navn.toLowerCase() + '">+</button></span>';
+        var b = li.querySelectorAll("button");
+        b[0].addEventListener("click", function () { endre(p, -1); });
+        b[1].addEventListener("click", function () { endre(p, 1); });
+        linjerEl.appendChild(li);
+      });
+      document.getElementById("kv-sum").textContent = Eks.kr(t.sum);
+      document.getElementById("kv-tom").hidden = t.antall > 0;
+      document.getElementById("kv-hent").hidden = !t.antall;
+    }
+    function hentetider() {
+      var sel = document.getElementById("kv-tid");
+      sel.innerHTML = "";
+      naa = new Date();
+      var dagNr = 0, lagt = 0;
+      while (lagt < 10 && dagNr < 7) {
+        var d = new Date(naa); d.setDate(d.getDate() + dagNr);
+        var t = APENT[d.getDay()];
+        if (t) {
+          var fra = t[0] * 60 + 30;
+          if (dagNr === 0) fra = Math.max(fra, Math.ceil((minutter(naa) + 60) / 30) * 30);
+          for (var m = fra; m <= t[1] * 60 - 30 && lagt < 10; m += 30) {
+            var o = document.createElement("option");
+            var navn = dagNr === 0 ? "I dag" : dagNr === 1 ? "I morgen" : ["Søndag", "Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag"][d.getDay()];
+            o.textContent = navn + " kl. " + hhmm(m);
+            sel.appendChild(o); lagt++;
+          }
+        }
+        dagNr++;
+      }
+    }
+    var forrigeFokus = null;
+    function apneSkuff() {
+      forrigeFokus = document.activeElement;
+      hentetider(); tegnKvittering();
+      if (typeof skuff.showModal === "function") skuff.showModal();
+    }
+    kurvknapp.addEventListener("click", apneSkuff);
+    document.getElementById("kurvlinje-knapp").addEventListener("click", apneSkuff);
+    document.getElementById("skuff-lukk").addEventListener("click", function () { skuff.close(); });
+    skuff.addEventListener("click", function (e) { if (e.target === skuff) skuff.close(); });
+    skuff.addEventListener("close", function () { if (forrigeFokus && forrigeFokus.focus) forrigeFokus.focus(); });
+
+    document.getElementById("kvittering").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var navn = document.getElementById("kv-navn");
+      if (!navn.value.trim()) {
+        navn.setAttribute("aria-invalid", "true");
+        document.getElementById("kv-navn-feil").textContent = "Skriv navnet vi skal skrive på posen.";
+        navn.focus(); return;
+      }
+      navn.removeAttribute("aria-invalid"); document.getElementById("kv-navn-feil").textContent = "";
+      var t = totaler();
+      var linjer = PRODUKTER.filter(function (p) { return kurv[p.id]; }).map(function (p) { return [kurv[p.id] + " × " + p.navn, Eks.kr(kurv[p.id] * p.pris)]; });
+      linjer.push(["Hentes", document.getElementById("kv-tid").value]);
+      linjer.push(["Sum (eksempel)", Eks.kr(t.sum)]);
+      skuff.close();
+      Eks.bekreft({ tittel: "Posen er bestilt, " + navn.value.trim() + "!", tekst: "På en ekte side ville bakeriet fått bestillingen, og posen stått klar med navnet ditt.", linjer: linjer, merk: "Dette er en eksempelside for et fiktivt bakeri. Ingenting er bestilt, og prisene er bare eksempler." });
+      kurv = {}; PRODUKTER.forEach(function (p) { tegnKontroll(p); }); oppdaterKurv(false); navn.value = "";
+    });
+    oppdaterKurv(false);
+  })();
+  </script>
+</body>
+</html>
