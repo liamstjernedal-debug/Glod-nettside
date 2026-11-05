@@ -380,7 +380,7 @@
       })
       .then(function () {
         submitBtn.removeAttribute("aria-busy");
-        submitBtn.textContent = "Jeg vil se et utkast";
+        submitBtn.textContent = "Send skjemaet";
       });
   });
 
