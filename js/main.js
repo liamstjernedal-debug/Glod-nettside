@@ -334,6 +334,9 @@
       "E-post: " + data.get("epost"),
       "Telefon: " + (data.get("telefon") || "–"),
       "Pakke: " + data.get("pakke"),
+      "Har nettside i dag: " + (data.get("har_nettside") || "–"),
+      "Type nettside: " + (data.get("type_nettside") || "–"),
+      "Ønsket oppstart: " + (data.get("oppstart") || "–"),
       "",
       data.get("melding"),
       "",
@@ -380,7 +383,7 @@
       })
       .then(function () {
         submitBtn.removeAttribute("aria-busy");
-        submitBtn.textContent = "Send skjemaet";
+        submitBtn.textContent = "Send forespørsel";
       });
   });
 
