@@ -314,8 +314,8 @@
     form.hidden = true;
     if (successText) {
       successText.textContent = viaMail
-        ? "E-postprogrammet ditt skal nå ha åpnet seg med meldingen ferdig utfylt. Trykk send der, så svarer vi innen [SVARTID]."
-        : "Vi svarer innen [SVARTID].";
+        ? "Vi svarer på henvendelser innen 24 timer på hverdager."
+        : "Vi svarer på henvendelser innen 24 timer på hverdager.";
     }
     success.hidden = false;
     success.focus();
@@ -365,8 +365,8 @@
 
     var action = form.getAttribute("action");
     if (!isConfigured(action) || !window.fetch) {
-      openMailto(data);
-      showSuccess(true);
+      var status = document.getElementById("skjema-status");
+      if (status) status.textContent = "Skjemaet er ikke aktivert ennå. Ring oss på +47 466 26 880.";
       return;
     }
 
@@ -378,8 +378,8 @@
         showSuccess(false);
       })
       .catch(function () {
-        openMailto(data);
-        showSuccess(true);
+        var status = document.getElementById("skjema-status");
+        if (status) status.textContent = "Meldingen ble ikke sendt. Prøv igjen senere eller ring oss på +47 466 26 880.";
       })
       .then(function () {
         submitBtn.removeAttribute("aria-busy");
