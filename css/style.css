@@ -1576,3 +1576,47 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .avslutning .section-head .h2 { max-width: 22ch; margin-inline: auto; }
 .avslutning .section-head__lead { margin-inline: auto; }
 .avslutning .hero__cta { justify-content: center; }
+
+/* =========================================================
+   Ny prismodell, tjenesteliste, drift og enkel bunntekst
+   ========================================================= */
+/* Tjenester: nummerert liste med luft */
+.tjenesteliste { margin-top: clamp(2.5rem, 1.5rem + 3vw, 4rem); border-top: 1px solid var(--line); }
+.tjeneste-rad { display: grid; grid-template-columns: 3.5rem minmax(0, 1fr); gap: 0.5rem 1.25rem; padding: clamp(1.5rem, 1rem + 2vw, 2.5rem) 0; border-bottom: 1px solid var(--line); }
+.tjeneste-rad__nr { font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.5rem); font-weight: 750; letter-spacing: -0.04em; line-height: 1; background: linear-gradient(120deg, var(--blue), var(--pink)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.tjeneste-rad__tittel { font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2.1rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
+.tjeneste-rad__tekst p { margin-top: 0.6rem; max-width: 34rem; color: var(--ink-soft); font-size: var(--fs-lead); line-height: 1.55; }
+.tjeneste-rad__tags { grid-column: 2; display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+.tjeneste-rad__tags li { padding: 0.35rem 0.8rem; border-radius: 999px; border: 1px solid rgba(5, 147, 198, 0.3); background: rgba(5, 147, 198, 0.07); color: var(--blue-ink); font-size: 0.8125rem; font-weight: 600; }
+@media (min-width: 900px) {
+  .tjeneste-rad { grid-template-columns: 5rem minmax(0, 1.2fr) minmax(0, 1fr); align-items: start; gap: 2rem; }
+  .tjeneste-rad__tags { grid-column: 3; justify-content: flex-end; margin-top: 0.35rem; }
+}
+
+/* Pakker: engangspris og «Dette er inkludert» */
+.pkg__price { margin-top: 1.25rem; padding-bottom: 1.25rem; }
+.pkg__desc { margin-top: 1.25rem; }
+.pkg__inkl { margin-top: 1.5rem; font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--on-dark-soft); }
+.pkg__inkl + .pkg__list { margin-top: 0.9rem; }
+.pkg__amount small { font-size: 0.5em; vertical-align: 0.15em; margin-right: 0.1em; }
+
+/* Valgfri drift: rolig, ikke et fjerde priskort */
+.drift { display: grid; gap: 2rem; margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem); padding: clamp(1.5rem, 1rem + 2vw, 2.5rem); border: 1px dashed rgba(252, 255, 255, 0.22); border-radius: var(--radius-lg); background: rgba(252, 255, 255, 0.03); }
+.drift .eyebrow { margin-bottom: 0.75rem; }
+.drift__tittel { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.1rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; color: var(--white); }
+.drift__pris { margin-top: 0.75rem; font-size: 1.25rem; font-weight: 700; color: var(--blue-light); }
+.drift__tekst { margin-top: 0.75rem; max-width: 30rem; color: var(--on-dark-soft); }
+.drift__detaljer .pkg__inkl { margin-top: 0; }
+.drift__detaljer .pkg__list { margin-bottom: 1.25rem; }
+.drift__fot { color: var(--on-dark-soft); font-size: 0.9375rem; margin-bottom: 1.25rem; max-width: 30rem; }
+@media (min-width: 900px) { .drift { grid-template-columns: 1fr 1fr; gap: 3rem; } }
+
+/* Kontakt: svartid */
+.contact__svartid { margin-top: 1.5rem; padding-left: 0.9rem; border-left: 2px solid var(--blue-light); color: var(--on-dark); font-weight: 600; }
+
+/* Enkel bunntekst */
+.footer--enkel { padding-top: clamp(2.5rem, 2rem + 2vw, 3.5rem); }
+.footer__enkel { display: grid; gap: 1.75rem; padding-bottom: 2rem; }
+.footer__enkel .footer__brand p { margin-top: 0.75rem; }
+.footer__bunnlinje { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line-dark); font-size: 0.875rem; }
+.footer__enkel .footer__links { align-items: center; gap: 0.6rem; }

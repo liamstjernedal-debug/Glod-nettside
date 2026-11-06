@@ -176,33 +176,39 @@
     </section>
 
     <!-- ============ TJENESTER ============ -->
-    <section class="section section--tint always" id="tjenester" aria-labelledby="tjenester-tittel">
+    <section class="section section--tint tjenester-seksjon" id="tjenester" aria-labelledby="tjenester-tittel">
       <div class="container">
         <div class="section-head section-head--center" data-reveal>
           <p class="eyebrow">FRA TANKE TIL SKJERM</p>
           <h2 id="tjenester-tittel" class="h2">Et godt førsteinntrykk er bare begynnelsen.</h2>
           <p class="section-head__lead">De beste nettsidene starter med de riktige spørsmålene. Vi kombinerer det strategiske og det visuelle, så helheten både ser ut og gjør jobben.</p>
         </div>
-        <ul class="always__grid" data-stagger>
-          <li class="feature" data-reveal>
-            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4"/><path d="M12 3.5V6M12 18v2.5M3.5 12H6M18 12h2.5"/></svg></span>
-            <h3 class="feature__title">Strategi &amp; retning</h3>
-            <p class="feature__text">Vi finner kjernen i merkevaren din og gjør den om til en tydelig digital plan.</p>
-            <p class="feature__tags">Posisjonering · Innhold · Struktur</p>
+        <ol class="tjenesteliste" data-stagger>
+          <li class="tjeneste-rad" data-reveal>
+            <span class="tjeneste-rad__nr" aria-hidden="true">01</span>
+            <div class="tjeneste-rad__tekst">
+              <h3 class="tjeneste-rad__tittel"><span class="visually-hidden">01 – </span>Strategi &amp; retning</h3>
+              <p>Vi finner kjernen i merkevaren din og gjør den om til en tydelig digital plan.</p>
+            </div>
+            <ul class="tjeneste-rad__tags"><li>Posisjonering</li><li>Innhold</li><li>Struktur</li></ul>
           </li>
-          <li class="feature" data-reveal>
-            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="14" rx="2.5"/><path d="M3 8.5h18M7 13h5M7 15.5h8"/></svg></span>
-            <h3 class="feature__title">Nettside &amp; nettbutikk</h3>
-            <p class="feature__text">Skreddersydde opplevelser som gjør det enkelt å forstå, velge og ta kontakt.</p>
-            <p class="feature__tags">Webdesign · Utvikling · Universell utforming</p>
+          <li class="tjeneste-rad" data-reveal>
+            <span class="tjeneste-rad__nr" aria-hidden="true">02</span>
+            <div class="tjeneste-rad__tekst">
+              <h3 class="tjeneste-rad__tittel"><span class="visually-hidden">02 – </span>Nettside &amp; nettbutikk</h3>
+              <p>Skreddersydde opplevelser som gjør det enkelt å forstå, velge og ta kontakt.</p>
+            </div>
+            <ul class="tjeneste-rad__tags"><li>Webdesign</li><li>Utvikling</li><li>Universell utforming</li></ul>
           </li>
-          <li class="feature" data-reveal>
-            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3.5c3 4 5 6.7 5 9.5a5 5 0 0 1-10 0c0-2.8 2-5.5 5-9.5Z"/><path d="M12 11.5c1.3 1.6 2 2.7 2 3.7a2 2 0 0 1-4 0c0-1 .7-2.1 2-3.7Z"/></svg></span>
-            <h3 class="feature__title">Identitet &amp; uttrykk</h3>
-            <p class="feature__text">Et visuelt språk som kjennes riktig – fra første skjermbilde til minste detalj.</p>
-            <p class="feature__tags">Visuell identitet · Designsystem · Innholdsdesign</p>
+          <li class="tjeneste-rad" data-reveal>
+            <span class="tjeneste-rad__nr" aria-hidden="true">03</span>
+            <div class="tjeneste-rad__tekst">
+              <h3 class="tjeneste-rad__tittel"><span class="visually-hidden">03 – </span>Identitet &amp; uttrykk</h3>
+              <p>Et visuelt språk som kjennes riktig – fra første skjermbilde til minste detalj.</p>
+            </div>
+            <ul class="tjeneste-rad__tags"><li>Visuell identitet</li><li>Designsystem</li><li>Innholdsdesign</li></ul>
           </li>
-        </ul>
+        </ol>
       </div>
     </section>
 
@@ -254,13 +260,17 @@
             <article class="pkg" data-reveal data-tilt aria-labelledby="pkg-enkel">
               <div class="pkg__inner">
                 <h3 class="pkg__name" id="pkg-enkel">Enkel</h3>
-                <p class="pkg__desc">For deg som trenger en profesjonell nettside som gjør det enkelt å finne og kontakte bedriften din.</p>
-                <p class="pkg__price"><span class="pkg__amount">5&nbsp;990&nbsp;kr <small>i oppstart</small></span><span class="pkg__monthly">199&nbsp;kr/mnd</span></p>
+                <p class="pkg__price"><span class="pkg__amount">5&nbsp;990&nbsp;kr</span><span class="pkg__monthly">Engangspris</span></p>
+                <p class="pkg__desc">En profesjonell nettside med alt det viktigste på plass. Perfekt for håndverkere og småbedrifter som vil gjøre det enkelt for kunder å finne dem og ta kontakt.</p>
+                <p class="pkg__inkl">Dette er inkludert:</p>
                 <ul class="pkg__list">
-                  <li>En ferdig nettside (opptil 5 sider)</li>
-                  <li>Domene og hosting: alt er satt opp, du slipper tekniske valg</li>
-                  <li>Grunnleggende SEO-oppsett, så Google forstår hva siden handler om</li>
-                  <li>Endringer utover det som er inkludert faktureres separat etter avtale</li>
+                  <li>Én komplett nettside med de viktigste seksjonene</li>
+                  <li>Presentasjon av bedriften og tjenestene</li>
+                  <li>Kontaktskjema og kontaktinformasjon</li>
+                  <li>Mobiltilpasset design</li>
+                  <li>Grunnleggende søkemotoroptimalisering</li>
+                  <li>Oppsett og publisering</li>
+                  <li>Tilpasninger før godkjenning</li>
                 </ul>
                 <a class="btn btn--glass pkg__btn" href="#kontakt" data-pakke="Enkel">Søk om utkast</a>
               </div>
@@ -269,34 +279,65 @@
             <article class="pkg pkg--featured" data-reveal data-tilt aria-labelledby="pkg-standard">
               <span class="pkg__halo" aria-hidden="true"></span>
               <div class="pkg__inner">
-                <p class="pkg__badge">Mest valgt</p>
+                <p class="pkg__badge">Anbefalt</p>
                 <h3 class="pkg__name" id="pkg-standard">Standard</h3>
-                <p class="pkg__desc">For deg som vil presentere bedriften, tjenestene og det som gjør dere verdt å velge – med litt mer plass til å fortelle.</p>
-                <p class="pkg__price"><span class="pkg__amount">9&nbsp;990&nbsp;kr <small>i oppstart</small></span><span class="pkg__monthly">399&nbsp;kr/mnd</span></p>
+                <p class="pkg__price"><span class="pkg__amount">9&nbsp;990&nbsp;kr</span><span class="pkg__monthly">Engangspris</span></p>
+                <p class="pkg__desc">For bedrifter som har mer å fortelle. Vi gir tjenestene dine plass, viser frem arbeidet ditt og gjør det enkelt for nye kunder å forstå hvorfor de bør velge deg.</p>
+                <p class="pkg__inkl">Dette er inkludert:</p>
                 <ul class="pkg__list">
-                  <li><strong>Alt i Enkel, pluss:</strong></li>
-                  <li>Drift og sikkerhet: vi passer på at siden er oppe og oppdatert</li>
-                  <li>Inntil to mindre endringer per år (for eksempel ny åpningstid eller ny pris)</li>
+                  <li>Alt i Enkel</li>
+                  <li>Inntil 5 separate sider</li>
+                  <li>Egne sider for tjenester, om oss og kontakt</li>
+                  <li>Bildegalleri eller referanseprosjekter</li>
+                  <li>Gjennomtenkt innholdsstruktur</li>
+                  <li>Hjelp med å formulere nettsidetekstene</li>
+                  <li>Tydelige kontaktpunkter gjennom nettsiden</li>
                 </ul>
                 <a class="btn btn--primary pkg__btn" href="#kontakt" data-pakke="Standard">Søk om utkast</a>
               </div>
             </article>
 
-            <article class="pkg" data-reveal data-tilt aria-labelledby="pkg-pluss">
+            <article class="pkg" data-reveal data-tilt aria-labelledby="pkg-skreddersydd">
               <div class="pkg__inner">
-                <h3 class="pkg__name" id="pkg-pluss">Pluss</h3>
-                <p class="pkg__desc">For deg som ønsker mer enn en ferdig nettside. Vi følger opp, holder innholdet oppdatert og gjør forbedringer over tid, slik at nettsiden fortsetter å jobbe for bedriften din.</p>
-                <p class="pkg__price"><span class="pkg__amount">12&nbsp;000&nbsp;kr <small>i oppstart</small></span><span class="pkg__monthly">999&nbsp;kr/mnd</span></p>
+                <h3 class="pkg__name" id="pkg-skreddersydd">Skreddersydd</h3>
+                <p class="pkg__price"><span class="pkg__amount"><small>Fra</small> 14&nbsp;990&nbsp;kr</span><span class="pkg__monthly">Engangspris</span></p>
+                <p class="pkg__desc">Noen bedrifter trenger litt mer. Vi bygger en nettside rundt virksomheten din, med design, innhold og funksjoner tilpasset det du faktisk trenger.</p>
+                <p class="pkg__inkl">Dette er inkludert:</p>
                 <ul class="pkg__list">
-                  <li><strong>Alt i Standard, pluss:</strong></li>
-                  <li>Én oppdatering hver måned</li>
-                  <li>Kort månedsrapport: du ser hvor mange som besøker siden</li>
-                  <li>Én konkret forbedring av siden hver måned</li>
+                  <li>Alt i Standard</li>
+                  <li>Mer individuell designretning</li>
+                  <li>Flere sider etter behov</li>
+                  <li>Utvidet innholdsstruktur</li>
+                  <li>Tilpassede funksjoner etter avtale</li>
+                  <li>Integrasjoner ved behov</li>
+                  <li>Mulighet for videreutvikling</li>
                 </ul>
-                <a class="btn btn--glass pkg__btn" href="#kontakt" data-pakke="Pluss">Søk om utkast</a>
+                <a class="btn btn--glass pkg__btn" href="#kontakt" data-pakke="Skreddersydd">Fortell oss om prosjektet</a>
               </div>
             </article>
           </div>
+
+          <!-- Valgfritt tillegg. Ikke en fjerde nettsidepakke. -->
+          <aside class="drift" aria-labelledby="drift-tittel" data-reveal>
+            <div class="drift__hoved">
+              <p class="eyebrow eyebrow--dark">VALGFRITT TILLEGG</p>
+              <h3 id="drift-tittel" class="drift__tittel">Vi holder nettsiden i gang.</h3>
+              <p class="drift__pris">299&nbsp;kr/mnd</p>
+              <p class="drift__tekst">Nettsiden er din. Men du trenger ikke ta deg av driften selv. Vi sørger for at den er tilgjengelig, sikker og fungerer som den skal.</p>
+            </div>
+            <div class="drift__detaljer">
+              <p class="pkg__inkl">Inkludert:</p>
+              <ul class="pkg__list">
+                <li>Hosting og teknisk drift</li>
+                <li>SSL/HTTPS</li>
+                <li>Teknisk vedlikehold ved behov</li>
+                <li>Hjelp dersom noe slutter å fungere</li>
+                <li>Ingen bindingstid</li>
+              </ul>
+              <p class="drift__fot">Foretrekker du å ordne driften selv? Helt i orden. Hosting og oppfølging hos oss er alltid valgfritt.</p>
+              <a class="btn btn--glass" href="#kontakt">Spør oss om drift</a>
+            </div>
+          </aside>
 
           <p class="section-head__lead packages__usikker" data-reveal>Usikker på hvilken pakke som passer? Fortell oss litt om bedriften din, så hjelper vi deg å finne riktig løsning.</p>
 
@@ -489,20 +530,20 @@
           <li class="person" data-reveal>
             <!-- Bytt plassholderen med et bilde: <img src="assets/navn1.jpg" alt="Liam Stjernedal" width="480" height="560"> -->
             <div class="person__photo" role="img" aria-label="Plass til bilde av Liam Stjernedal">
-              <span class="person__photo-label">Bilde av<br><span class="ph">Liam Stjernedal</span></span>
+              <span class="person__photo-label">Bilde av<br>Liam Stjernedal</span>
             </div>
-            <h3 class="person__name"><span class="ph">Liam Stjernedal</span></h3>
+            <h3 class="person__name">Liam Stjernedal</h3>
             <p class="person__role">Bygger sidene</p>
-            <p class="person__bio"><span class="ph">Liam bygger sidene dine og passer på at de er enkle å bruke og ser riktig ut på mobil.</span></p>
+            <p class="person__bio">Liam bygger sidene dine og passer på at de er enkle å bruke og ser riktig ut på mobil.</p>
           </li>
           <li class="person" data-reveal>
             <!-- Bytt plassholderen med et bilde: <img src="assets/navn2.jpg" alt="Paul Finnson" width="480" height="560"> -->
             <div class="person__photo person__photo--alt" role="img" aria-label="Plass til bilde av Paul Finnson">
-              <span class="person__photo-label">Bilde av<br><span class="ph">Paul Finnson</span></span>
+              <span class="person__photo-label">Bilde av<br>Paul Finnson</span>
             </div>
-            <h3 class="person__name"><span class="ph">Paul Finnson</span></h3>
+            <h3 class="person__name">Paul Finnson</h3>
             <p class="person__role">Snakker med kundene</p>
-            <p class="person__bio"><span class="ph">Paul er den du snakker med. Du får svar innen 24 timer.</span></p>
+            <p class="person__bio">Paul er den du snakker med. Vi svarer på henvendelser innen 24 timer på hverdager.</p>
           </li>
         </ul>
       </div>
@@ -518,6 +559,26 @@
         </div>
 
         <div class="faq__list" data-stagger>
+          <details class="faq-item" data-reveal>
+            <summary><span>Hva koster en nettside?</span><i aria-hidden="true"></i></summary>
+            <div class="faq-item__body"><p>Våre nettsider starter på 5&nbsp;990&nbsp;kr. Du betaler én gang for selve nettsiden, uten obligatoriske månedsavgifter til oss. Eventuelle kostnader til domene og hosting kommer i tillegg.</p></div>
+          </details>
+          <details class="faq-item" data-reveal>
+            <summary><span>Må jeg betale hver måned?</span><i aria-hidden="true"></i></summary>
+            <div class="faq-item__body"><p>Nei. Du betaler en engangspris for nettsiden. Ønsker du at vi tar oss av hosting og teknisk drift, kan du velge dette som et frivillig tillegg til 299&nbsp;kr i måneden.</p></div>
+          </details>
+          <details class="faq-item" data-reveal>
+            <summary><span>Kan jeg ha nettsiden hos en annen leverandør?</span><i aria-hidden="true"></i></summary>
+            <div class="faq-item__body"><p>Ja. Nettsiden er din, og du står fritt til å velge hosting selv. Vi kan hjelpe med publisering eller overlevering dersom du ønsker det.</p></div>
+          </details>
+          <details class="faq-item" data-reveal>
+            <summary><span>Hva skjer hvis jeg avslutter drift hos dere?</span><i aria-hidden="true"></i></summary>
+            <div class="faq-item__body"><p>Du beholder nettsiden din. Vi hjelper deg med nødvendig overlevering, slik at du kan fortsette driften hos en annen leverandør.</p></div>
+          </details>
+          <details class="faq-item" data-reveal>
+            <summary><span>Hva hvis jeg vil endre nettsiden senere?</span><i aria-hidden="true"></i></summary>
+            <div class="faq-item__body"><p>Vi hjelper gjerne med videreutvikling, nye sider eller endringer i innholdet. Arbeid utover den opprinnelige leveransen avtales og prises på forhånd.</p></div>
+          </details>
           <details class="faq-item" data-reveal>
             <summary><span>Er utkastet virkelig gratis?</span><i aria-hidden="true"></i></summary>
             <div class="faq-item__body"><p>Ja. Vi tilbyr et kostnadsfritt, personlig utkast til bedrifter der vi mener vi kan levere en god løsning. Du får se utkastet før du bestemmer deg, uten kjøpeplikt.</p></div>
@@ -539,34 +600,6 @@
             <div class="faq-item__body"><p>Da tar vi en ny titt. Vi lytter til tilbakemeldingene dine og justerer retningen slik at nettsiden passer bedre til bedriften din. Du bestemmer selv om du vil gå videre med prosjektet.</p></div>
           </details>
           <details class="faq-item" data-reveal>
-            <summary><span>Hva koster nettsiden?</span><i aria-hidden="true"></i></summary>
-            <div class="faq-item__body"><p>Våre nettsider starter på 5&nbsp;990&nbsp;kr i oppstart, med en månedlig pris fra 199&nbsp;kr. Du får tydelig informasjon om hva som inngår før du bestemmer deg.</p></div>
-          </details>
-          <details class="faq-item" data-reveal>
-            <summary><span>Kan jeg gjøre endringer senere?</span><i aria-hidden="true"></i></summary>
-            <div class="faq-item__body"><p>Ja, vi tilbyr ulike nivåer av oppfølging. Hva som er inkludert, avhenger av pakken du velger. Eventuelle tillegg avklares på forhånd.</p></div>
-          </details>
-          <details class="faq-item" data-reveal>
-            <summary><span>Er det bindingstid?</span><i aria-hidden="true"></i></summary>
-            <div class="faq-item__body"><p>Nei, ingen bindingstid.</p></div>
-          </details>
-          <details class="faq-item" data-reveal>
-            <summary><span>Hvem eier siden og domenet?</span><i aria-hidden="true"></i></summary>
-            <div class="faq-item__body"><p>Domenet registreres i ditt navn, og du eier siden. Du betaler for hosting hos oss, og vi sørger for at den kjører.</p></div>
-          </details>
-          <details class="faq-item" data-reveal>
-            <summary><span>Hva om jeg vil slutte?</span><i aria-hidden="true"></i></summary>
-            <div class="faq-item__body"><p>Du kan si opp abonnementet, og vi hjelper deg med å overføre siden. Domenet står i ditt navn.</p></div>
-          </details>
-          <details class="faq-item" data-reveal>
-            <summary><span>Kan jeg endre siden selv?</span><i aria-hidden="true"></i></summary>
-            <div class="faq-item__body"><p>Nei, men send oss en e-post, så ordner vi det.</p></div>
-          </details>
-          <details class="faq-item" data-reveal>
-            <summary><span>Hva koster endringer utenom pakken?</span><i aria-hidden="true"></i></summary>
-            <div class="faq-item__body"><p>Vi blir enige om et lite beløp for små endringer.</p></div>
-          </details>
-          <details class="faq-item" data-reveal>
             <summary><span>Garanterer dere topplassering på Google?</span><i aria-hidden="true"></i></summary>
             <div class="faq-item__body"><p>Nei, ingen kan love det. Vi setter opp siden slik at Google kan forstå og finne den.</p></div>
           </details>
@@ -583,9 +616,9 @@
           <h2 id="kontakt-tittel" class="h2">La oss vise deg hva vi kan få til.</h2>
           <p class="contact__lead">Fortell oss litt om bedriften din og hva du trenger. Vi vurderer forespørselen og tar kontakt dersom prosjektet passer. Da kan vi lage et personlig utkast du får se før du bestemmer deg.</p>
           <p class="contact__lead">Vi tilbyr gratis utkast til utvalgte bedrifter. Det gjør at vi kan bruke tiden på å lage gjennomtenkte forslag til dem vi tror vi kan hjelpe best.</p>
+          <p class="contact__svartid">Vi svarer på henvendelser innen 24 timer på hverdager.</p>
           <dl class="contact__direct">
-            <div><dt>E-post</dt><dd><a href="mailto:[E-POST]"><span class="ph">[E-POST]</span></a></dd></div>
-            <div><dt>Telefon</dt><dd><a href="tel:+4746626880"><span class="ph">+47 466 26 880</span></a></dd></div>
+            <div><dt>Telefon</dt><dd><a href="tel:+4746626880">+47 466 26 880</a></dd></div>
           </dl>
         </div>
 
@@ -627,7 +660,7 @@
                   <option value="Vet ikke ennå">Vet ikke ennå</option>
                   <option value="Enkel">Enkel</option>
                   <option value="Standard">Standard</option>
-                  <option value="Pluss">Pluss</option>
+                  <option value="Skreddersydd">Skreddersydd</option>
                 </select>
               </div>
             </div>
@@ -663,26 +696,14 @@
 
             <button class="btn btn--primary btn--lg form__submit" type="submit">Send forespørsel</button>
             <p class="form__note">Helt uforpliktende. Ingen betaling før du har sett og godkjent utkastet.</p>
-            <noscript><p class="form__note">Skjemaet trenger JavaScript. Du kan også sende e-post direkte til <span class="ph">[E-POST]</span>.</p></noscript>
+            <noscript><p class="form__note">Skjemaet trenger JavaScript.</p></noscript>
           </form>
 
           <div class="form-success" id="skjema-takk" tabindex="-1" hidden>
             <span class="form-success__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>
             <h3 class="form-success__title">Takk, vi har fått meldingen din.</h3>
-            <p class="form-success__text" id="skjema-takk-tekst">Vi svarer innen [SVARTID].</p>
+            <p class="form-success__text" id="skjema-takk-tekst">Vi svarer på henvendelser innen 24 timer på hverdager.</p>
             <button class="btn btn--glass" type="button" id="skjema-ny">Send en ny melding</button>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- ============ AVSLUTTENDE CTA ============ -->
-    <section class="section section--tint avslutning" aria-labelledby="avslutning-tittel">
-      <div class="container">
-        <div class="section-head section-head--center" data-reveal>
-          <h2 id="avslutning-tittel" class="h2">Bedriften din fortjener en nettside som viser den fra sin beste side.</h2>
-          <p class="section-head__lead">La oss vise deg hva vi kan få til. Send inn en forespørsel, så finner vi ut om vi kan lage et personlig utkast til deg.</p>
-          <div class="hero__cta">
-            <a class="btn btn--primary btn--lg" href="#kontakt">Søk om gratis utkast</a>
           </div>
         </div>
       </div>
@@ -690,24 +711,19 @@
   </main>
 
   <!-- ============ BUNN ============ -->
-  <footer class="footer">
-    <div class="container footer__grid">
+  <footer class="footer footer--enkel">
+    <div class="container footer__enkel">
       <div class="footer__brand">
         <img src="assets/logo-mork.svg" alt="Glød" width="96" height="40">
-        <p>GLØD lager moderne nettsider for bedrifter som vil gjøre et godt førsteinntrykk. Raskt, personlig og til en pris som gir mening.</p>
+        <p>Nettsider som gjør inntrykk.</p>
       </div>
-      <div class="footer__info">
-        <p>Glød <span class="ph">[ORGANISASJONSFORM]</span><br>Org.nr. <span class="ph">930 261 521</span></p>
-        <p><a href="mailto:[E-POST]"><span class="ph">[E-POST]</span></a><br><a href="tel:+4746626880"><span class="ph">+47 466 26 880</span></a></p>
+      <!-- Legg inn juridisk foretaksnavn og org.nr. her når opplysningene er klare (enkeltpersonforetak). -->
+      <div class="footer__bunnlinje">
+        <p>© <span data-year>2026</span> Glød</p>
+        <nav class="footer__links" aria-label="Juridisk">
+          <a href="personvern.html">Personvern</a><span aria-hidden="true">·</span><a href="vilkar.html">Vilkår</a>
+        </nav>
       </div>
-      <nav class="footer__links" aria-label="Juridisk">
-        <a href="personvern.html">Personvern</a>
-        <a href="vilkar.html">Vilkår</a>
-      </nav>
-    </div>
-    <div class="container footer__bottom">
-      <p>© <span data-year>2026</span> Glød</p>
-      <p>Ingen sporing. Ingen informasjonskapsler.</p>
     </div>
   </footer>
 

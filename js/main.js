@@ -314,8 +314,8 @@
     form.hidden = true;
     if (successText) {
       successText.textContent = viaMail
-        ? "E-postprogrammet ditt skal nå ha åpnet seg med meldingen ferdig utfylt. Trykk send der, så svarer vi innen [SVARTID]."
-        : "Vi svarer innen [SVARTID].";
+        ? "E-postprogrammet ditt skal nå ha åpnet seg med meldingen ferdig utfylt. Trykk send der. Vi svarer på henvendelser innen 24 timer på hverdager."
+        : "Vi svarer på henvendelser innen 24 timer på hverdager.";
     }
     success.hidden = false;
     success.focus();
