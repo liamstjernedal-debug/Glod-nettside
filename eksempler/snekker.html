@@ -6,77 +6,188 @@
   <title>Nordvegg Snekkerservice – eksempelside laget av Glød</title>
   <meta name="description" content="Eksempelside laget av Glød for en fiktiv snekker. Tjenester, om oss og kontaktinfo.">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#16181B">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2316181B'/%3E%3Cpath d='M8 24V8l16 16V8' fill='none' stroke='%23F07A1F' stroke-width='4'/%3E%3C/svg%3E">
+  <meta name="theme-color" content="#1E1B18">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231E1B18'/%3E%3Cpath d='M9 24V8l14 16V8' fill='none' stroke='%23E8742A' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="preload" href="bilder/snekker/hero.jpg" as="image">
   <link rel="stylesheet" href="felles/felles.css">
   <style>
-    /* Nordvegg: kullsvart, varmt treverk og signaloransje. Rette kanter. */
-    :root {
-      --side-bg: #F1EEE8; --side-ink: #16181B; --side-focus: #B4520A;
-      --side-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      --tittel: Futura, "Century Gothic", "Avenir Next", "Trebuchet MS", sans-serif; --tittel-sperring: -.01em;
-      --aksent: #F07A1F; --aksent-pa: #16181B; --aksent-tekst: #B4520A;
-      --dempet: #4A4D52; --strek: rgba(22,24,27,.14); --alt-bg: #E6E1D8; --kort-bg: #fff;
-      --topp-bg: rgba(241,238,232,.92); --knapp-radius: 2px; --bilde-radius: 2px; --kort-radius: 2px;
-      --hero-skygge: linear-gradient(180deg, rgba(22,24,27,.05) 20%, rgba(22,24,27,.82) 100%);
+    /* Fonten ligger lokalt i Glød-mappen. Ingen eksterne forespørsler. */
+    @font-face {
+      font-family: "Plus Jakarta Sans";
+      src: url("../assets/fonts/plus-jakarta-sans.woff2") format("woff2");
+      font-weight: 200 800; font-display: swap;
     }
-    .hero h1, .h2, .kort h3 { text-transform: uppercase; font-weight: 700; }
-    .logo b { font-family: var(--tittel); font-weight: 700; letter-spacing: .1em; font-size: 1.15rem; }
-    /* ---------- Felles oppsett for denne enkle infosiden ---------- */
-    body { font-size: clamp(16px, 15px + .25vw, 18px); }
-    .wrap { max-width: 1180px; margin-inline: auto; padding-inline: clamp(18px, 4vw, 48px); }
-    .topp { position: sticky; top: 0; z-index: 50; background: var(--topp-bg); border-bottom: 1px solid var(--strek); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
-    .topp__inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 68px; }
+    /* Nordvegg: varm kull, lys furu, sagflis-beige og oransje som på en sikkerhetsvest.
+       Kraftige, tette overskrifter i Plus Jakarta Sans mot rolig systemtekst. */
+    :root {
+      --side-bg: #FBF8F3; --side-ink: #1E1B18; --side-focus: #A9470C;
+      --side-font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --tittel: "Plus Jakarta Sans", system-ui, sans-serif; --tittel-vekt: 800; --tittel-sperring: -.035em;
+      --aksent: #E8742A; --aksent-hover: #F08A44; --aksent-pa: #1E1B18; --aksent-tekst: #A9470C; --aksent-pa-mork: #F59B5C;
+      --aksent-skygge: rgba(232, 116, 42, .65);
+      --dempet: #57514A; --strek: rgba(30, 27, 24, .12);
+      --lys: #FBF8F3; --lys-farge: #F1E7D8; --kort-bg: #fff;
+      --mork: #1E1B18; --mork-tekst: #F6F1EA; --mork-dempet: rgba(246, 241, 234, .74); --mork-kort: #2A2622; --mork-strek: rgba(246, 241, 234, .1);
+      --bunn-bg: #151310; --topp-bg: rgba(251, 248, 243, .9);
+      --ikon-bg: #FBE7D7; --ikon-farge: #A9470C;
+      --knapp-radius: 10px; --bilde-radius: 18px; --kort-radius: 16px; --ikon-radius: 14px;
+      --bilde-skygge: 0 30px 60px -36px rgba(30, 27, 24, .55);
+      --hero-overlegg: linear-gradient(90deg, rgba(20,18,15,.82) 0%, rgba(20,18,15,.55) 45%, rgba(20,18,15,.1) 100%), linear-gradient(0deg, rgba(20,18,15,.6) 0%, transparent 50%);
+    }
+    .logo b { display: block; font-family: var(--tittel); font-weight: 800; letter-spacing: .08em; font-size: 1.1rem; line-height: 1; }
+    .logo small { display: block; margin-top: 3px; font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: var(--dempet); }
+    /* =========================================================
+       Oppsett for de enkle infosidene (snekker og regnskap).
+       Fargene og skriftene settes i :root over.
+       ========================================================= */
+    body { font-size: clamp(16px, 15px + .3vw, 18px); line-height: 1.65; }
+    .wrap { max-width: 1200px; margin-inline: auto; padding-inline: clamp(20px, 5vw, 56px); }
+    h1, h2, h3 { font-family: var(--tittel); }
+    .overline { display: inline-flex; align-items: center; gap: 10px; font-size: .78rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--aksent-tekst); }
+    .overline::before { content: ""; width: 22px; height: 2px; background: currentColor; }
+    .h2 { margin-top: 14px; max-width: 18ch; font-size: clamp(2rem, 1.3rem + 2.8vw, 3.4rem); line-height: 1.05; letter-spacing: var(--tittel-sperring); font-weight: var(--tittel-vekt); text-wrap: balance; }
+    .ingress { margin-top: 18px; max-width: 38rem; color: var(--dempet); font-size: clamp(1.05rem, 1rem + .3vw, 1.2rem); }
+    .mork .ingress, .mork .steg p { color: var(--mork-dempet); }
+    .mork .overline { color: var(--aksent-pa-mork); }
+
+    /* ---------- Knapper ---------- */
+    .knapp {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      min-height: 52px; padding: 13px 24px; border: 0; border-radius: var(--knapp-radius);
+      background: var(--aksent); color: var(--aksent-pa); font: inherit; font-weight: 700; text-decoration: none; cursor: pointer;
+      box-shadow: 0 10px 24px -12px var(--aksent-skygge);
+      transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s, background-color .25s;
+    }
+    .knapp:hover { transform: translateY(-2px); box-shadow: 0 16px 30px -12px var(--aksent-skygge); background: var(--aksent-hover); }
+    .knapp:active { transform: translateY(0); }
+    .knapp svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: transform .35s; }
+    .knapp:hover svg { transform: translateX(3px); }
+
+    /* ---------- Fast toppmeny ---------- */
+    .topp { position: sticky; top: 0; z-index: 60; background: var(--topp-bg); -webkit-backdrop-filter: blur(14px) saturate(1.4); backdrop-filter: blur(14px) saturate(1.4); border-bottom: 1px solid transparent; transition: border-color .3s, box-shadow .3s; }
+    .topp.scrollet { border-color: var(--strek); box-shadow: 0 10px 30px -24px rgba(0,0,0,.5); }
+    .topp__inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 72px; }
     .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .logo svg { width: 34px; height: 34px; flex: none; }
-    .nav { display: none; gap: 24px; }
-    .nav a { text-decoration: none; font-weight: 600; font-size: .95rem; }
-    .nav a:hover { color: var(--aksent-tekst); }
-    @media (min-width: 860px) { .nav { display: flex; } }
-    .knapp { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 12px 22px; border: 2px solid transparent; border-radius: var(--knapp-radius); font-weight: 700; text-decoration: none; transition: transform .3s ease, background-color .3s; }
-    .knapp:hover { transform: translateY(-2px); }
-    .knapp--fylt { background: var(--aksent); color: var(--aksent-pa); }
-    .knapp--strek { border-color: currentColor; }
-    .topp .knapp { min-height: 44px; padding: 8px 16px; font-size: .92rem; }
+    .logo svg { width: 36px; height: 36px; flex: none; }
+    .nav { display: none; gap: 28px; }
+    .nav a { position: relative; padding: 6px 0; text-decoration: none; font-weight: 600; font-size: .95rem; }
+    .nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--aksent); transform: scaleX(0); transform-origin: left; transition: transform .3s; }
+    .nav a:hover::after { transform: scaleX(1); }
+    @media (min-width: 900px) { .nav { display: flex; } }
+    .topp .knapp { min-height: 44px; padding: 9px 18px; font-size: .92rem; }
 
-    .hero { position: relative; min-height: min(78vh, 720px); display: grid; align-items: end; color: #fff; overflow: hidden; }
-    .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
-    .hero::after { content: ""; position: absolute; inset: 0; background: var(--hero-skygge); }
-    .hero__tekst { position: relative; z-index: 1; padding-block: clamp(40px, 8vw, 96px); }
-    .hero h1 { max-width: 16ch; font-family: var(--tittel); font-size: clamp(2.3rem, 1.4rem + 4.4vw, 4.8rem); line-height: 1; letter-spacing: var(--tittel-sperring); text-wrap: balance; }
-    .hero p { max-width: 34rem; margin-top: 18px; font-size: clamp(1.05rem, 1rem + .4vw, 1.25rem); opacity: .92; }
-    .hero__knapper { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
-    .hero .knapp--strek { color: #fff; }
+    /* ---------- Hero ---------- */
+    .hero { position: relative; isolation: isolate; display: grid; align-items: end; min-height: clamp(520px, 82vh, 760px); color: #fff; overflow: hidden; }
+    .hero__bilde { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; animation: hero-inn 1.6s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes hero-inn { from { transform: scale(1.06); } to { transform: none; } }
+    .hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--hero-overlegg); }
+    .hero__tekst { padding-block: clamp(48px, 9vw, 112px); }
+    .hero__merke { display: inline-flex; align-items: center; gap: 10px; padding: 7px 14px; border-radius: 999px; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.28); font-size: .85rem; font-weight: 600; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+    .hero__merke i { width: 8px; height: 8px; border-radius: 50%; background: var(--aksent-pa-mork); }
+    .hero h1 { margin-top: 20px; max-width: 14ch; font-size: clamp(2.6rem, 1.4rem + 5.2vw, 5.4rem); line-height: .98; letter-spacing: var(--tittel-sperring); font-weight: var(--tittel-vekt); text-wrap: balance; text-shadow: 0 2px 30px rgba(0,0,0,.25); }
+    .hero p { max-width: 34rem; margin-top: 20px; font-size: clamp(1.08rem, 1rem + .45vw, 1.3rem); color: rgba(255,255,255,.92); }
+    .hero .knapp { margin-top: 30px; }
 
-    .seksjon { padding-block: clamp(64px, 9vw, 120px); }
-    .seksjon--alt { background: var(--alt-bg); }
-    .overline { font-size: .8rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--aksent-tekst); }
-    .h2 { margin-top: 10px; font-family: var(--tittel); font-size: clamp(1.9rem, 1.3rem + 2.4vw, 3.2rem); line-height: 1.05; letter-spacing: var(--tittel-sperring); }
-    .ingress { margin-top: 14px; max-width: 36rem; color: var(--dempet); font-size: 1.08rem; }
+    /* ---------- Seksjoner ---------- */
+    .seksjon { padding-block: clamp(72px, 10vw, 136px); }
+    .seksjon--lys { background: var(--lys); }
+    .seksjon--farge { background: var(--lys-farge); }
+    .mork { background: var(--mork); color: var(--mork-tekst); }
+    .topptekst { display: grid; gap: 8px 48px; align-items: end; margin-bottom: clamp(32px, 5vw, 56px); }
+    @media (min-width: 900px) { .topptekst { grid-template-columns: 1fr 1fr; } .topptekst .ingress { margin-top: 0; } }
 
-    .tjenester { display: grid; gap: clamp(24px, 4vw, 48px); margin-top: clamp(28px, 4vw, 48px); align-items: start; }
-    @media (min-width: 900px) { .tjenester { grid-template-columns: 1.1fr 1fr; } }
-    .bilde { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--bilde-radius); }
-    .kortliste { display: grid; gap: 12px; }
-    .kort { padding: 22px 24px; border-radius: var(--kort-radius); background: var(--kort-bg); border: 1px solid var(--strek); }
-    .kort h3 { font-family: var(--tittel); font-size: 1.3rem; letter-spacing: var(--tittel-sperring); }
-    .kort p { margin-top: 6px; color: var(--dempet); }
+    /* ---------- Bilder ---------- */
+    .bildeknapp { position: relative; display: block; width: 100%; padding: 0; border: 0; border-radius: var(--bilde-radius); overflow: hidden; background: var(--lys-farge); cursor: zoom-in; box-shadow: var(--bilde-skygge); }
+    .bildeknapp img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; transition: transform .8s cubic-bezier(.22,1,.36,1); }
+    .bildeknapp:hover img, .bildeknapp:focus-visible img { transform: scale(1.045); }
+    .bildeknapp__ikon { position: absolute; right: 14px; bottom: 14px; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,.92); color: #111; opacity: 0; transform: translateY(6px); transition: opacity .3s, transform .3s; }
+    .bildeknapp:hover .bildeknapp__ikon, .bildeknapp:focus-visible .bildeknapp__ikon { opacity: 1; transform: none; }
+    .bildeknapp__ikon svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+    .bildeknapp:focus-visible { outline: 3px solid var(--side-focus); outline-offset: 4px; }
 
-    .om { display: grid; gap: clamp(24px, 4vw, 56px); align-items: center; }
+    /* ---------- Tjenester ---------- */
+    .tjenester { display: grid; gap: clamp(28px, 4vw, 56px); align-items: center; }
+    @media (min-width: 960px) { .tjenester { grid-template-columns: 1fr 1.05fr; } }
+    .kortliste { display: grid; gap: 14px; }
+    .kort { position: relative; display: grid; grid-template-columns: 52px 1fr; gap: 2px 18px; padding: 22px 24px; border-radius: var(--kort-radius); background: var(--kort-bg); border: 1px solid var(--strek); transition: transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s, border-color .3s; }
+    .kort:hover { transform: translateY(-4px); border-color: var(--aksent); box-shadow: 0 22px 40px -26px rgba(0,0,0,.35); }
+    .kort__ikon { grid-row: span 2; display: grid; place-items: center; width: 52px; height: 52px; border-radius: var(--ikon-radius); background: var(--ikon-bg); color: var(--ikon-farge); transition: transform .4s; }
+    .kort:hover .kort__ikon { transform: rotate(-6deg) scale(1.06); }
+    .kort__ikon svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .kort h3 { align-self: end; font-size: 1.25rem; font-weight: var(--tittel-vekt); letter-spacing: var(--tittel-sperring); line-height: 1.2; }
+    .kort p { color: var(--dempet); }
+
+    /* ---------- Slik jobber vi ---------- */
+    .stegliste { display: grid; gap: 16px; counter-reset: steg; }
+    @media (min-width: 820px) { .stegliste { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+    .steg { position: relative; padding: 30px 26px 32px; border-radius: var(--kort-radius); background: var(--mork-kort); border: 1px solid var(--mork-strek); transition: transform .4s, border-color .3s; }
+    .steg:hover { transform: translateY(-4px); border-color: var(--aksent-pa-mork); }
+    .steg__nr { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: var(--aksent); color: var(--aksent-pa); font-weight: 800; font-size: 1.1rem; }
+    .steg h3 { margin-top: 22px; font-size: 1.35rem; font-weight: var(--tittel-vekt); letter-spacing: var(--tittel-sperring); }
+    .steg p { margin-top: 8px; }
+
+    /* ---------- Om oss ---------- */
+    .om { display: grid; gap: clamp(28px, 5vw, 72px); align-items: center; }
     @media (min-width: 900px) { .om { grid-template-columns: 1fr 1fr; } }
-    .om p.tekst { margin-top: 16px; color: var(--dempet); max-width: 32rem; }
-    .om figcaption { margin-top: 10px; font-size: .88rem; color: var(--dempet); }
+    .om p.tekst { margin-top: 18px; max-width: 34rem; color: var(--dempet); font-size: 1.08rem; }
+    .om figcaption { margin-top: 12px; font-size: .88rem; color: var(--dempet); }
 
-    .kontakt { display: grid; gap: 12px; margin-top: clamp(28px, 4vw, 40px); }
-    @media (min-width: 760px) { .kontakt { grid-template-columns: repeat(3, 1fr); } }
-    .kontakt div { padding: 22px 24px; border-radius: var(--kort-radius); background: var(--kort-bg); border: 1px solid var(--strek); }
-    .kontakt dt { font-size: .8rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--aksent-tekst); }
-    .kontakt dd { margin-top: 6px; font-size: 1.15rem; font-weight: 600; }
-    .kontakt a { text-decoration-thickness: 2px; text-underline-offset: 4px; }
+    /* ---------- Områder ---------- */
+    .omrader { display: grid; gap: 32px 64px; align-items: center; }
+    @media (min-width: 900px) { .omrader { grid-template-columns: 1fr 1fr; } }
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chips li { display: inline-flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 999px; background: var(--kort-bg); border: 1px solid var(--strek); font-weight: 600; }
+    .chips li::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--aksent); }
 
-    .bunn { padding: 36px 0; border-top: 1px solid var(--strek); font-size: .9rem; color: var(--dempet); }
-    .bunn .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+    /* ---------- Spørsmål og svar ---------- */
+    .faq { display: grid; gap: 32px 64px; align-items: start; }
+    @media (min-width: 900px) { .faq { grid-template-columns: .8fr 1.2fr; } }
+    .sporsmalsliste { display: grid; gap: 10px; }
+    .sporsmal { border-radius: var(--kort-radius); background: var(--kort-bg); border: 1px solid var(--strek); transition: border-color .3s, box-shadow .3s; }
+    .sporsmal[open] { border-color: var(--aksent); box-shadow: 0 18px 36px -28px rgba(0,0,0,.4); }
+    .sporsmal summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 60px; padding: 16px 22px; cursor: pointer; list-style: none; font-weight: 700; font-size: 1.05rem; border-radius: var(--kort-radius); }
+    .sporsmal summary::-webkit-details-marker { display: none; }
+    .sporsmal summary:hover { color: var(--aksent-tekst); }
+    .sporsmal__pluss { position: relative; flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--ikon-bg); transition: transform .35s; }
+    .sporsmal__pluss::before, .sporsmal__pluss::after { content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 2px; margin: -1px 0 0 -6px; background: var(--ikon-farge); border-radius: 2px; transition: transform .35s; }
+    .sporsmal__pluss::after { transform: rotate(90deg); }
+    .sporsmal[open] .sporsmal__pluss { transform: rotate(180deg); }
+    .sporsmal[open] .sporsmal__pluss::after { transform: rotate(0deg); }
+    .sporsmal p { padding: 0 22px 20px; color: var(--dempet); max-width: 40rem; }
+    .sporsmal[open] p { animation: eks-inn .45s cubic-bezier(.22,1,.36,1) both; }
+
+    /* ---------- Kontakt ---------- */
+    .kontakt { display: grid; gap: clamp(28px, 5vw, 64px); align-items: center; }
+    @media (min-width: 900px) { .kontakt { grid-template-columns: 1fr 1fr; } }
+    .kontaktkort { padding: clamp(24px, 4vw, 40px); border-radius: var(--kort-radius); background: var(--kort-bg); color: var(--side-ink); box-shadow: 0 40px 80px -40px rgba(0,0,0,.6); }
+    .kontaktkort dl { display: grid; gap: 0; }
+    .kontaktkort dl div { display: grid; grid-template-columns: 7.5rem 1fr; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--strek); }
+    .kontaktkort dt { font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--aksent-tekst); padding-top: 4px; }
+    .kontaktkort dd { font-weight: 600; }
+    .kontaktkort a { color: inherit; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+    .kontaktkort .knapp { width: 100%; margin-top: 24px; }
+    @media (max-width: 420px) { .kontaktkort dl div { grid-template-columns: 1fr; gap: 2px; } }
+
+    /* ---------- Bunn ---------- */
+    .bunn { padding: 40px 0; background: var(--bunn-bg); color: var(--mork-dempet); font-size: .9rem; }
+    .bunn .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px; align-items: center; }
+    .bunn a { color: var(--mork-tekst); text-underline-offset: 3px; }
     .bunn b { padding: 2px 8px; margin-right: 8px; border-radius: 999px; background: #D83995; color: #fff; font-size: .64rem; letter-spacing: .1em; }
+
+    /* ---------- Bildevisning ---------- */
+    .lysboks { width: min(1100px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); padding: 0; border: 0; background: transparent; overflow: visible; }
+    .lysboks::backdrop { background: rgba(8, 10, 12, .86); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+    .lysboks[open] { animation: eks-inn .4s cubic-bezier(.22,1,.36,1) both; }
+    .lysboks img { display: block; width: 100%; height: auto; max-height: calc(100dvh - 120px); object-fit: contain; border-radius: 12px; }
+    .lysboks p { margin-top: 12px; color: rgba(255,255,255,.85); font-size: .92rem; text-align: center; }
+    .lysboks__lukk { position: absolute; right: 8px; top: -56px; display: grid; place-items: center; width: 46px; height: 46px; border: 0; border-radius: 50%; background: #fff; color: #111; cursor: pointer; }
+    .lysboks__lukk svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+    .lysboks { margin-top: max(70px, calc((100dvh - 640px) / 2)); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero__bilde { animation: none; }
+      .bildeknapp img, .kort, .steg, .knapp { transition: none; }
+    }
   </style>
 </head>
 <body>
@@ -88,62 +199,111 @@
     <a href="../index.html#eksempler">Til Glød</a>
   </div>
 
-  <header class="topp">
+  <header class="topp" id="topp">
     <div class="wrap topp__inner">
       <a class="logo" href="#innhold" aria-label="Nordvegg Snekkerservice, til toppen">
-        <svg viewBox="0 0 34 34" aria-hidden="true"><rect x="1" y="1" width="32" height="32" fill="#16181B"/><path d="M9 26V8l16 18V8" fill="none" stroke="#F07A1F" stroke-width="3.4" stroke-linecap="square"/></svg>
-        <b>NORDVEGG</b>
+        <svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="9" fill="#1E1B18"/><path d="M11 26V10l14 16V10" fill="none" stroke="#E8742A" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span><b>NORDVEGG</b><small>Snekkerservice</small></span>
       </a>
       <nav class="nav" aria-label="Hovedmeny">
         <a href="#tjenester">Tjenester</a>
+        <a href="#slik">Slik jobber vi</a>
         <a href="#om">Om oss</a>
-        <a href="#kontakt">Kontakt</a>
+          <a href="#omrader">Områder</a>
+        <a href="#sporsmal">Spørsmål</a>
       </nav>
-      <a class="knapp knapp--fylt" href="#kontakt">Kontakt oss</a>
+      <a class="knapp" href="#kontakt">Kontakt oss</a>
     </div>
   </header>
 
   <main id="innhold">
+    <!-- ============ HERO ============ -->
     <section class="hero" aria-labelledby="hero-tittel">
-      <img src="bilder/snekker/hero.jpg" alt="To snekkere i arbeidsklær setter opp reisverket til et tilbygg i tre ved siden av et hvitt trehus" width="1408" height="768">
+      <img class="hero__bilde" src="bilder/snekker/hero.jpg" alt="To snekkere i arbeidsklær setter opp reisverket til et tilbygg i tre ved siden av et hvitt trehus" width="1408" height="768" fetchpriority="high">
       <div class="wrap hero__tekst">
+        <p class="hero__merke"><i aria-hidden="true"></i>Snekker i Eksempelby</p>
         <h1 id="hero-tittel">Snekkerarbeid i Eksempelby.</h1>
         <p>Tilbygg, terrasser og arbeid inne. Vi kommer på befaring og gir deg et tilbud.</p>
-        <div class="hero__knapper">
-          <a class="knapp knapp--fylt" href="#kontakt">Be om befaring</a>
-          <a class="knapp knapp--strek" href="#tjenester">Se tjenestene</a>
-        </div>
+        <a class="knapp" href="#kontakt">Be om befaring <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
     </section>
 
-    <section class="seksjon" id="tjenester" aria-labelledby="tj-tittel">
+    <!-- ============ TJENESTER ============ -->
+    <section class="seksjon seksjon--lys" id="tjenester" aria-labelledby="tj-tittel">
       <div class="wrap">
-        <p class="overline" data-r>Tjenester</p>
-        <h2 id="tj-tittel" class="h2" data-r>Dette gjør vi.</h2>
+        <div class="topptekst">
+          <div>
+            <p class="overline" data-r>Tjenester</p>
+            <h2 id="tj-tittel" class="h2" data-r>Dette gjør vi.</h2>
+          </div>
+          <p class="ingress" data-r>Vi tar både store og små jobber, ute og inne.</p>
+        </div>
         <div class="tjenester">
-          <img class="bilde" src="bilder/snekker/tjenester.jpg" alt="Ny terrasse i lyst treverk under bygging, med tommestokk, hammer og drill liggende på dekket" width="1408" height="768" loading="lazy" data-r>
+          <div data-r>
+          <button class="bildeknapp " type="button" data-stor="bilder/snekker/tjenester.jpg" data-alt="Ny terrasse i lyst treverk under bygging, med tommestokk, hammer og drill liggende på dekket" aria-label="Vis større bilde: Ny terrasse i lyst treverk under bygging, med tommestokk, hammer og drill liggende på dekket">
+            <img src="bilder/snekker/tjenester.jpg" alt="Ny terrasse i lyst treverk under bygging, med tommestokk, hammer og drill liggende på dekket" width="1408" height="768" loading="lazy">
+            <span class="bildeknapp__ikon" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M8.5 11h5M11 8.5v5"/></svg></span>
+          </button>
+          </div>
           <ul class="kortliste" data-r-gruppe>
-          <li class="kort" data-r>
-            <h3>Tilbygg</h3>
-            <p>Vi bygger tilbygg og påbygg i tre.</p>
-          </li>
-          <li class="kort" data-r>
-            <h3>Terrasse og platting</h3>
-            <p>Nye terrasser, utvidelser og nytt rekkverk.</p>
-          </li>
-          <li class="kort" data-r>
-            <h3>Arbeid inne</h3>
-            <p>Kjøkken, vegger, dører og listverk.</p>
-          </li>
+            <li class="kort" data-r>
+              <span class="kort__ikon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 11 10 5l7 6"/><path d="M5 9.5V20h10V9.5"/><path d="M17 13h4v7h-6"/><path d="M19 15.5v2"/></svg></span>
+              <h3>Tilbygg</h3>
+              <p>Vi bygger tilbygg og påbygg i tre.</p>
+            </li>
+            <li class="kort" data-r>
+              <span class="kort__ikon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 9h18M3 13h18M3 17h18"/><path d="M5 9v10M19 9v10"/><path d="M8 5l-2 4M16 5l2 4"/></svg></span>
+              <h3>Terrasse og platting</h3>
+              <p>Nye terrasser, utvidelser og nytt rekkverk.</p>
+            </li>
+            <li class="kort" data-r>
+              <span class="kort__ikon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="1"/><path d="M14.5 12.5v.01"/><path d="M3 21h18"/></svg></span>
+              <h3>Arbeid inne</h3>
+              <p>Kjøkken, vegger, dører og listverk.</p>
+            </li>
           </ul>
         </div>
       </div>
     </section>
 
-    <section class="seksjon seksjon--alt" id="om" aria-labelledby="om-tittel">
+    <!-- ============ SLIK JOBBER VI ============ -->
+    <section class="seksjon mork" id="slik" aria-labelledby="slik-tittel">
+      <div class="wrap">
+        <div class="topptekst">
+          <div>
+            <p class="overline" data-r>Slik jobber vi</p>
+            <h2 id="slik-tittel" class="h2" data-r>Fra befaring til ferdig jobb.</h2>
+          </div>
+          <p class="ingress" data-r>Du vet hva som skjer, og hvem som kommer.</p>
+        </div>
+        <ol class="stegliste" data-r-gruppe>
+          <li class="steg" data-r>
+            <span class="steg__nr" aria-hidden="true">1</span>
+            <h3>Befaring</h3>
+            <p>Vi kommer hjem til deg, ser på jobben og tar mål.</p>
+          </li>
+          <li class="steg" data-r>
+            <span class="steg__nr" aria-hidden="true">2</span>
+            <h3>Tilbud</h3>
+            <p>Du får et skriftlig tilbud som viser hva som er med.</p>
+          </li>
+          <li class="steg" data-r>
+            <span class="steg__nr" aria-hidden="true">3</span>
+            <h3>Jobben gjøres</h3>
+            <p>Vi gjør jobben og rydder etter oss når vi er ferdige.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ OM OSS ============ -->
+    <section class="seksjon seksjon--farge" id="om" aria-labelledby="om-tittel">
       <div class="wrap om">
         <figure data-r>
-          <img class="bilde" src="bilder/snekker/om-oss.jpg" alt="Snekker med vernebriller hugger i en bjelke med hammer og stemjern i et verksted" width="1408" height="768" loading="lazy">
+          <button class="bildeknapp " type="button" data-stor="bilder/snekker/om-oss.jpg" data-alt="Snekker med vernebriller hugger i en bjelke med hammer og stemjern i et verksted" aria-label="Vis større bilde: Snekker med vernebriller hugger i en bjelke med hammer og stemjern i et verksted">
+            <img src="bilder/snekker/om-oss.jpg" alt="Snekker med vernebriller hugger i en bjelke med hammer og stemjern i et verksted" width="1408" height="768" loading="lazy">
+            <span class="bildeknapp__ikon" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M8.5 11h5M11 8.5v5"/></svg></span>
+          </button>
           <figcaption>Ola, snekker (fiktiv person).</figcaption>
         </figure>
         <div>
@@ -155,16 +315,70 @@
       </div>
     </section>
 
-    <section class="seksjon" id="kontakt" aria-labelledby="kontakt-tittel">
-      <div class="wrap">
-        <p class="overline" data-r>Kontakt</p>
-        <h2 id="kontakt-tittel" class="h2" data-r>Ta kontakt.</h2>
-        <p class="ingress" data-r>Ring eller send en e-post. Fortell kort hva du trenger hjelp til.</p>
-        <dl class="kontakt" data-r-gruppe>
-          <div data-r><dt>Telefon</dt><dd><a href="#" data-demo="På en ekte side ringer denne lenken firmaet direkte. Her er nummeret oppdiktet." data-demo-tittel="Ring 000 00 000">000 00 000</a></dd></div>
-          <div data-r><dt>E-post</dt><dd><a href="#" data-demo="På en ekte side åpner denne lenken e-postprogrammet ditt. Her er adressen oppdiktet." data-demo-tittel="E-post">post@nordvegg.eksempel</a></dd></div>
-          <div data-r><dt>Adresse</dt><dd>Eksempelveien 1<br>0000 Eksempelby</dd></div>
-        </dl>
+    <!-- ============ OMRÅDER ============ -->
+    <section class="seksjon seksjon--lys" id="omrader" aria-labelledby="omr-tittel">
+      <div class="wrap omrader">
+        <div>
+          <p class="overline" data-r>Områder</p>
+          <h2 id="omr-tittel" class="h2" data-r>Områder vi dekker.</h2>
+          <p class="ingress" data-r>Vi tar oppdrag i Eksempelby og nabokommunene rundt. Bor du et annet sted, kan du spørre.</p>
+        </div>
+        <ul class="chips" data-r-gruppe>
+            <li data-r>Eksempelby sentrum</li>
+            <li data-r>Eksempeldalen</li>
+            <li data-r>Eksempelvik</li>
+            <li data-r>Eksempelstrand</li>
+            <li data-r>Eksempelåsen</li>
+            <li data-r>Eksempelli</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ SPØRSMÅL OG SVAR ============ -->
+    <section class="seksjon seksjon--farge" id="sporsmal" aria-labelledby="faq-tittel">
+      <div class="wrap faq">
+        <div>
+          <p class="overline" data-r>Spørsmål og svar</p>
+          <h2 id="faq-tittel" class="h2" data-r>Spørsmål vi ofte får.</h2>
+        </div>
+        <div class="sporsmalsliste" data-r-gruppe>
+          <details class="sporsmal" data-r>
+            <summary>Hvordan foregår en befaring?<span class="sporsmal__pluss" aria-hidden="true"></span></summary>
+            <p>Vi kommer hjem til deg, ser på jobben og tar mål. Etterpå får du et skriftlig tilbud.</p>
+          </details>
+          <details class="sporsmal" data-r>
+            <summary>Tar dere små jobber?<span class="sporsmal__pluss" aria-hidden="true"></span></summary>
+            <p>Ja. Vi tar også mindre oppdrag, som en ny dør eller nytt listverk.</p>
+          </details>
+          <details class="sporsmal" data-r>
+            <summary>Hvem rydder etter jobben?<span class="sporsmal__pluss" aria-hidden="true"></span></summary>
+            <p>Vi rydder og kjører bort avfall når jobben er ferdig.</p>
+          </details>
+          <details class="sporsmal" data-r>
+            <summary>Må jeg søke kommunen?<span class="sporsmal__pluss" aria-hidden="true"></span></summary>
+            <p>Det kommer an på jobben. Vi sier fra hvis det trengs en søknad, og kan hjelpe deg med den.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ KONTAKT ============ -->
+    <section class="seksjon mork" id="kontakt" aria-labelledby="kontakt-tittel">
+      <div class="wrap kontakt">
+        <div>
+          <p class="overline" data-r>Kontakt</p>
+          <h2 id="kontakt-tittel" class="h2" data-r>Ta kontakt.</h2>
+          <p class="ingress" data-r>Ring eller send en e-post. Fortell kort hva du trenger hjelp til.</p>
+        </div>
+        <div class="kontaktkort" data-r>
+          <dl>
+            <div><dt>Telefon</dt><dd><a href="#" data-demo="På en ekte side ringer denne knappen firmaet direkte. Her er nummeret oppdiktet." data-demo-tittel="Ring 000 00 000">000 00 000</a></dd></div>
+            <div><dt>E-post</dt><dd><a href="#" data-demo="På en ekte side åpner denne lenken e-postprogrammet ditt. Her er adressen oppdiktet." data-demo-tittel="E-post">post@nordvegg.eksempel</a></dd></div>
+            <div><dt>Adresse</dt><dd>Eksempelveien 1<br>0000 Eksempelby</dd></div>
+            <div><dt>Telefontid</dt><dd>Hverdager 07–16</dd></div>
+          </dl>
+          <a class="knapp" href="#" data-demo="På en ekte side ringer denne knappen firmaet direkte. Her er nummeret oppdiktet." data-demo-tittel="Ring 000 00 000">Ring 000 00 000 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
       </div>
     </section>
   </main>
@@ -172,11 +386,49 @@
   <footer class="bunn">
     <div class="wrap">
       <p>© <span data-aar>2026</span> Nordvegg Snekkerservice (fiktivt firma) · Eksempelveien 1, 0000 Eksempelby · 000 00 000</p>
-      <p><b>EKSEMPEL</b>Eksempelside laget av Glød for et fiktivt firma.</p>
+      <p><b>EKSEMPEL</b>Eksempelside laget av Glød for et fiktivt firma. <a href="../index.html#eksempler">Til Glød</a></p>
     </div>
   </footer>
 
+  <!-- Bildevisning: åpnes når man trykker på et bilde -->
+  <dialog class="lysboks" id="lysboks" aria-label="Bildevisning">
+    <button class="lysboks__lukk" type="button" id="lysboks-lukk" aria-label="Lukk bildevisningen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <img id="lysboks-bilde" src="data:," alt="" width="1408" height="768">
+    <p id="lysboks-tekst"></p>
+  </dialog>
+
   <script src="felles/felles.js"></script>
-  <script>Eks.start();</script>
+  <script>
+  (function () {
+    "use strict";
+    Eks.start();
+
+    // Toppmenyen får en tynn kant når man har scrollet
+    var topp = document.getElementById("topp");
+    function sjekk() { topp.classList.toggle("scrollet", window.scrollY > 10); }
+    window.addEventListener("scroll", sjekk, { passive: true });
+    sjekk();
+
+    // Enkel bildevisning
+    var boks = document.getElementById("lysboks");
+    var stort = document.getElementById("lysboks-bilde");
+    var tekst = document.getElementById("lysboks-tekst");
+    var forrige = null;
+    document.querySelectorAll("[data-stor]").forEach(function (knapp) {
+      knapp.addEventListener("click", function () {
+        if (typeof boks.showModal !== "function") { window.open(knapp.getAttribute("data-stor"), "_blank", "noopener"); return; }
+        forrige = knapp;
+        stort.src = knapp.getAttribute("data-stor");
+        stort.alt = knapp.getAttribute("data-alt");
+        tekst.textContent = knapp.getAttribute("data-alt");
+        boks.showModal();
+        document.getElementById("lysboks-lukk").focus();
+      });
+    });
+    document.getElementById("lysboks-lukk").addEventListener("click", function () { boks.close(); });
+    boks.addEventListener("click", function (e) { if (e.target === boks) boks.close(); });
+    boks.addEventListener("close", function () { if (forrige) forrige.focus(); });
+  })();
+  </script>
 </body>
 </html>
