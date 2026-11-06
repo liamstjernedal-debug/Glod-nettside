@@ -23,7 +23,14 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=20261106-layoutfix-2">
+  <style>
+    /* Kritisk layout: holde seksjonsoverskrifter og brødtekst faktisk midtstilt. */
+    #tjenester .section-head, #hvorfor .section-head { display:flex; flex-direction:column; align-items:center; margin-inline:auto; text-align:center; }
+    #tjenester .section-head__lead, #hvorfor .section-head__lead { width:min(100%, 38rem); margin-inline:auto; text-align:center; }
+    #tjenester, #hvorfor { padding-block:clamp(2.75rem,4.5vw,4.5rem); }
+    #tjenester .always__grid, #hvorfor .always__grid { margin-top:clamp(1.25rem,2.3vw,2rem); }
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#innhold">Hopp til innholdet</a>
@@ -71,8 +78,8 @@
       <div class="container hero__inner">
         <div class="hero__copy">
           <p class="eyebrow hero__eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span>GLØD — NETTSIDER FOR BEDRIFTER</p>
-          <h1 id="hero-tittel" class="hero__title">Se nettsiden din før du <span class="glow-text">bestemmer deg</span>.</h1>
-          <p class="hero__lead">Vi lager moderne nettsider for småbedrifter – raskt, enkelt og til en pris som gir mening. Får vi det vi trenger fra deg, viser vi deg et personlig utkast innen 48 timer.</p>
+          <h1 id="hero-tittel" class="hero__title">Se din nye nettside. <span class="glow-text">Innen 48 timer.</span></h1>
+          <p class="hero__lead">Vi lager moderne nettsider for småbedrifter – raskt, enkelt og til en pris som gir mening. Du får se et personlig utkast før du bestemmer deg. Vi tar oss av resten.</p>
           <div class="hero__cta">
             <a class="btn btn--primary btn--lg" href="#kontakt">Søk om gratis utkast</a>
             <a class="btn btn--ghost btn--lg" href="#slik-jobber-vi">Se hvordan det fungerer</a>
@@ -98,6 +105,7 @@
                 <span class="contractor-site__links">Tjenester&nbsp;&nbsp; Prosjekter&nbsp;&nbsp; Kontakt</span>
               </div>
               <div class="contractor-site__photo">
+                <img class="contractor-site__image" src="eksempler/bilder/snekker/hero.jpg" alt="" decoding="async">
                 <div class="contractor-site__gradient">
                   <span class="contractor-site__eyebrow">SNEKKERARBEID MED OMTANKE</span>
                   <strong>Solid håndverk.<br>Gode resultater.</strong>
@@ -113,7 +121,7 @@
             <div class="phone__notch"></div>
             <div class="contractor-phone">
               <div class="contractor-phone__nav"><strong>NORDVEGG</strong><span>☰</span></div>
-              <div class="contractor-phone__photo"></div>
+              <div class="contractor-phone__photo"><img src="eksempler/bilder/snekker/hero.jpg" alt=""></div>
               <div class="contractor-phone__body">
                 <span>DIN LOKALE SNEKKER</span>
                 <strong>Solid håndverk.<br>Gode resultater.</strong>
@@ -132,6 +140,11 @@
           <p class="eyebrow">ET GODT FØRSTEINNTRYKK</p>
           <h2 id="problem-tittel" class="h2">Kundene googler deg før de ringer. Hva finner de?</h2>
           <p class="section-head__lead">Et godt førsteinntrykk starter ofte lenge før den første samtalen. Nettsiden din skal gjøre det enkelt å forstå hvem du er, hva du tilbyr og hvorfor kunden bør velge nettopp deg.</p>
+          <div class="solution-card" data-reveal>
+            <span class="solution-card__glow" aria-hidden="true"></span>
+            <p class="solution-card__label">Løsningen</p>
+            <p class="solution-card__text">Vi gjør hele jobben for deg. Du får en proff side på plass – uten at du trenger å løfte en finger.</p>
+          </div>
         </div>
 
         <div class="problem__body">
@@ -149,12 +162,6 @@
               <p><strong>Ikke tid eller teknisk kunnskap?</strong><br>Det trenger du heller ikke. Du kjenner bedriften din. Vi tar oss av nettsiden.</p>
             </li>
           </ul>
-
-          <div class="solution-card" data-reveal>
-            <span class="solution-card__glow" aria-hidden="true"></span>
-            <p class="solution-card__label">Løsningen</p>
-            <p class="solution-card__text">Vi gjør hele jobben for deg. Du får en proff side på plass – uten at du trenger å løfte en finger.</p>
-          </div>
         </div>
       </div>
     </section>
