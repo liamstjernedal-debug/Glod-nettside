@@ -1576,3 +1576,19 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .avslutning .section-head .h2 { max-width: 22ch; margin-inline: auto; }
 .avslutning .section-head__lead { margin-inline: auto; }
 .avslutning .hero__cta { justify-content: center; }
+
+/* Valgfri drift og kompakt footer */
+.hosting { padding-top: 0; padding-bottom: var(--section-y); }
+.hosting__panel { display: grid; gap: clamp(1.75rem, 4vw, 3.5rem); padding: clamp(1.5rem, 4vw, 3.25rem); border-radius: var(--radius-lg); border: 1px solid rgba(252,255,255,.16); background: linear-gradient(125deg, rgba(252,255,255,.065), rgba(252,255,255,.018)); }
+.hosting__copy > p:not(.eyebrow) { color: var(--on-dark-soft); max-width: 60ch; margin-top: 1rem; }
+.hosting__choice { font-size: .92rem; }
+.hosting__details { align-self: center; }
+.hosting__price { font-size: clamp(2rem, 4vw, 2.8rem); line-height: 1.1; font-weight: 750; color: var(--white); }
+.hosting__price small { font-size: .42em; color: var(--on-dark-soft); font-weight: 600; }
+.hosting__details .pkg__list { margin: 1.25rem 0 1.5rem; }
+.footer--simple { padding-top: 2.5rem; padding-bottom: 2.5rem; }
+.footer__simple { display: flex; align-items: center; flex-wrap: wrap; gap: 1.5rem; justify-content: space-between; }
+.footer__simple .footer__brand p { margin-top: .25rem; max-width: none; }
+.footer__copyright { color: var(--on-dark-soft); font-size: .875rem; }
+@media (min-width: 780px) { .hosting__panel { grid-template-columns: 1.4fr 1fr; } }
+@media (max-width: 600px) { .footer__simple { flex-direction: column; align-items: flex-start; } }
