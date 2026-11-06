@@ -23,7 +23,7 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="css/style.css?v=20261106-layoutfix-2">
+  <link rel="stylesheet" href="css/style.css?v=20261106-promises-3">
   <style>
     /* Kritisk layout: holde seksjonsoverskrifter og brødtekst faktisk midtstilt. */
     #tjenester .section-head, #hvorfor .section-head { display:flex; flex-direction:column; align-items:center; margin-inline:auto; text-align:center; }
@@ -89,46 +89,26 @@
             <li>Nettsider fra 5&nbsp;990&nbsp;kr</li>
             <li>Se før du bestemmer deg</li>
           </ul>
+          <p class="hero__timing">48 timer gjelder første utkast – ikke ferdig levert nettside.</p>
         </div>
 
-        <!-- Skreddersydd mini-demo: snekkerfirma (fiktivt). Foto fra eksempelsiden. -->
-        <div class="hero__visual hero__visual--contractor" aria-label="Illustrasjon av en moderne, mobiltilpasset nettside for et fiktivt snekkerfirma" role="img">
-          <div class="browser browser--contractor" aria-hidden="true">
-            <div class="browser__bar">
-              <span class="browser__dots"><i></i><i></i><i></i></span>
-              <span class="browser__url">nordvegg-snekkerservice.eksempel</span>
-              <span class="tag-example">Eksempel</span>
-            </div>
-            <div class="contractor-site">
-              <div class="contractor-site__nav">
-                <span class="contractor-site__brand"><span class="contractor-site__brand-mark">N</span> NORDVEGG</span>
-                <span class="contractor-site__links">Tjenester&nbsp;&nbsp; Prosjekter&nbsp;&nbsp; Kontakt</span>
-              </div>
-              <div class="contractor-site__photo">
-                <img class="contractor-site__image" src="eksempler/bilder/snekker/hero.jpg" alt="" decoding="async">
-                <div class="contractor-site__gradient">
-                  <span class="contractor-site__eyebrow">SNEKKERARBEID MED OMTANKE</span>
-                  <strong>Solid håndverk.<br>Gode resultater.</strong>
-                  <span class="contractor-site__action">Få et tilbud <span aria-hidden="true">↗</span></span>
-                </div>
-              </div>
-              <div class="contractor-site__services">
-                <span>Renovering</span><span>Terrasse</span><span>Innredning</span>
-              </div>
-            </div>
-          </div>
-          <div class="phone phone--contractor" aria-hidden="true">
-            <div class="phone__notch"></div>
-            <div class="contractor-phone">
-              <div class="contractor-phone__nav"><strong>NORDVEGG</strong><span>☰</span></div>
-              <div class="contractor-phone__photo"><img src="eksempler/bilder/snekker/hero.jpg" alt=""></div>
-              <div class="contractor-phone__body">
-                <span>DIN LOKALE SNEKKER</span>
-                <strong>Solid håndverk.<br>Gode resultater.</strong>
-                <i>Få et tilbud ↗</i>
-              </div>
-            </div>
-          </div>
+        <div class="hero-promises" aria-label="Et enkelt første steg til din nye nettside">
+          <article class="promise promise--speed">
+            <div class="promise__top"><span>Første utkast</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg></div>
+            <h2><span class="promise__number">48</span><span class="promise__unit">Innen 48 timer</span></h2>
+            <p>Du får raskt se et personlig forslag til nettsiden din.</p>
+            <div class="promise__progress" aria-hidden="true"><span></span><i></i><i></i></div>
+          </article>
+          <article class="promise promise--choice">
+            <div class="promise__top"><span>Ingen kjøpeplikt</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6zM8 12l3 3 5-6"/></svg></div>
+            <h2>Se før du<br>bestemmer deg</h2>
+            <p>Vi viser deg utkastet før du tar stilling til om du vil gå videre.</p>
+          </article>
+          <article class="promise promise--price">
+            <div class="promise__top"><span>Fornuftig pris</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h8l10 10-7 7L3 10z"/><circle cx="7.5" cy="8" r="1"/></svg></div>
+            <h2><span class="promise__from">Fra</span> 5 990 <span class="promise__currency">kr</span></h2>
+            <p>Profesjonelle nettsider tilpasset småbedrifter, uten unødvendig kompliserte løsninger.</p>
+          </article>
         </div>
       </div>
     </section>
@@ -426,11 +406,10 @@
           <li class="example" data-reveal>
             <div class="example__frame">
               <a class="example__lenke" href="eksempler/snekker.html" target="_blank" rel="noopener" aria-label="Åpne eksempelsiden for Nordvegg Snekkerservice i ny fane"></a>
-              <span class="mini-bar" aria-hidden="true"><i></i><i></i><i></i><span class="mini-bar__url">snekker.eksempel</span><span class="tag-example tag-example--sm">Eksempel</span></span>
               <span class="example-cover example-cover--snekker" aria-hidden="true">
-                <img src="eksempler/bilder/snekker/hero.jpg" alt="" loading="lazy" decoding="async">
+                <img src="eksempler/bilder/snekker/hero.webp" alt="" loading="lazy" decoding="async">
                 <span class="example-cover__shade"></span>
-                <span class="example-cover__content"><small>HÅNDVERK / NETTSIDE</small><strong>Nordvegg<br>Snekkerservice</strong><em>Se prosjektet ↗</em></span>
+                <span class="example-cover__content"><small>HÅNDVERK / NETTSIDE</small><strong>Nordvegg<br>Snekkerservice</strong><em>Utforsk konseptet ↗</em></span>
               </span>
             </div>
             <div class="example__meta">
@@ -446,11 +425,10 @@
           <li class="example" data-reveal>
             <div class="example__frame">
               <a class="example__lenke" href="eksempler/regnskap.html" target="_blank" rel="noopener" aria-label="Åpne eksempelsiden for Eksempelby Regnskap i ny fane"></a>
-              <span class="mini-bar" aria-hidden="true"><i></i><i></i><i></i><span class="mini-bar__url">regnskap.eksempel</span><span class="tag-example tag-example--sm">Eksempel</span></span>
               <span class="example-cover example-cover--regnskap" aria-hidden="true">
-                <img src="eksempler/bilder/regnskap/hero.jpg" alt="" loading="lazy" decoding="async">
+                <img src="eksempler/bilder/regnskap/hero.webp" alt="" loading="lazy" decoding="async">
                 <span class="example-cover__shade"></span>
-                <span class="example-cover__content"><small>REGNSKAP / NETTSIDE</small><strong>Eksempelby<br>Regnskap</strong><em>Se prosjektet ↗</em></span>
+                <span class="example-cover__content"><small>REGNSKAP / NETTSIDE</small><strong>Eksempelby<br>Regnskap</strong><em>Utforsk konseptet ↗</em></span>
               </span>
             </div>
             <div class="example__meta">

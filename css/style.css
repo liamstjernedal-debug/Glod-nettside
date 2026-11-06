@@ -1767,3 +1767,47 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .contractor-site__gradient { padding:1.2rem; }
   .contractor-site__gradient strong { font-size:1.55rem; }
 }
+
+/* Hero: tre løfter i én komposisjon. Ingen faste høyder eller overlapp. */
+.hero__timing { margin-top: .85rem; font-size: .8rem; line-height: 1.6; color: var(--ink-soft); }
+.hero-promises { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; width: 100%; max-width: 36rem; margin-inline: auto; padding: 1rem 0; }
+.promise { position: relative; min-width: 0; padding: clamp(1.35rem, 2.3vw, 2rem); border: 1px solid rgba(255,255,255,.85); border-radius: 24px; background: rgba(255,255,255,.78); box-shadow: 0 16px 50px -24px rgba(18,32,43,.25), inset 0 0 0 1px rgba(18,32,43,.04); backdrop-filter: blur(16px); }
+.promise__top { display:flex; align-items:center; justify-content:space-between; gap:.75rem; font-size:.75rem; font-weight:650; color:var(--ink-soft); }
+.promise__top svg { width:22px; height:22px; flex:none; fill:none; stroke:currentColor; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+.promise h2 { margin-top:1.4rem; font-size:clamp(1.35rem,2vw,1.8rem); font-weight:700; line-height:1.2; letter-spacing:-.04em; }
+.promise p { margin-top:.9rem; color:var(--ink-soft); font-size:.86rem; line-height:1.65; }
+.promise--speed { background:linear-gradient(145deg,rgba(255,255,255,.95),rgba(223,244,252,.88)); margin-bottom:1.8rem; }
+.promise--speed .promise__top { color:var(--blue-ink); }
+.promise--speed h2 { margin-top:1rem; }
+.promise__number { display:block; font-size:clamp(4.8rem,7vw,7rem); line-height:1; letter-spacing:-.08em; color:var(--blue-ink); }
+.promise__unit { display:block; margin-top:.6rem; font-size:1rem; letter-spacing:-.02em; }
+.promise__progress { display:flex; gap:5px; margin-top:1.5rem; }
+.promise__progress span,.promise__progress i { height:4px; border-radius:4px; flex:1; background:rgba(5,147,198,.15); }
+.promise__progress span { flex:3; background:linear-gradient(90deg,var(--blue),#73c9e7); }
+.promise--choice { margin-top:1.8rem; background:linear-gradient(155deg,rgba(255,255,255,.95),rgba(251,234,245,.8)); }
+.promise--choice .promise__top svg { color:#ae2879; }
+.promise--price { grid-column:1/-1; display:grid; grid-template-columns:1fr 1.2fr; column-gap:1.5rem; align-items:center; }
+.promise--price .promise__top { grid-column:1/-1; }
+.promise--price h2 { white-space:nowrap; font-size:clamp(1.8rem,2.5vw,2.5rem); }
+.promise__from,.promise__currency { font-size:.95rem; font-weight:500; letter-spacing:-.02em; }
+.promise--price p { margin-top:1.4rem; }
+.example__frame { background:#152c34; }
+.example-cover { aspect-ratio:16/11; }
+.example-cover__content { justify-content:flex-end; }
+.example-cover__content small { letter-spacing:.12em; }
+.example-cover__shade { background:linear-gradient(0deg,rgba(5,18,23,.88),rgba(5,18,23,.35) 48%,transparent 80%); }
+.example-cover--regnskap .example-cover__shade { background:linear-gradient(0deg,rgba(11,30,48,.9),rgba(11,30,48,.35) 48%,transparent 80%); }
+.example-cover__content em { margin-top:.25rem; }
+@media (max-width: 480px) {
+  .hero-promises { gap:.75rem; padding:0; }
+  .promise { padding:1.15rem; border-radius:20px; }
+  .promise__top { font-size:.7rem; gap:.35rem; }
+  .promise__top svg { width:19px; height:19px; }
+  .promise h2 { font-size:1.25rem; }
+  .promise__number { font-size:4.5rem; }
+  .promise__unit { font-size:.85rem; }
+  .promise p { font-size:.8rem; }
+  .promise--price { grid-template-columns:1fr; }
+  .promise--price h2 { font-size:2.2rem; margin-top:1rem; }
+  .promise--price p { margin-top:.75rem; }
+}
