@@ -59,7 +59,7 @@
 
   --fs-body: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
   --fs-lead: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
-  --fs-h1: clamp(2.9rem, 1.6rem + 6vw, 7rem);
+  --fs-h1: clamp(2.9rem, 1.8rem + 4.6vw, 5.75rem);
   --fs-h2: clamp(2.2rem, 1.5rem + 3vw, 4.25rem);
   --fs-h3: clamp(1.3rem, 1.15rem + 0.6vw, 1.7rem);
 
@@ -175,7 +175,7 @@ h1, h2, h3, .h2 { font-family: var(--font-visning); font-weight: 500; letter-spa
 .topbar.is-scrolled, .topbar.is-open { border-bottom-color: var(--linje); }
 .topbar__inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; height: 100%; }
 .topbar__logo { display: block; flex: none; }
-.topbar__logo img { width: 140px; height: auto; }
+.topbar__logo img { width: 148px; height: auto; }
 .topbar__actions { display: flex; align-items: center; gap: 0.5rem; }
 .menu-toggle { display: inline-grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1.5px solid var(--blekk); border-radius: var(--radius); background: transparent; cursor: pointer; }
 .menu-toggle__bars, .menu-toggle__bars::before, .menu-toggle__bars::after { display: block; width: 18px; height: 1.5px; background: var(--blekk); transition: transform 0.3s var(--ease), background-color 0.2s; }
@@ -238,7 +238,7 @@ h1, h2, h3, .h2 { font-family: var(--font-visning); font-weight: 500; letter-spa
 /* =========================================================
    HERO: redaksjonell og asymmetrisk
    ========================================================= */
-.hero { position: relative; overflow: hidden; padding-block: clamp(3rem, 2rem + 6vw, 8rem) clamp(4rem, 3rem + 6vw, 9rem); }
+.hero { position: relative; overflow: hidden; padding-block: clamp(2.5rem, 1.5rem + 3.5vw, 5rem) clamp(3.5rem, 2.5rem + 4vw, 6.5rem); }
 .hero::after { /* stor kontur-ø i bakgrunnen */
   content: "ø"; content: "ø" / "";
   position: absolute; z-index: -1; right: -0.3em; top: -0.12em;
@@ -261,10 +261,13 @@ h1, h2, h3, .h2 { font-family: var(--font-visning); font-weight: 500; letter-spa
 .hero__fordeler li, .packages__benefits li { display: inline-flex; align-items: center; gap: 0.55rem; margin-right: 1.5rem; }
 .hero__fordeler li::before, .packages__benefits li::before { content: ""; width: 7px; height: 7px; background: var(--ember); flex: none; }
 @media (min-width: 900px) {
-  .hero__copy { grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr); column-gap: clamp(2rem, 4vw, 5rem); align-items: end; }
-  .hero__title { grid-column: 1 / -1; max-width: 11ch; }
+  /* Overskrift til venstre, ingress og knapper til høyre på samme høyde, så alt synes uten å scrolle */
+  .hero__copy { grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); grid-template-rows: auto auto auto 1fr; column-gap: clamp(2rem, 4vw, 5rem); }
+  .hero__title { grid-column: 1; grid-row: 1 / span 4; align-self: start; max-width: 11ch; }
   .hero__lead, .hero__cta, .hero__fordeler { grid-column: 2; }
-  .hero__lead { margin-top: clamp(2.5rem, 4vw, 4rem); }
+  .hero__lead { grid-row: 1; margin-top: 0.6rem; }
+  .hero__cta { grid-row: 2; }
+  .hero__fordeler { grid-row: 3; }
   .hero::after { top: auto; right: auto; left: clamp(0rem, 3vw, 5rem); bottom: -0.12em; font-size: clamp(18rem, 22vw, 26rem); }
 }
 
@@ -473,14 +476,14 @@ h1, h2, h3, .h2 { font-family: var(--font-visning); font-weight: 500; letter-spa
    BUNNTEKST: den ene mørke seksjonen
    ========================================================= */
 .footer { background: var(--natt); color: var(--natt-tekst); padding-top: clamp(3.5rem, 2.5rem + 3vw, 5.5rem); }
-.footer__nettstraks-top { display: grid; gap: 2rem; padding-bottom: 2.5rem; }
-.footer__brand img { width: 170px; height: auto; }
+.footer__nettstrax-top { display: grid; gap: 2rem; padding-bottom: 2.5rem; }
+.footer__brand img { width: 180px; height: auto; }
 .footer__brand p { margin-top: 1rem; font-family: var(--font-visning); font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem); line-height: 1.1; letter-spacing: -0.02em; }
 .footer__links { display: flex; flex-wrap: wrap; align-content: start; gap: 0.75rem 1.75rem; }
 .footer__links a { color: var(--natt-tekst); background-size: 0% 1.5px; background-image: linear-gradient(var(--ember), var(--ember)); }
 .footer__links a:hover { background-size: 100% 1.5px; }
 .footer__bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1.5rem; padding-block: 1.5rem; border-top: 1px solid var(--natt-linje); font-size: 0.875rem; color: var(--natt-graa); }
-@media (min-width: 768px) { .footer__nettstraks-top { grid-template-columns: 1fr auto; align-items: end; } }
+@media (min-width: 768px) { .footer__nettstrax-top { grid-template-columns: 1fr auto; align-items: end; } }
 
 /* =========================================================
    UNDERSIDER (personvern, vilkår, om)
