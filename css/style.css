@@ -1853,3 +1853,12 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .packages__disclosure { width: fit-content; max-width: min(100%, 42rem); margin: 1.15rem auto 0; color: var(--on-dark-soft); font-size: .8125rem; }
 .packages__disclosure summary { cursor: pointer; text-align: center; text-decoration: underline; text-underline-offset: .2em; }
 .packages__disclosure .packages__notes { margin: .75rem auto 0; gap: .3rem; font-size: .8125rem; }
+
+/* Kompakt oppsummering rett under priskortene */
+.packages__summary { margin: 1.6rem auto 0; padding: 1.15rem 1.5rem; border-radius: 20px; background: rgba(11, 28, 40, .78); color: var(--on-dark-soft); text-align: center; }
+.packages__summary .packages__benefits { margin: 0; flex-direction: row; justify-content: center; gap: .5rem 1.8rem; font-size: .9rem; }
+.packages__facts { border-top: 1px solid var(--line-dark); margin: 1rem 0 0; padding-top: 1rem; font-size: .9rem; }
+.packages__facts span { padding: 0 .25em; }
+.packages__summary .packages__disclosure { margin: .45rem auto 0; font-size: .75rem; }
+.packages__summary .packages__disclosure p { max-width: 37rem; margin: .5rem auto 0; line-height: 1.6; }
+@media(max-width:480px){.packages__summary{padding:1rem}.packages__summary .packages__benefits{gap:.5rem 1rem}.packages__facts{line-height:1.6}}

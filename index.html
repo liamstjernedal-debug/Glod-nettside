@@ -23,7 +23,7 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="css/style.css?v=20261108-examples-4">
+  <link rel="stylesheet" href="css/style.css?v=20261108-examples-5">
   <style>
     /* Kritisk layout: holde seksjonsoverskrifter og brødtekst faktisk midtstilt. */
     #tjenester .section-head, #hvorfor .section-head { display:flex; flex-direction:column; align-items:center; margin-inline:auto; text-align:center; }
@@ -190,14 +190,12 @@
             </article>
           </div>
 
-          <ul class="packages__benefits" aria-label="Fordeler"><li>Mobiltilpasset design</li><li>Rask levering</li><li>Hjelp med det tekniske</li></ul>
-
+          <div class="packages__summary" data-reveal>
+            <ul class="packages__benefits" aria-label="Fordeler"><li>Mobiltilpasset</li><li>Rask levering</li><li>Teknisk hjelp</li></ul>
+            <p class="packages__facts">Alle priser eks. mva. <span aria-hidden="true">·</span> Domenet registreres i ditt navn.</p>
+            <details class="packages__disclosure"><summary>Informasjon om Google</summary><p>Vi kan ikke garantere plassering på Google. Vi setter siden opp slik at den er klar til å bli funnet.</p></details>
+          </div>
           <p class="packages__usikker" data-reveal><strong>Usikker på hvilken pakke du trenger?</strong><br>Vi hjelper deg å velge.</p>
-
-          <details class="packages__disclosure" data-reveal>
-            <summary>Praktisk informasjon om pris og domene</summary>
-            <div class="packages__notes"><p>Alle priser er eks. mva.</p><p>Vi kan ikke garantere plassering på Google. Vi setter siden opp slik at den er klar til å bli funnet.</p><p>Domenet registreres i ditt navn.</p></div>
-          </details>
         </div>
       </section>
       <section class="section section--dark hosting" id="drift" aria-labelledby="drift-tittel">
