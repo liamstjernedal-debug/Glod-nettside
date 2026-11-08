@@ -23,7 +23,7 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="css/style.css?v=20261108-packages-3">
+  <link rel="stylesheet" href="css/style.css?v=20261108-examples-4">
   <style>
     /* Kritisk layout: holde seksjonsoverskrifter og brødtekst faktisk midtstilt. */
     #tjenester .section-head, #hvorfor .section-head { display:flex; flex-direction:column; align-items:center; margin-inline:auto; text-align:center; }
@@ -194,11 +194,10 @@
 
           <p class="packages__usikker" data-reveal><strong>Usikker på hvilken pakke du trenger?</strong><br>Vi hjelper deg å velge.</p>
 
-          <div class="packages__notes" data-reveal>
-            <p><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg>Alle priser er eks. mva.</p>
-            <p><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg>Vi kan ikke garantere plassering på Google. Vi setter siden opp slik at den er klar til å bli funnet.</p>
-            <p><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9c-2.6-2.6-3.8-5.6-3.8-9S9.4 5.6 12 3Z"/></svg>Domenet registreres i ditt navn.</p>
-          </div>
+          <details class="packages__disclosure" data-reveal>
+            <summary>Praktisk informasjon om pris og domene</summary>
+            <div class="packages__notes"><p>Alle priser er eks. mva.</p><p>Vi kan ikke garantere plassering på Google. Vi setter siden opp slik at den er klar til å bli funnet.</p><p>Domenet registreres i ditt navn.</p></div>
+          </details>
         </div>
       </section>
       <section class="section section--dark hosting" id="drift" aria-labelledby="drift-tittel">
@@ -264,7 +263,7 @@
           <div class="section-head" data-reveal>
             <p class="eyebrow eyebrow--dark">Eksempler</p>
             <h2 id="eksempler-tittel" class="h2">Slik kan siden din se ut.</h2>
-            <p class="section-head__lead">Tre ulike eksempler på nettsider vi har laget for fiktive bedrifter. Åpne sidene for å utforske dem.</p>
+            <p class="section-head__lead">Ulike eksempler på nettsider vi har laget for fiktive bedrifter. Åpne sidene for å utforske dem.</p>
           </div>
           <div class="gallery-nav" data-reveal>
             <button class="gallery-nav__btn" type="button" data-gallery="prev" aria-controls="galleri" aria-label="Forrige eksempel">
@@ -318,11 +317,12 @@
             </div>
           </li>
           <li class="example" data-reveal>
-            <div class="example__frame">
-              <a class="example__lenke" href="eksempler/steinvik.html" target="_blank" rel="noopener" aria-label="Åpne eksempelsiden for Steinvik Bygg i ny fane"></a>
-              <span class="example-cover" aria-hidden="true"><img src="eksempler/bilder/snekker/om-oss.webp" alt="" loading="lazy" decoding="async"><span class="example-cover__shade"></span><span class="example-cover__content"><small>OPPUSSING / NETTSIDE</small><strong>Steinvik<br>Bygg</strong><em>Utforsk konseptet ↗</em></span></span>
-            </div>
-            <div class="example__meta"><h3 class="example__title">Steinvik Bygg</h3><p class="example__kind">Håndverker · fiktivt firma</p><p class="example__feat">Tjenester, prosjekter og kontaktinfo</p><div class="example__actions"><a class="btn btn--glass btn--sm" href="eksempler/steinvik.html" target="_blank" rel="noopener">Åpne siden <span aria-hidden="true">↗</span></a><button class="btn btn--glass btn--sm" type="button" data-mobil="eksempler/steinvik.html" data-navn="Steinvik Bygg">Åpne som mobil</button></div></div>
+            <div class="example__frame"><a class="example__lenke" href="eksempler/restaurant.html" target="_blank" rel="noopener" aria-label="Åpne eksempelsiden for Lun Restaurant"></a><span class="example-cover" aria-hidden="true"><img src="eksempler/bilder/nye/restaurant.webp" alt="" loading="lazy"><span class="example-cover__shade"></span><span class="example-cover__content"><small>RESTAURANT / NETTSIDE</small><strong>LUN<br>Restaurant</strong><em>Utforsk konseptet ↗</em></span></span></div>
+            <div class="example__meta"><h3 class="example__title">Lun Restaurant</h3><p class="example__kind">Restaurant · fiktivt firma</p><p class="example__feat">Meny, atmosfære og bordbestilling</p><div class="example__actions"><a class="btn btn--glass btn--sm" href="eksempler/restaurant.html" target="_blank" rel="noopener">Åpne siden ↗</a><button class="btn btn--glass btn--sm" type="button" data-mobil="eksempler/restaurant.html" data-navn="Lun Restaurant">Åpne som mobil</button></div></div>
+          </li>
+          <li class="example" data-reveal>
+            <div class="example__frame"><a class="example__lenke" href="eksempler/renhold.html" target="_blank" rel="noopener" aria-label="Åpne eksempelsiden for Klart Renhold"></a><span class="example-cover" aria-hidden="true"><img src="eksempler/bilder/nye/renhold.webp" alt="" loading="lazy"><span class="example-cover__shade"></span><span class="example-cover__content"><small>RENHOLD / NETTSIDE</small><strong>KLART<br>Renhold</strong><em>Utforsk konseptet ↗</em></span></span></div>
+            <div class="example__meta"><h3 class="example__title">Klart Renhold</h3><p class="example__kind">Renhold · fiktivt firma</p><p class="example__feat">Tjenester, priser og forespørsel</p><div class="example__actions"><a class="btn btn--glass btn--sm" href="eksempler/renhold.html" target="_blank" rel="noopener">Åpne siden ↗</a><button class="btn btn--glass btn--sm" type="button" data-mobil="eksempler/renhold.html" data-navn="Klart Renhold">Åpne som mobil</button></div></div>
           </li>
         </ul>
       </div>

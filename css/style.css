@@ -1848,3 +1848,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .packages__notes p { gap: .55rem; }
 .packages__notes svg { width: 17px; height: 17px; }
 .packages { padding-bottom: clamp(2rem, 3vw, 3rem); }
+
+/* Praktiske detaljer er tilgjengelige ved behov. */
+.packages__disclosure { width: fit-content; max-width: min(100%, 42rem); margin: 1.15rem auto 0; color: var(--on-dark-soft); font-size: .8125rem; }
+.packages__disclosure summary { cursor: pointer; text-align: center; text-decoration: underline; text-underline-offset: .2em; }
+.packages__disclosure .packages__notes { margin: .75rem auto 0; gap: .3rem; font-size: .8125rem; }
