@@ -216,6 +216,24 @@
 
   /* Legg til valgt tjeneste uten å slette det besøkende allerede har skrevet. */
   var messageField = document.getElementById("f-melding");
+  var servicesByKey = {
+    google: "Bli synlig på Google",
+    anmeldelser: "Få flere Google-anmeldelser",
+    booking: "La kundene bestille selv",
+    automatisering: "Spar tid med smarte automatiseringer",
+    seo: "Bli lettere funnet i søk",
+    landingssider: "Gjør besøkende til henvendelser"
+  };
+  var selectedService = new URLSearchParams(window.location.search).get("tjeneste");
+  if (messageField && Object.prototype.hasOwnProperty.call(servicesByKey, selectedService) && !messageField.value.trim()) {
+    messageField.value = "Jeg ønsker hjelp med: " + servicesByKey[selectedService] + "\n\n";
+    var contactTitle = document.getElementById("kontakt-tittel");
+    var contactLead = document.querySelector(".contact__lead");
+    var messageLabel = document.querySelector("label[for='f-melding']");
+    if (contactTitle) contactTitle.textContent = "Fortell oss hva du trenger";
+    if (contactLead) contactLead.textContent = "Fortell litt om bedriften og hva du ønsker hjelp med, så tar vi kontakt.";
+    if (messageLabel) messageLabel.textContent = "Hva ønsker du hjelp med?";
+  }
   document.querySelectorAll("[data-tjeneste]").forEach(function (link) {
     link.addEventListener("click", function () {
       if (!messageField) return;

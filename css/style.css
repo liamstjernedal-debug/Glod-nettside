@@ -204,7 +204,7 @@ h1, h2, h3, .h2 { font-family: var(--font-visning); font-weight: 500; letter-spa
     background: linear-gradient(var(--ember), var(--ember)) left bottom / 0% 2px no-repeat;
     transition: background-size 0.35s var(--ease);
   }
-  .nav__list a:hover, .nav__list a[aria-current="true"] { background-size: 100% 2px; }
+  .nav__list a:hover, .nav__list a[aria-current="true"], .nav__list a[aria-current="page"] { background-size: 100% 2px; }
 }
 @media (max-width: 380px) { .topbar__logo img { width: 118px; } .topbar .btn--sm { padding-inline: 0.75rem; } }
 
@@ -443,6 +443,74 @@ h1, h2, h3, .h2 { font-family: var(--font-visning); font-weight: 500; letter-spa
   .services__intro { grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 4rem; }
   .service { grid-template-columns: 5.5rem minmax(0, 1fr) minmax(0, 1fr); gap: 2rem; padding: 2.2rem 0; }
   .service__detail { grid-column: auto; }
+}
+
+/* Oversikt på forsiden og egen tjenesteside. */
+.service-teaser__layout { display: grid; gap: clamp(2.5rem, 5vw, 5rem); align-items: end; }
+.service-teaser__lead { max-width: 31rem; margin: 1.25rem 0 1.75rem; font-size: var(--fs-lead); color: var(--graa); }
+.teaser-list { list-style: none; border-top: 1.5px solid var(--blekk); }
+.teaser-list li { border-bottom: 1px solid var(--linje); }
+.teaser-list a { display: grid; grid-template-columns: 3rem 1fr 1rem; gap: 1rem; align-items: center; padding: 1.25rem 0; text-decoration: none; transition: color 0.25s var(--ease); }
+.teaser-list a:hover, .teaser-list a:focus-visible { color: var(--ember-tekst); }
+.teaser-list a > span:first-child { font-family: var(--font-visning); font-size: 1.5rem; color: var(--ember-tekst); }
+.teaser-list a > span:last-child { font-family: Arial, sans-serif; color: var(--ember-tekst); }
+.teaser-list strong { font-family: var(--font-visning); font-size: clamp(1.25rem, 1rem + 0.7vw, 1.75rem); font-weight: 500; }
+@media (min-width: 900px) { .service-teaser__layout { grid-template-columns: 1fr 1fr; } }
+.service-page-hero { padding: clamp(4rem, 8vw, 8rem) 0 clamp(4rem, 7vw, 7rem); }
+.service-page-hero__grid { display: grid; gap: 2rem; align-items: end; }
+.service-page-hero h1 { max-width: 12ch; font-size: clamp(3.3rem, 2rem + 5.5vw, 7rem); line-height: 0.96; letter-spacing: -0.035em; }
+.service-page-hero__grid > div:last-child { max-width: 29rem; color: var(--graa); font-size: var(--fs-lead); }
+.service-page-hero__jump { display: inline-block; margin-top: 1.5rem; color: var(--blekk); font-weight: 600; font-size: 1rem; text-underline-offset: 0.3em; text-decoration-color: var(--ember); }
+.service-page-hero__jump span { font-family: Arial, sans-serif; color: var(--ember-tekst); }
+.directory-head { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1.5px solid var(--blekk); padding-bottom: 1rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; color: var(--ember-tekst); }
+.service-panel { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; padding: clamp(2.5rem, 4vw, 4rem) 0; border-bottom: 1px solid var(--linje-sterk); scroll-margin-top: calc(var(--header-h) + 1rem); }
+.service-panel__heading { display: grid; grid-template-columns: 3.5rem minmax(0, 1fr); gap: 1rem; align-items: start; }
+.service-panel__number { font-family: var(--font-visning); color: var(--ember-tekst); font-size: 2.25rem; line-height: 1; }
+.service-panel h2 { font-size: clamp(2rem, 1.5rem + 1.6vw, 3rem); line-height: 1.04; max-width: 15ch; overflow-wrap: anywhere; }
+.service-panel__category { margin-top: 0.75rem; color: var(--ember-tekst); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.service-panel__body { max-width: 32rem; color: var(--graa); }
+.service-panel__price { margin-top: 1.5rem; color: var(--blekk); }
+.service-panel__price strong { font-family: var(--font-visning); font-size: 1.75rem; font-weight: 500; }
+.service-panel__price span { color: var(--graa); font-size: 0.875rem; }
+.service-panel__link { display: inline-flex; gap: 0.7rem; align-items: center; margin-top: 1rem; color: var(--blekk); font-weight: 600; text-decoration-color: var(--ember); text-underline-offset: 0.3em; }
+.service-panel__link svg { width: 1rem; height: 1rem; fill: none; stroke: var(--ember-tekst); stroke-width: 2; transition: transform 0.25s var(--ease); }
+.service-panel__link:hover svg, .service-panel__link:focus-visible svg { transform: translate(3px, -3px); }
+.service-visual { position: relative; min-height: 13rem; display: flex; flex-direction: column; justify-content: space-between; padding: 1.5rem; background: var(--papir-2); overflow: hidden; transition: background-color 0.3s; }
+.service-panel:nth-of-type(even) .service-visual { background: var(--blekk); color: var(--papir); }
+.service-panel:hover .service-visual, .service-panel:focus-within .service-visual { background: #e8ddcb; }
+.service-panel:nth-of-type(even):hover .service-visual, .service-panel:nth-of-type(even):focus-within .service-visual { background: #342920; }
+.service-visual__caption, .service-visual__index { font-size: 0.68rem; letter-spacing: 0.12em; font-weight: 600; opacity: 0.75; }
+.service-visual__index { align-self: flex-end; }
+.service-visual__flow { display: flex; flex-direction: column; align-items: flex-start; gap: 0.25rem; padding-block: 0.75rem; }
+.service-visual__flow span { font-family: var(--font-visning); font-size: 1rem; line-height: 1.2; }
+.service-visual__flow i { width: 1px; height: 0.6rem; margin-left: 0.25rem; background: var(--ember); transform-origin: top; transition: transform 0.5s var(--ease); }
+.service-panel:hover .service-visual__flow i, .service-panel:focus-within .service-visual__flow i { transform: scaleY(0.6); }
+.service-terms { display: grid; gap: 0.75rem; max-width: 55rem; padding: 2rem 0 0; color: var(--graa); font-size: 0.9375rem; }
+.service-page-end { margin-top: clamp(3rem, 6vw, 6rem); background: var(--papir-2); }
+.service-page-end::before { content: none; }
+.service-page-end__inner { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 2rem; }
+@media (min-width: 900px) {
+  .service-page-hero__grid { grid-template-columns: 1.25fr 0.75fr; gap: 4rem; }
+  .service-panel { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 0.9fr); gap: clamp(2rem, 3vw, 3.5rem); align-items: start; }
+  .service-panel:nth-of-type(even) .service-visual { transform: translateY(1.75rem); }
+  .service-panel:nth-of-type(even) { padding-bottom: calc(clamp(2.5rem, 4vw, 4rem) + 1.75rem); }
+}
+/* Diskret bevegelse uten å flytte layouten. */
+@media (prefers-reduced-motion: no-preference) {
+  .js .hero__title, .js .hero__lead, .js .hero__cta, .js .hero__fordeler { animation: inn 0.7s var(--ease) both; }
+  .js .hero__lead { animation-delay: 0.12s; }
+  .js .hero__cta { animation-delay: 0.22s; }
+  .js .hero__fordeler { animation-delay: 0.32s; }
+  .hero::after { animation: hero-drift 12s ease-in-out infinite alternate; }
+  @keyframes hero-drift { from { transform: translateY(0); } to { transform: translateY(-12px); } }
+  .step { position: relative; }
+  .step::after { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--ember); transform: scaleX(0); transform-origin: left; transition: transform 0.8s var(--ease); }
+  .step.is-visible::after { transform: scaleX(1); }
+  .example__frame { transition: border-color 0.3s var(--ease), transform 0.3s var(--ease); }
+  .example__frame:hover, .example__frame:focus-within { transform: translateY(-4px); border-color: var(--ember-tekst); }
+  .example__frame:focus-within .example-cover img { transform: scale(1.04); }
+  .pkg__inner { transition: transform 0.3s var(--ease); }
+  .pkg:hover .pkg__inner, .pkg:focus-within .pkg__inner { transform: translateX(5px); }
 }
 
 /* =========================================================
