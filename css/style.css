@@ -1869,3 +1869,16 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .hosting__exclusions { margin: 0 0 1rem; color: var(--on-dark-soft); font-size: .875rem; }
 .hosting__exclusions summary { cursor: pointer; text-decoration: underline; text-underline-offset: .2em; }
 .hosting__exclusions p { margin-top: .5rem; line-height: 1.6; }
+
+/* Nettstraks: ordmerke, footer og myk overgang */
+.topbar__logo img { width: 158px; height: auto; }
+.footer--nettstraks { padding-top: 2.5rem; padding-bottom: .25rem; }
+.footer__nettstraks-top { display:flex; align-items:start; justify-content:space-between; gap:1.5rem; padding-bottom:1.75rem; }
+.footer--nettstraks .footer__brand img { width: 158px; height: auto; }
+.footer--nettstraks .footer__brand p { margin-top:.4rem; }
+.footer--nettstraks .footer__bottom { padding-block:1.1rem; }
+.hero::after { content:""; position:absolute; z-index:0; pointer-events:none; inset:auto 0 0; height:clamp(64px,9vw,125px); background:linear-gradient(to bottom,rgba(11,22,32,0) 0%,rgba(76,91,127,.13) 25%,rgba(45,56,85,.48) 60%,#0b1620 100%); }
+.hero__inner { position:relative; z-index:1; }
+.gallery { overscroll-behavior:auto; overflow-y:hidden; touch-action:pan-x pan-y pinch-zoom; }
+.gallery__track { touch-action:pan-x pan-y pinch-zoom; }
+@media(max-width:600px) { .footer__nettstraks-top { flex-direction:column; } .topbar__logo img { width:145px; } }

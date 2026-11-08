@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TALL Regnskap – eksempelside laget av Glød</title>
-  <meta name="description" content="Eksempelside laget av Glød for et fiktivt regnskapskontor. Tjenester, om oss og kontaktinfo.">
+  <title>TALL Regnskap – eksempelside laget av Nettstraks</title>
+  <meta name="description" content="Eksempelside laget av Nettstraks for et fiktivt regnskapskontor. Tjenester, om oss og kontaktinfo.">
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#12304A">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2312304A'/%3E%3Cpath d='M9 22V15M16 22V10M23 22V18' stroke='%237CCBBE' stroke-width='3.4' stroke-linecap='round'/%3E%3C/svg%3E">
   <link rel="preload" href="bilder/regnskap/hero.webp" as="image">
   <link rel="stylesheet" href="felles/felles.css">
   <style>
-    /* Fonten ligger lokalt i Glød-mappen. Ingen eksterne forespørsler. */
+    /* Fonten ligger lokalt i Nettstraks-mappen. Ingen eksterne forespørsler. */
     @font-face {
       font-family: "Plus Jakarta Sans";
       src: url("../assets/fonts/plus-jakarta-sans.woff2") format("woff2");
@@ -191,6 +191,11 @@
       .hero__bilde { animation: none; }
       .bildeknapp img, .kort, .steg, .knapp { transition: none; }
     }
+
+    /* TALL: typografisk og grafisk identitet */
+    :root { --side-bg:#f5f0e6; --side-ink:#142e40; --side-focus:#31546a; --tittel:Georgia,serif; --tittel-vekt:400; --tittel-sperring:-.045em; --aksent:#17384e; --aksent-hover:#294c60; --aksent-pa:#fff; --aksent-tekst:#6a776f; --aksent-pa-mork:#dfc9a5; --lys:#f5f0e6; --lys-farge:#e8e2d6; --kort-bg:#f5f0e6; --mork:#132e40; --mork-kort:#1c3b4d; --bunn-bg:#102838; --topp-bg:#f5f0e6; --ikon-bg:#e8e2d6; --ikon-farge:#17384e; --knapp-radius:2px; --bilde-radius:2px; --kort-radius:2px; --ikon-radius:2px; }
+    .topp{backdrop-filter:none;-webkit-backdrop-filter:none}.logo svg{display:none}.logo span{font-family:var(--side-font);font-weight:800;letter-spacing:.15em;font-size:1.15rem}.knapp,.knapp:hover{box-shadow:none}.hero{background:#17384e;min-height:clamp(560px,78vh,740px);align-items:center}.hero::after{display:none}.hero__tekst{position:relative;z-index:1}.hero__merke{padding:0;border:0;border-radius:0;background:none;backdrop-filter:none;-webkit-backdrop-filter:none;color:#d6c7ac;font-size:.7rem;letter-spacing:.17em;text-transform:uppercase}.hero h1{font-weight:400;max-width:12ch;text-shadow:none}.hero p{max-width:29rem}.tall-hero-grafikk{position:absolute;inset:0 0 0 52%;border-left:1px solid #ffffff30;overflow:hidden;display:flex;align-items:center;justify-content:center;color:#e9e1d0}.tall-hero-grafikk strong{font:400 clamp(280px,40vw,550px)/1 Georgia,serif;opacity:.12}.tall-hero-grafikk i{position:absolute;width:65%;aspect-ratio:1;border:1px solid #e8e0ce66;border-radius:50%}.tall-hero-grafikk span,.tall-hero-grafikk small{position:absolute;font:600 .7rem/1.7 var(--side-font);letter-spacing:.16em;color:#d6c7ac}.tall-hero-grafikk span{top:12%;right:10%}.tall-hero-grafikk small{bottom:10%;left:10%}.kort{border-radius:0;box-shadow:none;border:0;border-top:1px solid var(--strek);background:transparent} .kort__ikon{display:none}.kort{grid-template-columns:1fr;gap:.45rem}.kort:hover{box-shadow:none}.tjenester img[src$=".svg"],.om img[src$=".svg"]{aspect-ratio:10/11;object-fit:contain}.seksjon{padding-block:clamp(70px,8vw,115px)}@media(max-width:700px){.hero{min-height:620px}.hero__tekst{padding-top:100px;padding-bottom:80px}.tall-hero-grafikk{inset:0 0 0 58%;opacity:.55}.tall-hero-grafikk strong{font-size:280px}.hero h1{font-size:clamp(2.8rem,12vw,4.3rem)}}
+
   </style>
 </head>
 <body>
@@ -198,8 +203,8 @@
 
   <div class="eks-bar" role="note">
     <span class="eks-bar__merke">EKSEMPEL</span>
-    <span>Eksempelside laget av Glød for et fiktivt firma.</span>
-    <a href="../index.html#eksempler">Til Glød</a>
+    <span>Eksempelside laget av Nettstraks for et fiktivt firma.</span>
+    <a href="../index.html#eksempler">Til Nettstraks</a>
   </div>
 
   <header class="topp" id="topp">
@@ -221,7 +226,7 @@
   <main id="innhold">
     <!-- ============ HERO ============ -->
     <section class="hero" aria-labelledby="hero-tittel">
-      <img class="hero__bilde" src="bilder/regnskap/hero.webp" alt="Lyst kontormiljø med møterom bak glassvegger og varme tredetaljer" width="1600" height="1068" fetchpriority="high">
+      <div class="tall-hero-grafikk" aria-hidden="true"><span>01 / 03</span><strong>T</strong><i></i><small>REGNSKAP &amp; RÅDGIVNING<br>OSLO</small></div>
       <div class="wrap hero__tekst">
         <p class="hero__merke"><i aria-hidden="true"></i>Regnskapskontor i Oslo</p>
         <h1 id="hero-tittel">Tallene på plass.<br>Blikket fremover.</h1>
@@ -242,8 +247,8 @@
         </div>
         <div class="tjenester">
           <div data-r>
-          <button class="bildeknapp " type="button" data-stor="bilder/regnskap/tjenester.webp" data-alt="Ryddig møterom med dagslys, et langt bord og stoler ved store vinduer" aria-label="Vis større bilde: Ryddig møterom med dagslys, et langt bord og stoler ved store vinduer">
-            <img src="bilder/regnskap/tjenester.webp" alt="Ryddig møterom med dagslys, et langt bord og stoler ved store vinduer" width="1600" height="1068" loading="lazy">
+          <button class="bildeknapp " type="button" data-stor="bilder/tall-oversikt.svg" data-alt="Grafisk illustrasjon av TALLs regnskapstjenester" aria-label="Vis større bilde: Grafisk illustrasjon av TALLs regnskapstjenester">
+            <img src="bilder/tall-oversikt.svg" alt="Grafisk illustrasjon av TALLs regnskapstjenester" width="1600" height="1068" loading="lazy">
             <span class="bildeknapp__ikon" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M8.5 11h5M11 8.5v5"/></svg></span>
           </button>
           </div>
@@ -302,11 +307,11 @@
     <section class="seksjon seksjon--farge" id="om" aria-labelledby="om-tittel">
       <div class="wrap om">
         <figure data-r>
-          <button class="bildeknapp " type="button" data-stor="bilder/regnskap/om-oss.webp" data-alt="Rolig kontorlounge med lyse trevegger og sitteplasser i naturlig lys" aria-label="Vis større bilde: Rolig kontorlounge med lyse trevegger og sitteplasser i naturlig lys">
-            <img src="bilder/regnskap/om-oss.webp" alt="Rolig kontorlounge med lyse trevegger og sitteplasser i naturlig lys" width="1600" height="1067" loading="lazy">
+          <button class="bildeknapp " type="button" data-stor="bilder/tall-komposisjon.svg" data-alt="Grafisk illustrasjon av oversikt og retning" aria-label="Vis større bilde: Grafisk illustrasjon av oversikt og retning">
+            <img src="bilder/tall-komposisjon.svg" alt="Grafisk illustrasjon av oversikt og retning" width="1600" height="1067" loading="lazy">
             <span class="bildeknapp__ikon" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M8.5 11h5M11 8.5v5"/></svg></span>
           </button>
-          <figcaption>Kontormiljø som inspirasjon til det fiktive konseptet.</figcaption>
+          <figcaption>Grafisk illustrasjon for det fiktive konseptet.</figcaption>
         </figure>
         <div>
           <p class="overline" data-r>Om oss</p>
@@ -369,7 +374,7 @@
   <footer class="bunn">
     <div class="wrap">
       <p>© <span data-aar>2026</span> TALL Regnskap (fiktivt firma) · Oslo (fiktivt konsept) · 000 00 000</p>
-      <p><b>EKSEMPEL</b>Eksempelside laget av Glød for et fiktivt firma. <a href="../index.html#eksempler">Til Glød</a></p>
+      <p><b>EKSEMPEL</b>Eksempelside laget av Nettstraks for et fiktivt firma. <a href="../index.html#eksempler">Til Nettstraks</a></p>
     </div>
   </footer>
 

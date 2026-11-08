@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Nordvegg Tømrer – eksempelside laget av Glød</title>
-  <meta name="description" content="Eksempelside laget av Glød for en fiktiv snekker. Tjenester, om oss og kontaktinfo.">
+  <title>Nordvegg Tømrer – eksempelside laget av Nettstraks</title>
+  <meta name="description" content="Eksempelside laget av Nettstraks for en fiktiv snekker. Tjenester, om oss og kontaktinfo.">
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#1E1B18">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231E1B18'/%3E%3Cpath d='M9 24V8l14 16V8' fill='none' stroke='%23E8742A' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
   <link rel="preload" href="bilder/snekker/hero.webp" as="image">
   <link rel="stylesheet" href="felles/felles.css">
   <style>
-    /* Fonten ligger lokalt i Glød-mappen. Ingen eksterne forespørsler. */
+    /* Fonten ligger lokalt i Nettstraks-mappen. Ingen eksterne forespørsler. */
     @font-face {
       font-family: "Plus Jakarta Sans";
       src: url("../assets/fonts/plus-jakarta-sans.woff2") format("woff2");
@@ -190,6 +190,11 @@
     }
 
     .prosjektbilder { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:2rem 0; } .prosjektbilder img { width:100%; height:300px; object-fit:cover; border-radius:var(--bilde-radius); } .prosjektbilder figcaption { margin-top:.6rem; font-size:.875rem; color:var(--dempet); } @media(max-width:700px){.prosjektbilder{grid-template-columns:1fr}.prosjektbilder img{height:240px}}
+
+    /* Nordvegg: redaksjonell arkitekturprofil */
+    :root { --side-bg:#f2eee6; --side-ink:#302d27; --side-focus:#705644; --side-font:"Plus Jakarta Sans",system-ui,sans-serif; --tittel:Georgia,serif; --tittel-vekt:400; --tittel-sperring:-.04em; --aksent:#a7896b; --aksent-hover:#c2a788; --aksent-pa:#1e1b18; --aksent-tekst:#795a42; --aksent-pa-mork:#d7b899; --lys:#f2eee6; --lys-farge:#e6dfd2; --kort-bg:#f7f4ed; --mork:#292d28; --mork-kort:#343a32; --bunn-bg:#202620; --topp-bg:#f2eee6; --ikon-bg:#e7ded0; --ikon-farge:#76553d; --knapp-radius:2px; --bilde-radius:2px; --kort-radius:2px; --ikon-radius:2px; --hero-overlegg:linear-gradient(90deg,rgba(25,27,23,.75),rgba(25,27,23,.08) 75%),linear-gradient(0deg,rgba(25,27,23,.58),transparent 65%); }
+    .topp{backdrop-filter:none;-webkit-backdrop-filter:none}.logo svg{display:none}.logo b{font-family:var(--side-font);font-size:1rem}.logo small{font-size:.6rem}.knapp{box-shadow:none;letter-spacing:.02em}.knapp:hover{box-shadow:none}.hero{min-height:clamp(580px,83vh,820px)}.hero__merke{padding:0;background:none;border:0;border-radius:0;backdrop-filter:none;-webkit-backdrop-filter:none;text-transform:uppercase;letter-spacing:.16em;font-size:.7rem}.hero h1{text-shadow:none;max-width:12ch;font-weight:400}.hero__bilde{object-position:center 58%;filter:saturate(.8)}.kort{border-radius:0;box-shadow:none} .kort__ikon{display:none}.kort{grid-template-columns:1fr;gap:.45rem}.kort:hover{box-shadow:none}.prosjektbilder{grid-template-columns:1.2fr .8fr;align-items:end;gap:1.5rem}.prosjektbilder img{height:clamp(300px,36vw,520px)}.prosjektbilder figure:last-child img{height:clamp(260px,30vw,430px)}.prosjektbilder figcaption{font-size:.75rem;text-transform:uppercase;letter-spacing:.1em}.seksjon{padding-block:clamp(65px,7vw,110px)}@media(max-width:700px){.prosjektbilder{grid-template-columns:1fr}.prosjektbilder img,.prosjektbilder figure:last-child img{height:280px}.hero h1{font-size:clamp(2.8rem,12vw,4.3rem)}}
+
   </style>
 </head>
 <body>
@@ -197,8 +202,8 @@
 
   <div class="eks-bar" role="note">
     <span class="eks-bar__merke">EKSEMPEL</span>
-    <span>Eksempelside laget av Glød for et fiktivt firma.</span>
-    <a href="../index.html#eksempler">Til Glød</a>
+    <span>Eksempelside laget av Nettstraks for et fiktivt firma.</span>
+    <a href="../index.html#eksempler">Til Nettstraks</a>
   </div>
 
   <header class="topp" id="topp">
@@ -208,7 +213,7 @@
         <span><b>NORDVEGG</b><small>Tømrer</small></span>
       </a>
       <nav class="nav" aria-label="Hovedmeny">
-        <a href="#tjenester">Tjenester</a>
+        <a href="#prosjekter">Prosjekter</a><a href="#tjenester">Tjenester</a>
         <a href="#slik">Slik jobber vi</a>
         <a href="#om">Om oss</a>
           <a href="#omrader">Områder</a>
@@ -224,11 +229,13 @@
       <img class="hero__bilde" src="bilder/snekker/hero.webp" alt="Ferdig moderne hus med trekledd fasade, store vinduer og en ryddig hage" width="1600" height="1342" fetchpriority="high">
       <div class="wrap hero__tekst">
         <p class="hero__merke"><i aria-hidden="true"></i>Tømrer i Bergen</p>
-        <h1 id="hero-tittel">Håndverk som varer.</h1>
+        <h1 id="hero-tittel">Rom for livet.<br>Bygget for å vare.</h1>
         <p>Tilbygg, terrasser og arbeid inne. Vi kommer på befaring og gir deg et tilbud.</p>
         <a class="knapp" href="#kontakt">Be om befaring <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
     </section>
+
+    <section class="seksjon seksjon--lys" id="prosjekter" aria-labelledby="prosjekt-tittel"><div class="wrap"><div class="topptekst"><div><p class="overline" data-r>Fiktive prosjektkonsepter</p><h2 class="h2" id="prosjekt-tittel" data-r>Gjennomført fra idé til detalj.</h2></div><p class="ingress" data-r>Illustrasjoner som viser hvordan håndverk og materialer kan presenteres.</p></div><div class="prosjektbilder" data-r-gruppe><figure data-r><img src="bilder/snekker/tjenester.webp" alt="Lyst interiør med tretrapp" loading="lazy"><figcaption>Innvendig oppussing · illustrasjonsprosjekt</figcaption></figure><figure data-r><img src="bilder/snekker/om-oss.webp" alt="Stue med trepanel og store glassdører" loading="lazy"><figcaption>Tilbygg og detaljer · illustrasjonsprosjekt</figcaption></figure></div><a class="knapp" href="#kontakt">Fortell oss om prosjektet</a></div></section>
 
     <!-- ============ TJENESTER ============ -->
     <section class="seksjon seksjon--lys" id="tjenester" aria-labelledby="tj-tittel">
@@ -336,7 +343,7 @@
       </div>
     </section>
 
-    <section class="seksjon seksjon--lys" id="prosjekter" aria-labelledby="prosjekt-tittel"><div class="wrap"><div class="topptekst"><div><p class="overline" data-r>Fiktive prosjektkonsepter</p><h2 class="h2" id="prosjekt-tittel" data-r>Gjennomført fra idé til detalj.</h2></div><p class="ingress" data-r>Illustrasjoner som viser hvordan håndverk og materialer kan presenteres.</p></div><div class="prosjektbilder" data-r-gruppe><figure data-r><img src="bilder/snekker/tjenester.webp" alt="Lyst interiør med tretrapp" loading="lazy"><figcaption>Innvendig oppussing · illustrasjonsprosjekt</figcaption></figure><figure data-r><img src="bilder/snekker/om-oss.webp" alt="Stue med trepanel og store glassdører" loading="lazy"><figcaption>Tilbygg og detaljer · illustrasjonsprosjekt</figcaption></figure></div><a class="knapp" href="#kontakt">Fortell oss om prosjektet</a></div></section>
+
     <!-- ============ SPØRSMÅL OG SVAR ============ -->
     <section class="seksjon seksjon--farge" id="sporsmal" aria-labelledby="faq-tittel">
       <div class="wrap faq">
@@ -389,7 +396,7 @@
   <footer class="bunn">
     <div class="wrap">
       <p>© <span data-aar>2026</span> Nordvegg Tømrer (fiktivt firma) · Bergen (fiktivt konsept) · 000 00 000</p>
-      <p><b>EKSEMPEL</b>Eksempelside laget av Glød for et fiktivt firma. <a href="../index.html#eksempler">Til Glød</a></p>
+      <p><b>EKSEMPEL</b>Eksempelside laget av Nettstraks for et fiktivt firma. <a href="../index.html#eksempler">Til Nettstraks</a></p>
     </div>
   </footer>
 
