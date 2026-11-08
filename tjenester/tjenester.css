@@ -1,0 +1,98 @@
+/* Bare tjenestesiden: typografi, demonstrasjoner og interaksjoner. */
+.services-page .service-page-hero { padding-block: clamp(3.5rem, 6vw, 6.5rem); }
+.services-page .service-page-hero h1 { max-width: 11ch; }
+.services-page .service-page-hero__grid > div:last-child { max-width: 30rem; }
+.services-page .service-panel { padding-block: clamp(3rem, 5.5vw, 5.5rem); align-items: start; }
+.services-page .service-panel h2 { max-width: 18ch; overflow-wrap: normal; hyphens: auto; text-wrap: balance; }
+.services-page .service-panel__heading { grid-template-columns: 3rem minmax(0,1fr); }
+.services-page .service-panel__body { line-height: 1.6; }
+.services-page .service-panel__note { margin-top: .75rem; color: var(--graa); font-size: .875rem; }
+.services-page .service-panel__link { padding-block: .2rem; }
+.services-page .service-panel__link:hover, .services-page .service-panel__link:focus-visible { color: var(--ember-tekst); }
+.services-page .demo { position: relative; min-width: 0; padding: clamp(1.25rem, 2vw, 2rem); background: #e9e1d3; color: var(--blekk); overflow: hidden; }
+.services-page .demo__eyebrow { display: block; font-family: var(--font-tekst); font-size: .65rem; font-weight: 600; line-height: 1.4; letter-spacing: .11em; color: var(--ember-tekst); }
+.services-page .demo__foot { margin-top: 1.4rem; font-size: .75rem; color: var(--graa); line-height: 1.4; }
+.services-page .demo__foot > span { font-family: Arial,sans-serif; color: var(--ember-tekst); }
+.services-page .demo-search { display:flex; align-items:center; gap:.7rem; margin-top:1.7rem; padding:.75rem; background:var(--papir-3); border:1px solid var(--linje); font-size:.75rem; color:var(--graa); }
+.services-page .demo-search__icon { width:.8rem; height:.8rem; border:1.5px solid var(--ember-tekst); border-radius:50%; position:relative; flex:none; }
+.services-page .demo-search__icon::after { content:""; position:absolute; width:.3rem; height:1.5px; background:var(--ember-tekst); right:-.24rem; bottom:-.12rem; transform:rotate(45deg); }
+.services-page .profile-card { display:flex; gap:.8rem; align-items:flex-start; padding:1rem .75rem; background:var(--papir-3); border:1px solid var(--linje); border-top:0; }
+.services-page .profile-card__mark { display:grid; place-items:center; width:2.5rem; height:2.5rem; flex:none; border-radius:50%; background:#d7bfa6; font:1.5rem var(--font-visning); }
+.services-page .profile-card strong,.services-page .profile-card small,.services-page .profile-card__stars { display:block; }
+.services-page .profile-card strong { font-family:var(--font-visning); font-size:1.1rem; font-weight:500; }
+.services-page .profile-card small { color:var(--graa); font-size:.68rem; line-height:1.5; }
+.services-page .profile-card__stars { color:var(--ember-tekst); letter-spacing:.15em; font-family:Arial,sans-serif; font-size:.95rem; margin:.2rem 0; }
+.services-page .demo--reviews,.services-page .demo--automation { background:var(--blekk); color:var(--papir); }
+.services-page .demo--reviews .demo__eyebrow,.services-page .demo--automation .demo__eyebrow { color:#f59b7f; }
+.services-page .demo--reviews .demo__foot { color:#cbbfb2; }
+.services-page .review-note { margin:1.5rem 0; padding:1.3rem; background:var(--papir); color:var(--blekk); transform:rotate(-2deg); }
+.services-page .review-note__label { display:block; margin-bottom:.65rem; font-size:.6rem; font-weight:600; letter-spacing:.12em; color:var(--ember-tekst); }
+.services-page .review-note strong { display:block; font:500 1.5rem/1.1 var(--font-visning); }
+.services-page .review-note p { margin:.4rem 0 .8rem; font-size:.78rem; color:var(--graa); }
+.services-page .review-note__link { display:inline-block; font-size:.75rem; font-weight:600; border-bottom:1px solid var(--ember); }
+.services-page .review-note__link span { font-family:Arial,sans-serif; }
+.services-page .review-route { display:flex; align-items:center; gap:.35rem; font-size:.65rem; color:#e2d8cc; }
+.services-page .review-route i { flex:1; height:1px; background:var(--ember); transform-origin:left; }
+.services-page .booking-head { display:flex; justify-content:space-between; align-items:end; margin-top:1.5rem; }
+.services-page .booking-head small,.services-page .booking-head strong { display:block; }
+.services-page .booking-head small { font-size:.65rem; letter-spacing:.1em; color:var(--graa); }
+.services-page .booking-head strong { margin-top:.3rem; font:500 1.35rem var(--font-visning); }
+.services-page .booking-head > span { color:var(--ember-tekst); font-size:.7rem; font-weight:600; letter-spacing:.1em; }
+.services-page .booking-days { display:grid; grid-template-columns:repeat(5,1fr); gap:.25rem; margin:1.1rem 0; }
+.services-page .booking-days span { display:grid; place-items:center; gap:.25rem; padding:.5rem .15rem; font-size:.58rem; color:var(--graa); }
+.services-page .booking-days b { font:500 1.2rem var(--font-visning); color:var(--blekk); }
+.services-page .booking-days .is-day { background:var(--blekk); color:var(--papir); }
+.services-page .booking-days .is-day b { color:var(--papir); }
+.services-page .booking-times { display:flex; flex-wrap:wrap; gap:.4rem; }
+.services-page .booking-times button,.services-page .chat-questions button { font:600 .72rem var(--font-tekst); background:transparent; color:inherit; border:1px solid currentColor; border-radius:2px; cursor:pointer; transition:background-color .2s,color .2s; }
+.services-page .booking-times button { padding:.55rem .75rem; }
+.services-page .booking-times button:hover,.services-page .booking-times button[aria-pressed=true] { background:var(--blekk); color:var(--papir); }
+.services-page .booking-result { min-height:2.7em; margin-top:.8rem; color:var(--graa); font-size:.72rem; }
+.services-page .auto-flow { margin-top:1.5rem; }
+.services-page .auto-flow div { position:relative; display:grid; grid-template-columns:2rem 1fr; column-gap:.7rem; padding:0 0 1.15rem; }
+.services-page .auto-flow div:not(:last-child)::before { content:""; position:absolute; top:2rem; bottom:0; left:1rem; width:1px; background:var(--ember); transform-origin:top; }
+.services-page .auto-flow__symbol { grid-row:span 2; display:grid; place-items:center; width:2rem; height:2rem; border:1px solid var(--ember); border-radius:50%; color:#f59b7f; font-size:.65rem; }
+.services-page .auto-flow strong { font:500 1.05rem var(--font-visning); }
+.services-page .auto-flow small { color:#cbbfb2; font-size:.7rem; }
+.services-page .seo-result { margin-top:1.4rem; padding:1.2rem; background:var(--papir-3); border-left:2px solid var(--ember); }
+.services-page .seo-result small { display:block; color:var(--graa); font-size:.7rem; }
+.services-page .seo-result strong { display:block; margin:.5rem 0; font:500 1.15rem/1.15 var(--font-visning); }
+.services-page .seo-result p { color:var(--graa); font-size:.75rem; line-height:1.45; }
+.services-page .seo-points { display:flex; flex-wrap:wrap; gap:.5rem 1rem; margin-top:1rem; font-size:.65rem; color:var(--ember-tekst); }
+.services-page .seo-points b { color:var(--blekk); font-weight:600; }
+.services-page .demo--landing { background:#dcd1c0; }
+.services-page .landing-preview { position:relative; min-height:14rem; margin-top:1.4rem; background:#faf7f0; overflow:hidden; }
+.services-page .landing-preview__bar { display:flex; justify-content:space-between; padding:.75rem; border-bottom:1px solid var(--linje); font-size:.6rem; letter-spacing:.1em; font-weight:600; }
+.services-page .landing-preview__content { position:relative; z-index:1; padding:1.1rem; }
+.services-page .landing-preview__content small { font-size:.55rem; letter-spacing:.1em; }
+.services-page .landing-preview__content strong { display:block; margin:.6rem 0 1rem; font:500 2.2rem/.92 var(--font-visning); }
+.services-page .landing-preview__cta { display:inline-block; padding:.5rem; background:var(--ember); font-size:.62rem; font-weight:600; }
+.services-page .landing-preview__cta span { font-family:Arial,sans-serif; }
+.services-page .landing-preview__shape { position:absolute; right:-2rem; bottom:-3rem; width:9rem; height:12rem; border-radius:50% 50% 0 0; background:#b7a48e; transform:rotate(-20deg); }
+.services-page .demo--chat { background:#e9e1d3; }
+.services-page .chat-head { display:flex; justify-content:space-between; align-items:center; padding-bottom:1rem; border-bottom:1px solid var(--linje); }
+.services-page .chat-head strong { display:block; margin-top:.35rem; font:500 1.2rem var(--font-visning); }
+.services-page .chat-head__dot { width:.6rem; height:.6rem; border-radius:50%; background:var(--ember); }
+.services-page .chat-window { display:flex; flex-direction:column; gap:.5rem; min-height:8rem; padding:1rem 0; }
+.services-page .chat-bubble { align-self:flex-start; max-width:90%; padding:.75rem; background:var(--papir-3); font-size:.75rem; line-height:1.45; }
+.services-page .chat-bubble--question { align-self:flex-end; color:var(--papir); background:var(--blekk); }
+.services-page .chat-questions { display:flex; flex-wrap:wrap; gap:.4rem; }
+.services-page .chat-questions button { padding:.5rem .6rem; text-align:left; }
+.services-page .chat-questions button:hover,.services-page .chat-questions button[aria-pressed=true] { color:var(--papir); background:var(--blekk); }
+.services-page .chat-disclaimer { margin-top:.9rem; font-size:.68rem; color:var(--graa); }
+.services-page .service-end__packages { margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--linje); color:var(--graa); font-size:.95rem; }
+.services-page .service-end__packages a { color:var(--blekk); font-weight:600; text-decoration-color:var(--ember); text-underline-offset:.25em; }
+@media (min-width:900px) {
+ .services-page .service-panel { grid-template-columns:minmax(0,1.04fr) minmax(0,.9fr) minmax(0,1.05fr); gap:clamp(1.5rem,3vw,3rem); }
+ .services-page .service-panel:nth-of-type(even) { padding-bottom:clamp(3rem,5.5vw,5.5rem); }
+ .services-page .service-panel:nth-of-type(even) .demo { transform:translateY(1.25rem); }
+}
+@media (prefers-reduced-motion:no-preference) {
+ .services-page .demo { transition:background-color .3s var(--ease); }
+ .services-page .service-panel:hover .review-route i,.services-page .service-panel:focus-within .review-route i { animation:demo-line 1s var(--ease) both; }
+ .services-page .service-panel:hover .auto-flow div::before,.services-page .service-panel:focus-within .auto-flow div::before { animation:demo-line-y .8s var(--ease) both; }
+ .services-page .profile-card { transition:transform .4s var(--ease); }
+ .services-page .service-panel:hover .profile-card { transform:translateY(-3px); }
+ @keyframes demo-line { from { transform:scaleX(.2); } to { transform:scaleX(1); } }
+ @keyframes demo-line-y { from { transform:scaleY(.2); } to { transform:scaleY(1); } }
+}

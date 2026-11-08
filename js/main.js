@@ -222,7 +222,8 @@
     booking: "La kundene bestille selv",
     automatisering: "Spar tid med smarte automatiseringer",
     seo: "Bli lettere funnet i søk",
-    landingssider: "Gjør besøkende til henvendelser"
+    landingssider: "Gjør besøkende til henvendelser",
+    "ki-chatbot": "KI-chatbot"
   };
   var selectedService = new URLSearchParams(window.location.search).get("tjeneste");
   if (messageField && Object.prototype.hasOwnProperty.call(servicesByKey, selectedService) && !messageField.value.trim()) {
