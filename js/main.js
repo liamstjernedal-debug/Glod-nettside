@@ -93,58 +93,28 @@
     });
   }
 
-  /* ---------- Hero-glød som følger musen svakt (kun desktop) ---------- */
-  var glow = document.querySelector("[data-parallax]");
-  var hero = document.querySelector(".hero");
-  if (glow && hero && finePointer.matches && !reduceMotion.matches) {
-    var tx = 0, ty = 0, cx = 0, cy = 0, raf = null, heroVisible = true;
-    var tick = function () {
-      cx += (tx - cx) * 0.06;
-      cy += (ty - cy) * 0.06;
-      glow.style.transform = "translate3d(" + cx.toFixed(2) + "px," + cy.toFixed(2) + "px,0)";
-      if (Math.abs(tx - cx) > 0.1 || Math.abs(ty - cy) > 0.1) {
-        raf = requestAnimationFrame(tick);
-      } else {
-        raf = null;
-      }
-    };
-    window.addEventListener("pointermove", function (e) {
-      if (!heroVisible) return;
-      tx = (e.clientX / window.innerWidth - 0.5) * 40;
-      ty = (e.clientY / window.innerHeight - 0.5) * 28;
-      if (!raf) raf = requestAnimationFrame(tick);
-    }, { passive: true });
-    if ("IntersectionObserver" in window) {
-      new IntersectionObserver(function (entries) {
-        heroVisible = entries[0].isIntersecting;
-      }).observe(hero);
-    }
-  }
-
-  /* ---------- Lett tilt på pakkekortene (kun desktop) ---------- */
+  /* ---------- Glød: et mykt lys som følger pekeren (kun desktop) ----------
+     Lyset flyttes med transform via CSS-variabler, én gang per bilde (rAF).
+     På mobil og med redusert bevegelse står lyset stille. */
   if (finePointer.matches && !reduceMotion.matches) {
-    document.querySelectorAll("[data-tilt]").forEach(function (card) {
-      var inner = card.querySelector(".pkg__inner");
-      var frame = null;
-      card.addEventListener("pointermove", function (e) {
-        var r = card.getBoundingClientRect();
-        var px = (e.clientX - r.left) / r.width;
-        var py = (e.clientY - r.top) / r.height;
-        if (frame) cancelAnimationFrame(frame);
-        frame = requestAnimationFrame(function () {
-          card.style.setProperty("--ry", ((px - 0.5) * 6).toFixed(2) + "deg");
-          card.style.setProperty("--rx", ((0.5 - py) * 5).toFixed(2) + "deg");
-          if (inner) {
-            inner.style.setProperty("--mx", (px * 100).toFixed(1) + "%");
-            inner.style.setProperty("--my", (py * 100).toFixed(1) + "%");
-          }
-        });
-      });
-      card.addEventListener("pointerleave", function () {
-        if (frame) cancelAnimationFrame(frame);
-        card.style.setProperty("--rx", "0deg");
-        card.style.setProperty("--ry", "0deg");
-      });
+    document.querySelectorAll("[data-glod]").forEach(function (flate) {
+      var lys = flate.querySelector(".glod");
+      if (!lys) return;
+      var mx = 0, my = 0, cx = null, cy = null, raf = null;
+      var tick = function () {
+        if (cx === null) { cx = mx; cy = my; }
+        cx += (mx - cx) * 0.12;
+        cy += (my - cy) * 0.12;
+        lys.style.setProperty("--gx", cx.toFixed(1) + "px");
+        lys.style.setProperty("--gy", cy.toFixed(1) + "px");
+        raf = (Math.abs(mx - cx) > 0.5 || Math.abs(my - cy) > 0.5) ? requestAnimationFrame(tick) : null;
+      };
+      flate.addEventListener("pointermove", function (e) {
+        var r = flate.getBoundingClientRect();
+        mx = e.clientX - r.left;
+        my = e.clientY - r.top;
+        if (!raf) raf = requestAnimationFrame(tick);
+      }, { passive: true });
     });
   }
 
