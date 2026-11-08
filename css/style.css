@@ -1862,3 +1862,10 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .packages__summary .packages__disclosure { margin: .45rem auto 0; font-size: .75rem; }
 .packages__summary .packages__disclosure p { max-width: 37rem; margin: .5rem auto 0; line-height: 1.6; }
 @media(max-width:480px){.packages__summary{padding:1rem}.packages__summary .packages__benefits{gap:.5rem 1rem}.packages__facts{line-height:1.6}}
+
+/* Tekstjusteringer for én kontaktperson og drift */
+.about__solo { max-width: 50rem; margin-inline: auto; }
+.about__solo .about__text { max-width: 48rem; }
+.hosting__exclusions { margin: 0 0 1rem; color: var(--on-dark-soft); font-size: .875rem; }
+.hosting__exclusions summary { cursor: pointer; text-decoration: underline; text-underline-offset: .2em; }
+.hosting__exclusions p { margin-top: .5rem; line-height: 1.6; }

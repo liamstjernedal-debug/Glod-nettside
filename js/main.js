@@ -240,14 +240,6 @@
     });
   }
 
-  /* ---------- Pakkeknapper velger pakke i skjemaet ---------- */
-  var pakkeSelect = document.getElementById("f-pakke");
-  document.querySelectorAll("[data-pakke]").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      if (pakkeSelect) pakkeSelect.value = btn.getAttribute("data-pakke");
-    });
-  });
-
   /* ---------- Kontaktskjema ---------- */
   var form = document.getElementById("kontaktskjema");
   if (!form) return;
@@ -262,9 +254,7 @@
     firmanavn: "Skriv inn navnet på firmaet. Har det ikke navn ennå, skriv «Ikke bestemt».",
     epost: "Skriv inn e-postadressen din.",
     epostFormat: "Det ser ikke ut som en gyldig e-postadresse.",
-    telefon: "Telefonnummeret ser ikke riktig ut.",
-    melding: "Skriv noen ord om hva du trenger.",
-    samtykke: "Du må krysse av her før vi kan kontakte deg."
+    melding: "Skriv noen ord om bedriften din."
   };
 
   var showError = function (input, text) {
@@ -281,11 +271,6 @@
   var validateField = function (input) {
     var v = input.type === "checkbox" ? input.checked : input.value.trim();
     var name = input.name;
-    if (name === "telefon") {
-      var ok = !v || /^[+0-9 ()-]{5,20}$/.test(v);
-      showError(input, ok ? "" : messages.telefon);
-      return ok;
-    }
     if (input.required && !v) {
       showError(input, messages[name] || "Dette feltet må fylles ut.");
       return false;
@@ -314,8 +299,8 @@
     form.hidden = true;
     if (successText) {
       successText.textContent = viaMail
-        ? "Vi svarer på henvendelser innen 24 timer på hverdager."
-        : "Vi svarer på henvendelser innen 24 timer på hverdager.";
+        ? "Jeg tar kontakt så snart som mulig."
+        : "Jeg tar kontakt så snart som mulig.";
     }
     success.hidden = false;
     success.focus();
@@ -323,26 +308,6 @@
 
   var isConfigured = function (value) {
     return value && value.indexOf("[") === -1 && /^https?:\/\//.test(value);
-  };
-
-  var openMailto = function (data) {
-    var to = form.getAttribute("data-epost") || "";
-    var subject = "Henvendelse fra " + data.get("navn") + " (" + data.get("firmanavn") + ")";
-    var body = [
-      "Navn: " + data.get("navn"),
-      "Firma: " + data.get("firmanavn"),
-      "E-post: " + data.get("epost"),
-      "Telefon: " + (data.get("telefon") || "–"),
-      "Pakke: " + data.get("pakke"),
-      "Har nettside i dag: " + (data.get("har_nettside") || "–"),
-      "Type nettside: " + (data.get("type_nettside") || "–"),
-      "Ønsket oppstart: " + (data.get("oppstart") || "–"),
-      "",
-      data.get("melding"),
-      "",
-      "Samtykke til å bli kontaktet: ja"
-    ].join("\n");
-    window.location.href = "mailto:" + to + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
   };
 
   form.addEventListener("submit", function (e) {
@@ -366,7 +331,7 @@
     var action = form.getAttribute("action");
     if (!isConfigured(action) || !window.fetch) {
       var status = document.getElementById("skjema-status");
-      if (status) status.textContent = "Skjemaet er ikke aktivert ennå. Ring oss på +47 466 26 880.";
+      if (status) status.textContent = "Skjemaet er ikke aktivert ennå. Prøv igjen senere.";
       return;
     }
 
@@ -379,7 +344,7 @@
       })
       .catch(function () {
         var status = document.getElementById("skjema-status");
-        if (status) status.textContent = "Meldingen ble ikke sendt. Prøv igjen senere eller ring oss på +47 466 26 880.";
+        if (status) status.textContent = "Meldingen ble ikke sendt. Prøv igjen senere.";
       })
       .then(function () {
         submitBtn.removeAttribute("aria-busy");

@@ -48,8 +48,8 @@ Bilder av dere: bytt `div.person__photo` i Om oss med et `<img>` (eksempel står
 
 Siden har ingen backend. Slik virker skjemaet nå:
 
-- Så lenge `action="[SKJEMA-URL]"` ikke er byttet ut, åpner skjemaet brukerens e-postprogram (mailto) med meldingen ferdig utfylt til adressen i `data-epost`. Bytt derfor `data-epost="[E-POST]"` med den ekte adressen uansett.
-- Når du legger inn en ekte adresse (som begynner med `https://`), sender skjemaet med `fetch` og viser takkemeldingen. Feiler sendingen, faller det tilbake til mailto.
+- Så lenge `action="[SKJEMA-URL]"` ikke er byttet ut, er skjemaet ikke aktivert og viser en feilmelding.
+- Når en skjematjeneste er konfigurert med en ekte `https://`-adresse, sender skjemaet med `fetch`. Feiler sendingen, vises en feilmelding.
 
 Slik kobler du til, for eksempel med Formspree (Basin, Getform og liknende virker på samme måte):
 
@@ -110,7 +110,7 @@ Alle sidene har `noindex, nofollow`, et tydelig EKSEMPEL-merke øverst og neders
 - **Eksempelfirmaer:** Morgengry Bakeri, Kvist & Kløver, Nordvegg Snekkerservice og Rolig Fysio er fiktive. Jeg har ikke sjekket om noen faktisk heter det. Adressen i mockupen slutter på `.eksempel`, som ikke er et ekte domene.
 - **«Mest valgt»:** Står på Standard fordi du ba om det. Hvis dere ikke har kunder ennå, er det strengt tatt ikke sant. Vurder «Anbefalt» til dere har tall å stå på.
 - **vilkar.html** har `noindex` og står ikke i sitemap.xml til vilkårene er skrevet.
-- **Pakkeknappene** («Velg Enkel» osv.) hopper til skjemaet og velger riktig pakke.
+- **Pakkeknappene** hopper til kontaktskjemaet.
 
 ### Designvalg i fem linjer
 

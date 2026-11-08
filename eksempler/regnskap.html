@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Eksempelby Regnskap – eksempelside laget av Glød</title>
+  <title>TALL Regnskap – eksempelside laget av Glød</title>
   <meta name="description" content="Eksempelside laget av Glød for et fiktivt regnskapskontor. Tjenester, om oss og kontaktinfo.">
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#12304A">
@@ -17,18 +17,18 @@
       src: url("../assets/fonts/plus-jakarta-sans.woff2") format("woff2");
       font-weight: 200 800; font-display: swap;
     }
-    /* Eksempelby Regnskap: dyp marineblå, sjøgrønn, kjølig grå og varm sand.
+    /* TALL Regnskap: dyp marineblå, sjøgrønn, kjølig grå og varm sand.
        Klassisk serif i overskriftene mot ren Plus Jakarta Sans i brødteksten. */
     :root {
-      --side-bg: #F7F8F7; --side-ink: #13222F; --side-focus: #1E6F66;
+      --side-bg: #f6f2e9; --side-ink: #13222F; --side-focus: #1E6F66;
       --side-font: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
       --tittel: Charter, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif; --tittel-vekt: 700; --tittel-sperring: -.02em;
       --aksent: #12304A; --aksent-hover: #1B4466; --aksent-pa: #fff; --aksent-tekst: #1E6F66; --aksent-pa-mork: #7CCBBE;
       --aksent-skygge: rgba(18, 48, 74, .55);
       --dempet: #4A5862; --strek: rgba(19, 34, 47, .1);
-      --lys: #F7F8F7; --lys-farge: #ECEFEA; --kort-bg: #fff;
+      --lys: #f6f2e9; --lys-farge: #ebe6da; --kort-bg: #fff;
       --mork: #12304A; --mork-tekst: #F2F6F8; --mork-dempet: rgba(242, 246, 248, .76); --mork-kort: #183B59; --mork-strek: rgba(242, 246, 248, .12);
-      --bunn-bg: #0D2336; --topp-bg: rgba(247, 248, 247, .9);
+      --bunn-bg: #0D2336; --topp-bg: rgba(246, 242, 233, .94);
       --ikon-bg: #DDEFEC; --ikon-farge: #1E6F66;
       --knapp-radius: 999px; --bilde-radius: 22px; --kort-radius: 18px; --ikon-radius: 50%;
       --bilde-skygge: 0 30px 60px -36px rgba(18, 48, 74, .5);
@@ -38,7 +38,7 @@
     .hero .knapp:hover { background: #E9F4F2; }
     .mork .knapp, .steg__nr { background: #7CCBBE; color: #12304A; }
     .mork .knapp:hover { background: #95D7CC; }
-    .logo span { font-family: var(--tittel); font-weight: 700; font-size: 1.2rem; letter-spacing: -.01em; }
+    .logo span { font-family: var(--tittel); font-weight: 700; font-size: 1.2rem; letter-spacing: .08em; text-transform: uppercase; }
     /* =========================================================
        Oppsett for de enkle infosidene (snekker og regnskap).
        Fargene og skriftene settes i :root over.
@@ -204,9 +204,9 @@
 
   <header class="topp" id="topp">
     <div class="wrap topp__inner">
-      <a class="logo" href="#innhold" aria-label="Eksempelby Regnskap, til toppen">
+      <a class="logo" href="#innhold" aria-label="TALL Regnskap, til toppen">
         <svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="10" fill="#12304A"/><path d="M11 25V17M18 25V11M25 25V20" stroke="#7CCBBE" stroke-width="3.6" stroke-linecap="round"/></svg>
-        <span>Eksempelby Regnskap</span>
+        <span>TALL Regnskap</span>
       </a>
       <nav class="nav" aria-label="Hovedmeny">
         <a href="#tjenester">Tjenester</a>
@@ -223,9 +223,9 @@
     <section class="hero" aria-labelledby="hero-tittel">
       <img class="hero__bilde" src="bilder/regnskap/hero.webp" alt="Lyst kontormiljø med møterom bak glassvegger og varme tredetaljer" width="1600" height="1068" fetchpriority="high">
       <div class="wrap hero__tekst">
-        <p class="hero__merke"><i aria-hidden="true"></i>Regnskapskontor i Eksempelby</p>
-        <h1 id="hero-tittel">Regnskap for små bedrifter.</h1>
-        <p>Vi fører regnskapet, så du kan bruke tiden på bedriften din.</p>
+        <p class="hero__merke"><i aria-hidden="true"></i>Regnskapskontor i Oslo</p>
+        <h1 id="hero-tittel">Tallene på plass.<br>Blikket fremover.</h1>
+        <p>Oversikt, rådgivning og regnskap for deg som bygger noe eget.</p>
         <a class="knapp" href="#kontakt">Ta kontakt <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
     </section>
@@ -236,9 +236,9 @@
         <div class="topptekst">
           <div>
             <p class="overline" data-r>Tjenester</p>
-            <h2 id="tj-tittel" class="h2" data-r>Dette hjelper vi med.</h2>
+            <h2 id="tj-tittel" class="h2" data-r>Klarhet i hvert tall.</h2>
           </div>
-          <p class="ingress" data-r>Vi tar oss av de faste oppgavene, så du slipper å følge med på fristene selv.</p>
+          <p class="ingress" data-r>Fra løpende bokføring til årsoppgjør: tjenester som gir deg bedre oversikt og mer tid til bedriften.</p>
         </div>
         <div class="tjenester">
           <div data-r>
@@ -311,7 +311,7 @@
         <div>
           <p class="overline" data-r>Om oss</p>
           <h2 id="om-tittel" class="h2" data-r>Et lite regnskapskontor.</h2>
-          <p class="tekst" data-r>Vi jobber med små bedrifter i Eksempelby.</p>
+          <p class="tekst" data-r>Vi jobber med små bedrifter i Oslo.</p>
           <p class="tekst" data-r>Du får én fast kontaktperson som kjenner bedriften din.</p>
         </div>
       </div>
@@ -357,7 +357,7 @@
           <dl>
             <div><dt>Telefon</dt><dd><a href="#" data-demo="På en ekte side ringer denne knappen firmaet direkte. Her er nummeret oppdiktet." data-demo-tittel="Ring 000 00 000">000 00 000</a></dd></div>
             <div><dt>E-post</dt><dd><a href="#" data-demo="På en ekte side åpner denne lenken e-postprogrammet ditt. Her er adressen oppdiktet." data-demo-tittel="E-post">post@regnskap.eksempel</a></dd></div>
-            <div><dt>Adresse</dt><dd>Eksempelveien 1<br>0000 Eksempelby</dd></div>
+            <div><dt>Adresse</dt><dd>Oslo (fiktivt konsept)</dd></div>
             <div><dt>Åpent</dt><dd>Hverdager 08–16</dd></div>
           </dl>
           <a class="knapp" href="#" data-demo="På en ekte side ringer denne knappen firmaet direkte. Her er nummeret oppdiktet." data-demo-tittel="Ring 000 00 000">Ring 000 00 000 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
@@ -368,7 +368,7 @@
 
   <footer class="bunn">
     <div class="wrap">
-      <p>© <span data-aar>2026</span> Eksempelby Regnskap (fiktivt firma) · Eksempelveien 1, 0000 Eksempelby · 000 00 000</p>
+      <p>© <span data-aar>2026</span> TALL Regnskap (fiktivt firma) · Oslo (fiktivt konsept) · 000 00 000</p>
       <p><b>EKSEMPEL</b>Eksempelside laget av Glød for et fiktivt firma. <a href="../index.html#eksempler">Til Glød</a></p>
     </div>
   </footer>
