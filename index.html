@@ -23,7 +23,7 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="css/style.css?v=20261106-promises-3">
+  <link rel="stylesheet" href="css/style.css?v=20261108-cleanup-1">
   <style>
     /* Kritisk layout: holde seksjonsoverskrifter og brødtekst faktisk midtstilt. */
     #tjenester .section-head, #hvorfor .section-head { display:flex; flex-direction:column; align-items:center; margin-inline:auto; text-align:center; }
@@ -77,103 +77,21 @@
 
       <div class="container hero__inner">
         <div class="hero__copy">
-          <p class="eyebrow hero__eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span>GLØD — NETTSIDER FOR BEDRIFTER</p>
-          <h1 id="hero-tittel" class="hero__title">Se din nye nettside. <span class="glow-text">Innen 48 timer.</span></h1>
-          <p class="hero__lead">Vi lager moderne nettsider for småbedrifter – raskt, enkelt og til en pris som gir mening. Du får se et personlig utkast før du bestemmer deg. Vi tar oss av resten.</p>
+          <h1 id="hero-tittel" class="hero__title">Se din nye nettside <span class="glow-text">innen 48 timer</span></h1>
+          <p class="hero__lead">Vi lager moderne nettsider for småbedrifter – raskt, enkelt og til en hyggelig pris. Du får se et personlig utkast før du bestemmer deg. Vi tar oss av resten.</p>
           <div class="hero__cta">
             <a class="btn btn--primary btn--lg" href="#kontakt">Søk om gratis utkast</a>
             <a class="btn btn--ghost btn--lg" href="#slik-jobber-vi">Se hvordan det fungerer</a>
           </div>
           <ul class="hero__fordeler">
             <li>Første utkast innen 48 timer</li>
-            <li>Nettsider fra 5&nbsp;990&nbsp;kr</li>
+            <li>Nettside fra 5&nbsp;990&nbsp;kr</li>
             <li>Se før du bestemmer deg</li>
           </ul>
           <p class="hero__timing">48 timer gjelder første utkast – ikke ferdig levert nettside.</p>
         </div>
 
-        <div class="hero-promises" aria-label="Et enkelt første steg til din nye nettside">
-          <article class="promise promise--speed">
-            <div class="promise__top"><span>Første utkast</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg></div>
-            <h2><span class="promise__number">48</span><span class="promise__unit">Innen 48 timer</span></h2>
-            <p>Du får raskt se et personlig forslag til nettsiden din.</p>
-            <div class="promise__progress" aria-hidden="true"><span></span><i></i><i></i></div>
-          </article>
-          <article class="promise promise--choice">
-            <div class="promise__top"><span>Ingen kjøpeplikt</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6zM8 12l3 3 5-6"/></svg></div>
-            <h2>Se før du<br>bestemmer deg</h2>
-            <p>Vi viser deg utkastet før du tar stilling til om du vil gå videre.</p>
-          </article>
-          <article class="promise promise--price">
-            <div class="promise__top"><span>Fornuftig pris</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h8l10 10-7 7L3 10z"/><circle cx="7.5" cy="8" r="1"/></svg></div>
-            <h2><span class="promise__from">Fra</span> 5 990 <span class="promise__currency">kr</span></h2>
-            <p>Profesjonelle nettsider tilpasset småbedrifter, uten unødvendig kompliserte løsninger.</p>
-          </article>
-        </div>
-      </div>
-    </section>
 
-    <!-- ============ PROBLEM OG LØSNING ============ -->
-    <section class="section section--light problem" aria-labelledby="problem-tittel">
-      <div class="container problem__grid">
-        <div class="problem__head" data-reveal>
-          <p class="eyebrow">ET GODT FØRSTEINNTRYKK</p>
-          <h2 id="problem-tittel" class="h2">Kundene googler deg før de ringer. Hva finner de?</h2>
-          <p class="section-head__lead">Et godt førsteinntrykk starter ofte lenge før den første samtalen. Nettsiden din skal gjøre det enkelt å forstå hvem du er, hva du tilbyr og hvorfor kunden bør velge nettopp deg.</p>
-          <div class="solution-card" data-reveal>
-            <span class="solution-card__glow" aria-hidden="true"></span>
-            <p class="solution-card__label">Løsningen</p>
-            <p class="solution-card__text">Vi gjør hele jobben for deg. Du får en proff side på plass – uten at du trenger å løfte en finger.</p>
-          </div>
-        </div>
-
-        <div class="problem__body">
-          <ul class="problem__list" data-stagger>
-            <li class="problem__item" data-reveal>
-              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></span>
-              <p><strong>Ingen nettside?</strong><br>Da kan potensielle kunder gå glipp av det du har å tilby. Vi gjør bedriften din synlig og enkel å finne på nett.</p>
-            </li>
-            <li class="problem__item" data-reveal>
-              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-              <p><strong>En nettside som har sett bedre dager?</strong><br>Et utdatert uttrykk kan gi feil førsteinntrykk. Vi gir bedriften din en moderne nettside som gjenspeiler kvaliteten du leverer.</p>
-            </li>
-            <li class="problem__item" data-reveal>
-              <span class="icon-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span>
-              <p><strong>Ikke tid eller teknisk kunnskap?</strong><br>Det trenger du heller ikke. Du kjenner bedriften din. Vi tar oss av nettsiden.</p>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ TJENESTER ============ -->
-    <section class="section section--tint always compact-section compact-section--services" id="tjenester" aria-labelledby="tjenester-tittel">
-      <div class="container">
-        <div class="section-head section-head--center" data-reveal>
-          <p class="eyebrow">FRA TANKE TIL SKJERM</p>
-          <h2 id="tjenester-tittel" class="h2">Mer enn bare en fin nettside.</h2>
-          <p class="section-head__lead">Vi kombinerer strategi, design og utvikling, slik at nettsiden både ser bra ut og gjør jobben.</p>
-        </div>
-        <ul class="always__grid" data-stagger>
-          <li class="feature" data-reveal>
-            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4"/><path d="M12 3.5V6M12 18v2.5M3.5 12H6M18 12h2.5"/></svg></span>
-            <h3 class="feature__title">Strategi &amp; retning</h3>
-            <p class="feature__text">Vi finner kjernen i merkevaren din og gjør den om til en tydelig digital plan.</p>
-            <p class="feature__tags">Posisjonering · Innhold · Struktur</p>
-          </li>
-          <li class="feature" data-reveal>
-            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="14" rx="2.5"/><path d="M3 8.5h18M7 13h5M7 15.5h8"/></svg></span>
-            <h3 class="feature__title">Nettside &amp; nettbutikk</h3>
-            <p class="feature__text">Skreddersydde opplevelser som gjør det enkelt å forstå, velge og ta kontakt.</p>
-            <p class="feature__tags">Webdesign · Utvikling · Universell utforming</p>
-          </li>
-          <li class="feature" data-reveal>
-            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3.5c3 4 5 6.7 5 9.5a5 5 0 0 1-10 0c0-2.8 2-5.5 5-9.5Z"/><path d="M12 11.5c1.3 1.6 2 2.7 2 3.7a2 2 0 0 1-4 0c0-1 .7-2.1 2-3.7Z"/></svg></span>
-            <h3 class="feature__title">Identitet &amp; uttrykk</h3>
-            <p class="feature__text">Et visuelt språk som kjennes riktig – fra første skjermbilde til minste detalj.</p>
-            <p class="feature__tags">Visuell identitet · Designsystem · Innholdsdesign</p>
-          </li>
-        </ul>
       </div>
     </section>
 
@@ -194,17 +112,17 @@
             <li class="step" data-reveal>
               <span class="step__num" aria-hidden="true">01</span>
               <h3 class="step__title">Fortell oss om bedriften.</h3>
-              <p class="step__text">Send inn en kort forespørsel om hva du trenger. Vi vurderer prosjektet og tar kontakt dersom vi kan tilby deg et personlig utkast.</p>
+              <p class="step__text">Fortell oss kort om bedriften og hva du trenger. Vi vurderer forespørselen og tar kontakt.</p>
             </li>
             <li class="step" data-reveal>
               <span class="step__num" aria-hidden="true">02</span>
               <h3 class="step__title">Se nettsiden før du bestemmer deg.</h3>
-              <p class="step__text">Vi lager et gjennomført utkast tilpasset bedriften din. Innen 48 timer etter at vi har fått informasjonen vi trenger, får du se hvordan nettsiden din kan bli – helt uten kjøpeplikt.</p>
+              <p class="step__text">Hvis prosjektet godkjennes, lager vi et personlig utkast innen 48 timer etter at vi har fått informasjonen vi trenger. Du ser det uten kjøpeplikt.</p>
             </li>
             <li class="step" data-reveal>
               <span class="step__num step__num--live" aria-hidden="true">03</span>
               <h3 class="step__title">Vi tar oss av resten.</h3>
-              <p class="step__text">Du kjenner bedriften din. Vi kan nettsider. Vi sørger for at design, innhold og detaljer spiller sammen, slik at resultatet føles riktig fra første stund. Og skulle noe ikke treffe helt, finpusser vi til det gjør det.</p>
+              <p class="step__text">Vi gjør ferdig design, innhold og detaljer sammen med deg, og finpusser etter tilbakemeldingene dine.</p>
             </li>
           </ol>
           <div class="hero__cta steps__cta" data-reveal>
@@ -273,6 +191,8 @@
             </article>
           </div>
 
+          <ul class="packages__benefits" aria-label="Fordeler"><li>Mobiltilpasset design</li><li>Rask levering</li><li>Hjelp med det tekniske</li></ul>
+
           <p class="section-head__lead packages__usikker" data-reveal>Usikker på hvilken pakke som passer? Fortell oss litt om bedriften din, så hjelper vi deg å finne riktig løsning.</p>
 
           <div class="packages__notes" data-reveal>
@@ -326,49 +246,6 @@
             <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3.5 19 6.5v5c0 4.3-3 7.6-7 9-4-1.4-7-4.7-7-9v-5z"/><path d="m9 12 2 2 4-4"/></svg></span>
             <h3 class="feature__title">Trygt og enkelt.</h3>
             <p class="feature__text">Vi tar oss av det tekniske, slik at du kan fokusere på det du er god på.</p>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- ============ DETTE FÅR DU ALLTID ============ -->
-    <section class="section section--light always" aria-labelledby="alltid-tittel">
-      <div class="container">
-        <div class="section-head section-head--center" data-reveal>
-          <p class="eyebrow">I alle pakkene</p>
-          <h2 id="alltid-tittel" class="h2">Dette får du alltid.</h2>
-        </div>
-
-        <ul class="always__grid" data-stagger>
-          <li class="feature" data-reveal>
-            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg></span>
-            <h3 class="feature__title">Fungerer på mobil og PC</h3>
-            <p class="feature__text">Siden tilpasser seg telefon, nettbrett og PC.</p>
-          </li>
-          <li class="feature" data-reveal>
-            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>
-            <h3 class="feature__title">Trygg for kundene</h3>
-            <p class="feature__text">Nettleseren viser at siden er sikker, uten advarsel til kundene dine.</p>
-          </li>
-          <li class="feature" data-reveal>
-            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9c-2.6-2.6-3.8-5.6-3.8-9S9.4 5.6 12 3Z"/></svg></span>
-            <h3 class="feature__title">Fullt eierskap</h3>
-            <p class="feature__text">Domenet registreres i ditt eller bedriftens navn.</p>
-          </li>
-          <li class="feature" data-reveal>
-            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5M8 10.5h5M10.5 8v5"/></svg></span>
-            <h3 class="feature__title">Klar for Google</h3>
-            <p class="feature__text">Siden er satt opp så Google kan finne og vise den.</p>
-          </li>
-          <li class="feature" data-reveal>
-            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></span>
-            <h3 class="feature__title">Direkte kontakt</h3>
-            <p class="feature__text">Skjema som sender kundehenvendelser rett til e-posten din.</p>
-          </li>
-          <li class="feature" data-reveal>
-            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4.5 5.5h15a1.5 1.5 0 0 1 1.5 1.5v9a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 3.5V17.5h-1A1.5 1.5 0 0 1 3 16V7a1.5 1.5 0 0 1 1.5-1.5Z"/><path d="M8 10.5h8M8 13.5h5"/></svg></span>
-            <h3 class="feature__title">Personlig oppfølging</h3>
-            <p class="feature__text">Du forholder deg til oss to, på norsk – ingen mellomledd.</p>
           </li>
         </ul>
       </div>
@@ -514,34 +391,11 @@
         </div>
 
         <div class="faq__list" data-stagger>
-          <details class="faq-item" data-reveal>
-            <summary><span>Hva koster en nettside?</span><i aria-hidden="true"></i></summary>
-            <div class="faq-item__body"><p>Våre nettsider starter på 5 990 kr. Du betaler én gang for nettsiden. Domene og eventuell hosting kommer i tillegg.</p></div>
-          </details>
-          <details class="faq-item" data-reveal>
-            <summary><span>Får alle som sender inn en forespørsel et gratis utkast?</span><i aria-hidden="true"></i></summary>
-            <div class="faq-item__body"><p>Nei. Vi velger ut prosjektene vi tror vi kan hjelpe best, slik at vi kan lage gjennomtenkte forslag uten kjøpeplikt.</p></div>
-          </details>
-          <details class="faq-item" data-reveal>
-            <summary><span>Hvor raskt får jeg se et utkast?</span><i aria-hidden="true"></i></summary>
-            <div class="faq-item__body"><p>Når forespørselen er godkjent og vi har fått informasjonen vi trenger, får du normalt se et første utkast innen 48 timer.</p></div>
-          </details>
-          <details class="faq-item" data-reveal>
-            <summary><span>Må jeg kunne noe om nettsider eller design?</span><i aria-hidden="true"></i></summary>
-            <div class="faq-item__body"><p>Nei. Du forteller oss om bedriften din, så tar vi oss av design, struktur og det tekniske.</p></div>
-          </details>
-          <details class="faq-item" data-reveal>
-            <summary><span>Må jeg betale hver måned?</span><i aria-hidden="true"></i></summary>
-            <div class="faq-item__body"><p>Nei. Nettsiden betales som en engangspris. Hosting og drift hos oss er valgfritt og koster 299 kr i måneden.</p></div>
-          </details>
-          <details class="faq-item" data-reveal>
-            <summary><span>Hva hvis jeg vil gjøre endringer senere?</span><i aria-hidden="true"></i></summary>
-            <div class="faq-item__body"><p>Da hjelper vi gjerne. Endringer og videreutvikling avtales og prises separat. Driftspakken gjelder teknisk drift, ikke løpende designendringer.</p></div>
-          </details>
-          <details class="faq-item" data-reveal>
-            <summary><span>Hva hvis jeg ikke er fornøyd med utkastet?</span><i aria-hidden="true"></i></summary>
-            <div class="faq-item__body"><p>Da lytter vi til tilbakemeldingene dine og finpusser retningen. Du bestemmer selv om du ønsker å gå videre.</p></div>
-          </details>
+          <details class="faq-item" data-reveal><summary><span>Hva koster en nettside?</span><i aria-hidden="true"></i></summary><div class="faq-item__body"><p>Våre nettsider starter på 5 990 kr. Du betaler én gang for nettsiden. Domene og eventuell hosting kommer i tillegg.</p></div></details>
+          <details class="faq-item" data-reveal><summary><span>Hva er inkludert?</span><i aria-hidden="true"></i></summary><div class="faq-item__body"><p>Enkel-pakken inkluderer en mobiltilpasset nettside med informasjon om bedriften og tjenestene dine, kontaktskjema, oppsett og publisering. Se pakkene over for mer informasjon.</p></div></details>
+          <details class="faq-item" data-reveal><summary><span>Hvordan fungerer 48-timersløftet?</span><i aria-hidden="true"></i></summary><div class="faq-item__body"><p>Vi velger ut prosjekter vi kan hjelpe. Når forespørselen er godkjent og vi har fått informasjonen vi trenger, får du normalt se et første utkast innen 48 timer. Dette gjelder utkastet, ikke ferdig levert nettside.</p></div></details>
+          <details class="faq-item" data-reveal><summary><span>Hva hvis jeg ønsker endringer?</span><i aria-hidden="true"></i></summary><div class="faq-item__body"><p>Vi lytter til tilbakemeldingene dine og finpusser utkastet. Endringer og videreutvikling senere avtales og prises separat. Driftspakken gjelder teknisk drift, ikke løpende designendringer.</p></div></details>
+          <details class="faq-item" data-reveal><summary><span>Er det løpende kostnader?</span><i aria-hidden="true"></i></summary><div class="faq-item__body"><p>Nettsiden betales som en engangspris. Domene kommer i tillegg. Hosting og drift hos oss er valgfritt og koster 299 kr i måneden.</p></div></details>
         </div>
       </div>
     </section>
