@@ -214,6 +214,17 @@
   var form = document.getElementById("kontaktskjema");
   if (!form) return;
 
+  /* Legg til valgt tjeneste uten å slette det besøkende allerede har skrevet. */
+  var messageField = document.getElementById("f-melding");
+  document.querySelectorAll("[data-tjeneste]").forEach(function (link) {
+    link.addEventListener("click", function () {
+      if (!messageField) return;
+      var existing = messageField.value.replace(/^Jeg ønsker hjelp med: [^\n]*\n\n/, "");
+      messageField.value = "Jeg ønsker hjelp med: " + link.getAttribute("data-tjeneste") + "\n\n" + existing;
+      messageField.dispatchEvent(new Event("input", { bubbles: true }));
+    });
+  });
+
   var success = document.getElementById("skjema-takk");
   var successText = document.getElementById("skjema-takk-tekst");
   var again = document.getElementById("skjema-ny");

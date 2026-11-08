@@ -421,6 +421,31 @@ h1, h2, h3, .h2 { font-family: var(--font-visning); font-weight: 500; letter-spa
 @media (min-width: 900px) { .hosting__panel { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: clamp(2rem, 5vw, 6rem); } }
 
 /* =========================================================
+   TILLEGGSTJENESTER: en redaksjonell oversikt
+   ========================================================= */
+.services__intro { display: grid; gap: 1.75rem; align-items: end; margin-bottom: clamp(3rem, 4vw, 4.5rem); }
+.services__label { margin-bottom: 1.25rem; color: var(--ember-tekst); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.14em; }
+.services__intro .h2 { max-width: 16ch; }
+.services__intro-copy { max-width: 28rem; color: var(--graa); font-size: var(--fs-lead); line-height: 1.55; }
+.services__price { margin-top: 1.25rem; color: var(--blekk); font-size: 0.9375rem; font-weight: 600; }
+.services__list { list-style: none; border-top: 1.5px solid var(--blekk); }
+.service { display: grid; grid-template-columns: 3.3rem minmax(0, 1fr); gap: 0.75rem 1rem; padding: 1.75rem 0; border-bottom: 1px solid var(--linje); }
+.service__number { font-family: var(--font-visning); font-size: clamp(2rem, 1.5rem + 1.5vw, 3rem); line-height: 1; color: var(--ember-tekst); }
+.service__title h3 { max-width: 20ch; font-size: clamp(1.4rem, 1.2rem + 0.8vw, 2rem); line-height: 1.12; }
+.service__detail { grid-column: 2; max-width: 31rem; color: var(--graa); }
+.service__detail a { display: inline-flex; gap: 0.7rem; align-items: center; margin-top: 1rem; color: var(--blekk); font-size: 0.9375rem; font-weight: 600; text-decoration: underline; text-decoration-color: var(--ember); text-underline-offset: 0.3em; transition: color 0.2s; }
+.service__detail a:hover { color: var(--ember-tekst); }
+.service__arrow { width: 0.9rem; height: 0.9rem; fill: none; stroke: var(--ember-tekst); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.2s var(--ease); }
+.service__detail a:hover .service__arrow { transform: translate(3px, -3px); }
+.services__outro { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; padding-top: 2rem; }
+.services__outro p { max-width: 26rem; color: var(--graa); }
+@media (min-width: 900px) {
+  .services__intro { grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 4rem; }
+  .service { grid-template-columns: 5.5rem minmax(0, 1fr) minmax(0, 1fr); gap: 2rem; padding: 2.2rem 0; }
+  .service__detail { grid-column: auto; }
+}
+
+/* =========================================================
    SPØRSMÅL OG SVAR: store typografiske rader
    ========================================================= */
 .faq__grid { display: grid; gap: 2.5rem; }
