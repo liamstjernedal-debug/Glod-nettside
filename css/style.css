@@ -485,7 +485,7 @@ h1, h2, h3, .h2 { font-family: var(--font-visning); font-weight: 500; letter-spa
 .footer { background: var(--natt); color: var(--natt-tekst); padding-top: clamp(3.5rem, 2.5rem + 3vw, 5.5rem); }
 .footer__nettstrax-top { display: grid; gap: 2rem; padding-bottom: 2.5rem; }
 .footer__brand img { width: 180px; height: auto; }
-.footer__brand p { margin-top: 1rem; font-family: var(--font-visning); font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem); line-height: 1.1; letter-spacing: -0.02em; }
+.footer__brand p { margin-top: 0.9rem; font-family: var(--font-tekst); font-weight: 400; font-size: clamp(1.05rem, 1rem + 0.3vw, 1.2rem); line-height: 1.4; letter-spacing: 0; color: var(--natt-graa); }
 .footer__links { display: flex; flex-wrap: wrap; align-content: start; gap: 0.75rem 1.75rem; }
 .footer__links a { color: var(--natt-tekst); background-size: 0% 1.5px; background-image: linear-gradient(var(--ember), var(--ember)); }
 .footer__links a:hover { background-size: 100% 1.5px; }
