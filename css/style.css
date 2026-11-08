@@ -1835,3 +1835,16 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .hosting__price { font-size: 2rem; }
 .hosting__details .pkg__list { margin: .7rem 0 1rem; display: flex; flex-wrap: wrap; gap: .35rem 1rem; }
 @media (max-height: 650px) { .hero { min-height: 0; } }
+
+/* Samlet og kompakt praktisk informasjon under pakkene */
+.packages__notes {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: .5rem;
+  width: min(100%, 38rem);
+  margin: 1.5rem auto 0;
+  font-size: .875rem;
+}
+.packages__notes p { gap: .55rem; }
+.packages__notes svg { width: 17px; height: 17px; }
+.packages { padding-bottom: clamp(2rem, 3vw, 3rem); }
