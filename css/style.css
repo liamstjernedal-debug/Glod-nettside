@@ -1820,3 +1820,18 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .packages__benefits { display: flex; flex-wrap: wrap; justify-content: center; gap: .65rem 1.75rem; margin-top: 2rem; color: var(--on-dark-soft); font-size: .9375rem; }
 .packages__benefits li::before { content: "✓"; color: var(--blue-light); margin-right: .5rem; }
 @media (max-width: 480px) { .hero__fordeler { flex-direction: column; align-items: center; } .packages__benefits { flex-direction: column; align-items: center; } }
+
+/* Justering av hero og kompakte priser og drift */
+.hero { min-height: 100vh; min-height: 100svh; display: flex; align-items: center; }
+.hero__inner { width: 100%; }
+.hero__lead { text-wrap: balance; }
+.packages__usikker { margin: 1.4rem auto 0; text-align: center; font-size: .875rem; line-height: 1.55; color: var(--on-dark-soft); }
+.packages__usikker strong { color: var(--on-dark); font-weight: 650; }
+.packages__benefits { margin-top: 1.5rem; }
+.hosting { padding-bottom: clamp(2.5rem, 4vw, 4rem); }
+.hosting__panel { gap: 1.25rem 2rem; padding: clamp(1.25rem, 2.5vw, 2rem); }
+.hosting__copy .h2 { font-size: clamp(1.65rem, 2vw, 2.25rem); }
+.hosting__copy > p:not(.eyebrow) { margin-top: .65rem; }
+.hosting__price { font-size: 2rem; }
+.hosting__details .pkg__list { margin: .7rem 0 1rem; display: flex; flex-wrap: wrap; gap: .35rem 1rem; }
+@media (max-height: 650px) { .hero { min-height: 0; } }

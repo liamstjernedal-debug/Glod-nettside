@@ -3,7 +3,6 @@
   "use strict";
 
   var root = document.documentElement;
-  root.classList.add("js");
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
@@ -69,6 +68,7 @@
     }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
     revealEls.forEach(function (el) { io.observe(el); });
   }
+  root.classList.add("js");
 
   /* ---------- Aktiv lenke i menyen ---------- */
   var navLinks = document.querySelectorAll(".nav__list a[href^='#']");
