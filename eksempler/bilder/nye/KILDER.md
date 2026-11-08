@@ -12,3 +12,7 @@ Fotografier fra Unsplash, brukt som illustrasjoner i fiktive nettsidekonsepter. 
 - klart-kjokken.webp: https://images.unsplash.com/photo-1556912172-45b7abe8b7e1
 - klart-vask.webp: https://images.unsplash.com/photo-1527515637462-cff94eecc1ac
 - klart-stue.webp: https://images.unsplash.com/photo-1600210492486-724fe5c67fb0
+
+## Genererte illustrasjoner
+
+Følgende bilder er laget med bildegenerering for de fiktive demonstrasjonssidene, og viser ikke reelle kundeprosjekter: nordvegg-terrasse.webp, nordvegg-kjokken.webp, nordvegg-oppmaling.webp, nordvegg-vindu.webp, klart-stue-ny.webp, lun-fisk.webp, lun-salat.webp og lun-dessert.webp.
