@@ -96,3 +96,19 @@
  @keyframes demo-line { from { transform:scaleX(.2); } to { transform:scaleX(1); } }
  @keyframes demo-line-y { from { transform:scaleY(.2); } to { transform:scaleY(1); } }
 }
+
+/* Tjenesteinnhold: lukket som standard, med synlig tastaturfokus. */
+.services-page .service-includes { margin-top: 1.25rem; border-top: 1px solid var(--linje); border-bottom: 1px solid var(--linje); color: var(--blekk); }
+.services-page .service-includes summary { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .8rem 0; cursor: pointer; list-style: none; font-weight: 600; }
+.services-page .service-includes summary::-webkit-details-marker { display: none; }
+.services-page .service-includes summary::after { content: "+"; font: 500 1.4rem/1 var(--font-visning); color: var(--ember-tekst); }
+.services-page .service-includes[open] summary::after { content: "−"; }
+.services-page .service-includes summary:hover { color: var(--ember-tekst); }
+.services-page .service-includes summary:focus-visible { outline: 3px solid var(--ember-tekst); outline-offset: 3px; }
+.services-page .service-includes__content { padding: .15rem 0 1.2rem; }
+.services-page .service-includes__group + .service-includes__group { margin-top: 1.2rem; }
+.services-page .service-includes__group h3 { font: 600 .9rem var(--font-tekst); letter-spacing: 0; }
+.services-page .service-includes__group ul { list-style: disc outside; margin: .45rem 0 0; padding-left: 1.15rem; color: var(--graa); font-size: .9rem; }
+.services-page .service-includes__group li + li { margin-top: .3rem; }
+.services-page .service-panel__availability { display: inline-block; margin-top: .7rem; color: var(--ember-tekst); font-size: .75rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.services-page .service-panel h2 { hyphens: none; overflow-wrap: normal; }
