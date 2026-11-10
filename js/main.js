@@ -1,4 +1,5 @@
 /* Glød – vanilla JavaScript. Ingen biblioteker, ingen sporing. */
+const SKJEMA_ENDEPUNKT = "";
 (function () {
   "use strict";
 
@@ -214,33 +215,16 @@
   var form = document.getElementById("kontaktskjema");
   if (!form) return;
 
-  /* Legg til valgt tjeneste uten å slette det besøkende allerede har skrevet. */
-  var messageField = document.getElementById("f-melding");
-  var servicesByKey = {
-    google: "Bli synlig på Google",
-    anmeldelser: "Få flere Google-anmeldelser",
-    booking: "La kundene bestille selv",
-    automatisering: "Spar tid med smarte automatiseringer",
-    seo: "Bli lettere funnet i søk",
-    landingssider: "Gjør besøkende til henvendelser",
-    "ki-chatbot": "KI-chatbot"
-  };
-  var selectedService = new URLSearchParams(window.location.search).get("tjeneste");
-  if (messageField && Object.prototype.hasOwnProperty.call(servicesByKey, selectedService) && !messageField.value.trim()) {
-    messageField.value = "Jeg ønsker hjelp med: " + servicesByKey[selectedService] + "\n\n";
-    var contactTitle = document.getElementById("kontakt-tittel");
-    var contactLead = document.querySelector(".contact__lead");
-    var messageLabel = document.querySelector("label[for='f-melding']");
-    if (contactTitle) contactTitle.textContent = "Fortell oss hva du trenger";
-    if (contactLead) contactLead.textContent = "Fortell litt om bedriften og hva du ønsker hjelp med, så tar vi kontakt.";
-    if (messageLabel) messageLabel.textContent = "Hva ønsker du hjelp med?";
-  }
-  document.querySelectorAll("[data-tjeneste]").forEach(function (link) {
+  /* Ta med valgt tjeneste og pakke uten å endre det besøkende skriver. */
+  var selectedService = new URLSearchParams(window.location.search).get("tjeneste") || "";
+  var serviceField = document.getElementById("f-tjeneste");
+  if (serviceField) serviceField.value = selectedService;
+  document.querySelectorAll("[data-pakke]").forEach(function (link) {
     link.addEventListener("click", function () {
-      if (!messageField) return;
-      var existing = messageField.value.replace(/^Jeg ønsker hjelp med: [^\n]*\n\n/, "");
-      messageField.value = "Jeg ønsker hjelp med: " + link.getAttribute("data-tjeneste") + "\n\n" + existing;
-      messageField.dispatchEvent(new Event("input", { bubbles: true }));
+      var selected = link.getAttribute("data-pakke");
+      form.querySelectorAll('input[name="pakke"]').forEach(function (input) {
+        input.checked = input.value === selected;
+      });
     });
   });
 
@@ -299,8 +283,8 @@
     form.hidden = true;
     if (successText) {
       successText.textContent = viaMail
-        ? "Jeg tar kontakt så snart som mulig."
-        : "Jeg tar kontakt så snart som mulig.";
+        ? "Vi tar kontakt så snart som mulig."
+        : "Vi tar kontakt så snart som mulig.";
     }
     success.hidden = false;
     success.focus();
@@ -322,22 +306,21 @@
       return;
     }
 
+    if (!isConfigured(SKJEMA_ENDEPUNKT) || !window.fetch) {
+      var status = document.getElementById("skjema-status");
+      if (status) status.textContent = "Skjemaet er ikke koblet til ennå.";
+      return;
+    }
+
     var data = new FormData(form);
     if (data.get("nettsted")) {        // spam-felle fylt ut: lat som alt gikk fint
       showSuccess(false);
       return;
     }
 
-    var action = form.getAttribute("action");
-    if (!isConfigured(action) || !window.fetch) {
-      var status = document.getElementById("skjema-status");
-      if (status) status.textContent = "Skjemaet er ikke aktivert ennå. Prøv igjen senere.";
-      return;
-    }
-
     submitBtn.setAttribute("aria-busy", "true");
     submitBtn.textContent = "Sender …";
-    fetch(action, { method: "POST", body: data, headers: { Accept: "application/json" } })
+    fetch(SKJEMA_ENDEPUNKT, { method: "POST", body: data, headers: { Accept: "application/json" } })
       .then(function (res) {
         if (!res.ok) throw new Error("Status " + res.status);
         showSuccess(false);
