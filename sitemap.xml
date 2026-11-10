@@ -6,7 +6,11 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://[DOMENE]/personvern.html</loc>
+    <loc>https://[DOMENE]/tjenester/</loc>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://[DOMENE]/om-nettstrax.html</loc>
     <priority>0.3</priority>
   </url>
 </urlset>
