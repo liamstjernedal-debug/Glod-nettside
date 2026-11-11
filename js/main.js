@@ -1,5 +1,5 @@
 /* Glød – vanilla JavaScript. Ingen biblioteker, ingen sporing. */
-const SKJEMA_ENDEPUNKT = "";
+const SKJEMA_ENDEPUNKT = "https://api.web3forms.com/submit";
 (function () {
   "use strict";
 
@@ -318,11 +318,18 @@ const SKJEMA_ENDEPUNKT = "";
       return;
     }
 
+    data.append("name", data.get("navn") || "");      // Web3Forms bruker name/email som avsender og «svar til»
+    data.append("email", data.get("epost") || "");
+
     submitBtn.setAttribute("aria-busy", "true");
     submitBtn.textContent = "Sender …";
     fetch(SKJEMA_ENDEPUNKT, { method: "POST", body: data, headers: { Accept: "application/json" } })
       .then(function (res) {
         if (!res.ok) throw new Error("Status " + res.status);
+        return res.json();
+      })
+      .then(function (json) {
+        if (!json || json.success !== true) throw new Error("Avvist");
         showSuccess(false);
       })
       .catch(function () {
