@@ -374,7 +374,7 @@ h1, h2, h3, .h2 { font-family: var(--font-visning); font-weight: 500; letter-spa
   padding: 2rem 0 2.25rem;
 }
 .pkg__badge { grid-area: badge; margin-bottom: 0.5rem; font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ember-tekst); }
-.pkg__badge::before { content: "\2192\2002"; content: "\2192\2002" / ""; }
+.pkg__badge .arrow-icon { margin-right: 0.35rem; }
 .pkg__name { grid-area: navn; font-size: clamp(2rem, 1.5rem + 2vw, 3.25rem); line-height: 1; letter-spacing: -0.03em; }
 .pkg--featured .pkg__name { background: linear-gradient(var(--ember), var(--ember)) left 96% / 100% 0.08em no-repeat; justify-self: start; }
 .pkg__desc { grid-area: desc; margin-top: 0.75rem; max-width: 26rem; color: var(--graa); }
@@ -612,3 +612,7 @@ h1, h2, h3, .h2 { font-family: var(--font-visning); font-weight: 500; letter-spa
   .js [data-reveal] { opacity: 1; transform: none; }
   .glod { will-change: auto; }
 }
+
+/* Piler som vises likt uansett enhet og font. */
+.arrow-icon { display: inline-block; flex: none; width: 1em; height: 1em; vertical-align: -0.12em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.teaser-list .arrow-icon, .service-page-hero__jump .arrow-icon { color: var(--ember-tekst); }
