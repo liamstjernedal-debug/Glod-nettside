@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Billig nettside til bedriften din – fra 5 990 kr | Nettstrax</title>
   <meta name="description" content="Billig nettside til småbedrifter og nye firmaer. Se siden din innen 48 timer, til fast pris fra 5 990 kr eks. mva. Du betaler når du er fornøyd.">
-  <link rel="canonical" href="https://[DOMENE]/">
+  <link rel="canonical" href="https://nettstrax.no/">
   <meta name="theme-color" content="#F5F0E6">
 
   <meta property="og:type" content="website">
@@ -13,7 +13,7 @@
   <meta property="og:site_name" content="Nettstrax">
   <meta property="og:title" content="Billig nettside til bedriften din – fra 5 990 kr | Nettstrax">
   <meta property="og:description" content="Billig nettside til småbedrifter og nye firmaer. Se siden din innen 48 timer, til fast pris fra 5 990 kr eks. mva. Du betaler når du er fornøyd.">
-  <meta property="og:url" content="https://[DOMENE]/">
+  <meta property="og:url" content="https://nettstrax.no/">
   <meta property="og:image" content="https://liamstjernedal-debug.github.io/Glod-nettside/assets/og-nettstrax.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Billig nettside til bedriften din – fra 5 990 kr | Nettstrax">
@@ -24,7 +24,7 @@
   <link rel="apple-touch-icon" href="assets/nettstrax-apple-touch.png?v=2">
   <link rel="preload" href="assets/fonts/fraunces-500.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/instrument-sans-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/style.css?v=20261111-piler">
+  <link rel="stylesheet" href="css/style.css?v=20261111-mobil">
   <style>
     .packages__extras { max-width: 42rem; margin-top: 1rem; }
     .packages__extras h3 { font-size: var(--fs-h3); }
@@ -35,6 +35,8 @@
     .package-options label { display: inline-flex; align-items: center; gap: .45rem; cursor: pointer; }
     .package-options input { accent-color: var(--ember-tekst); width: 1rem; height: 1rem; }
     .package-options input:focus-visible { outline: 3px solid var(--ember-tekst); outline-offset: 3px; }
+    .contact__mail { font-size: 1rem; }
+    .contact__mail a { color: var(--ember-tekst); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
     .hero__title, .section-head h2, .faq-item summary, .contact h2 { hyphens: none; overflow-wrap: normal; }
   </style>
 </head>
@@ -308,7 +310,7 @@
             </div>
             <div class="hosting__details">
               <p class="hosting__price">299 kr <small>/mnd eks. mva.</small></p>
-              <ul class="pkg__list"><li>Hosting</li><li>SSL/HTTPS</li><li>Vi passer på at siden er på nett og at sertifikatet fornyes</li><li>Én liten endring i måneden, for eksempel ny tekst eller nytt bilde</li><li>Feilretting knyttet til hosting og drift</li><li>Hjelp via kontaktskjemaet, normalt svar innen 2 virkedager</li><li>Ingen bindingstid</li><li>Gratis hjelp til å flytte siden hvis du slutter</li></ul>
+              <ul class="pkg__list"><li>Hosting</li><li>SSL/HTTPS</li><li>Vi passer på at siden er på nett og at sertifikatet fornyes</li><li>Én liten endring i måneden, for eksempel ny tekst eller nytt bilde</li><li>Feilretting knyttet til hosting og drift</li><li>Hjelp på e-post, normalt svar innen 2 virkedager</li><li>Ingen bindingstid</li><li>Gratis hjelp til å flytte siden hvis du slutter</li></ul>
               <details class="hosting__exclusions"><summary>Dette er ikke inkludert</summary><p>Nye undersider, redesign, nye funksjoner, større videreutvikling og domeneavgift. Endringer utover én liten i måneden avtales først.</p></details>
               <a class="btn btn--primary" href="#kontakt">Spør oss om drift</a>
             </div>
@@ -352,7 +354,7 @@
     <!-- ============ KONTAKT ============ -->
     <section class="section section--dark contact" id="kontakt" aria-labelledby="kontakt-tittel">
       <div class="container contact__grid">
-        <div class="contact__copy" data-reveal><p class="eyebrow eyebrow--dark">ET PROSJEKT I TANKENE?</p><h2 id="kontakt-tittel" class="h2">Fortell oss om bedriften din</h2><p class="contact__lead">Fyll ut skjemaet, så svarer vi innen 1 virkedag. Du betaler først når du har sett nettsiden og er fornøyd.</p></div>
+        <div class="contact__copy" data-reveal><p class="eyebrow eyebrow--dark">ET PROSJEKT I TANKENE?</p><h2 id="kontakt-tittel" class="h2">Fortell oss om bedriften din</h2><p class="contact__lead">Fyll ut skjemaet, så svarer vi innen 1 virkedag. Du betaler først når du har sett nettsiden og er fornøyd.</p><p class="contact__lead contact__mail">Vil du heller skrive e-post? Send til <a href="mailto:kontakt@nettstrax.no">kontakt@nettstrax.no</a>.</p></div>
 
         <div class="form-card" data-reveal>
           <form class="form" id="kontaktskjema" method="POST" novalidate>
@@ -376,7 +378,7 @@
           <div class="form-success" id="skjema-takk" tabindex="-1" hidden>
             <span class="form-success__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>
             <h3 class="form-success__title">Takk, vi har fått meldingen din.</h3>
-            <p class="form-success__text" id="skjema-takk-tekst">Vi tar kontakt så snart som mulig.</p>
+            <p class="form-success__text" id="skjema-takk-tekst">Vi svarer innen 1 virkedag.</p>
             <button class="btn btn--glass" type="button" id="skjema-ny">Send en ny melding</button>
           </div>
         </div>
@@ -391,6 +393,6 @@
   </footer>
 
   <div class="grain" aria-hidden="true"></div>
-  <script src="js/main.js?v=tekst-seo-v1" defer></script>
+  <script src="js/main.js?v=20261111-skjema" defer></script>
 </body>
 </html>

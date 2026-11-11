@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Bytt [DOMENE] med det ekte domenet. Legg til vilkar.html når vilkårene er skrevet. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://[DOMENE]/</loc>
+    <loc>https://nettstrax.no/</loc>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://[DOMENE]/tjenester/</loc>
-    <priority>0.3</priority>
+    <loc>https://nettstrax.no/tjenester/</loc>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://[DOMENE]/om-nettstrax.html</loc>
-    <priority>0.3</priority>
+    <loc>https://nettstrax.no/om-nettstrax.html</loc>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://nettstrax.no/vilkar.html</loc>
+    <priority>0.1</priority>
+  </url>
+  <url>
+    <loc>https://nettstrax.no/personvern.html</loc>
+    <priority>0.1</priority>
   </url>
 </urlset>
