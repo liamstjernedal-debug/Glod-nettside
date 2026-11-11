@@ -207,6 +207,8 @@ h1, h2, h3, .h2 { font-family: var(--font-visning); font-weight: 500; letter-spa
   .nav__list a:hover, .nav__list a[aria-current="true"], .nav__list a[aria-current="page"] { background-size: 100% 2px; }
 }
 @media (max-width: 380px) { .topbar__logo img { width: 118px; } .topbar .btn--sm { padding-inline: 0.75rem; } }
+/* Undersider: logoen lenker allerede til forsiden, så «Til forsiden» skjules på smale skjermer for å unngå sidelengs scrolling. */
+@media (max-width: 520px) { .topbar__actions .btn--ghost { display: none; } }
 
 /* ---------- Seksjoner ---------- */
 .section { position: relative; padding-block: var(--section-y); }

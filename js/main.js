@@ -282,9 +282,7 @@ const SKJEMA_ENDEPUNKT = "https://api.web3forms.com/submit";
   var showSuccess = function (viaMail) {
     form.hidden = true;
     if (successText) {
-      successText.textContent = viaMail
-        ? "Vi tar kontakt så snart som mulig."
-        : "Vi tar kontakt så snart som mulig.";
+      successText.textContent = "Vi svarer innen 1 virkedag.";
     }
     success.hidden = false;
     success.focus();
