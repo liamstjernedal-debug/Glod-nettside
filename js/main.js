@@ -212,7 +212,12 @@ const SKJEMA_ENDEPUNKT = "https://api.web3forms.com/submit";
               st.sjekketMob = na;
               st.maxM = Math.max(0, Math.min(MAKS_MOBIL, mob.contentDocument.documentElement.scrollHeight - mob.contentWindow.innerHeight));
             }
-            mob.contentWindow.scrollTo({ top: (y / st.maxY) * (st.maxM || 0), behavior: "instant" });
+            // Samme fart på skjermen som PC-siden: mobilsiden rulles bare så langt at begge rekker bunnen samtidig
+            var dekk = st.ramme.closest(".preview");
+            var sPC = parseFloat(dekk && dekk.style.getPropertyValue("--pv-s")) || 0.375;
+            var sPM = parseFloat(dekk && dekk.style.getPropertyValue("--pm-s")) || 0.3;
+            var mobMaks = Math.min(st.maxM || 0, (st.maxY * sPC) / sPM);
+            mob.contentWindow.scrollTo({ top: (y / st.maxY) * mobMaks, behavior: "instant" });
           }
         } catch (e) { /* ikke tilgang til siden: la den stå stille */ }
       });
