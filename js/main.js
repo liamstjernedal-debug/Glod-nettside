@@ -158,6 +158,8 @@ const SKJEMA_ENDEPUNKT = "https://api.web3forms.com/submit";
       pv.style.setProperty("--pv-w", vw + "px");
       pv.style.setProperty("--pv-h", Math.ceil(h) + "px");
       pv.style.setProperty("--pv-s", s.toFixed(4));
+      var tlf = pv.querySelector(".example-cover__mobil");
+      if (tlf && tlf.clientWidth) pv.style.setProperty("--pm-s", (tlf.clientWidth / 390).toFixed(4));
     });
   };
   if (previews.length) {
@@ -178,9 +180,10 @@ const SKJEMA_ENDEPUNKT = "https://api.web3forms.com/submit";
   var bredSkjerm = window.matchMedia("(min-width: 700px)").matches;
   if (rammer.length && "IntersectionObserver" in window && !spareData && bredSkjerm) {
     // Sidene ruller sakte nedover og tilbake mens kortet er synlig, så besøkende ser mer enn toppen.
-    var HASTIGHET = 80;   // px per sekund (inne i den ekte siden)
+    var HASTIGHET = 140;  // px per sekund (inne i den ekte siden)
     var PAUSE = 1800;     // ms hvile øverst og nederst
-    var MAKS_RULL = 2600; // ruller ikke lenger ned enn dette
+    var MAKS_RULL = 2600; // ruller ikke lenger ned enn dette (PC)
+    var MAKS_MOBIL = 5000; // samme for mobilsiden, som er lengre
     var aktive = [];
     var rullLoop = null;
     var jevn = function (t) { return t < 0.5 ? 2 * t * t : 1 - 2 * (1 - t) * (1 - t); };
@@ -202,6 +205,15 @@ const SKJEMA_ENDEPUNKT = "https://api.web3forms.com/submit";
           else if (p < 2 * PAUSE + dur) y = st.maxY;
           else y = (1 - jevn((p - 2 * PAUSE - dur) / dur)) * st.maxY;
           win.scrollTo({ top: y, behavior: "instant" });
+          // Mobilsiden ruller i takt: samme fremdrift, men over sin egen lengde
+          var mob = st.mobil;
+          if (mob && mob.classList.contains("er-klar") && mob.contentDocument && mob.contentWindow) {
+            if (!st.sjekketMob || na - st.sjekketMob > 2000) {
+              st.sjekketMob = na;
+              st.maxM = Math.max(0, Math.min(MAKS_MOBIL, mob.contentDocument.documentElement.scrollHeight - mob.contentWindow.innerHeight));
+            }
+            mob.contentWindow.scrollTo({ top: (y / st.maxY) * (st.maxM || 0), behavior: "instant" });
+          }
         } catch (e) { /* ikke tilgang til siden: la den stå stille */ }
       });
       rullLoop = aktive.length ? requestAnimationFrame(rullTick) : null;
@@ -209,7 +221,7 @@ const SKJEMA_ENDEPUNKT = "https://api.web3forms.com/submit";
     var settAktiv = function (ramme, paa) {
       var i = aktive.findIndex(function (s) { return s.ramme === ramme; });
       if (paa && i < 0 && ramme.classList.contains("er-klar") && !reduceMotion.matches) {
-        aktive.push({ ramme: ramme, t0: performance.now() });
+        aktive.push({ ramme: ramme, mobil: ramme.closest(".example").querySelector(".preview__mobil"), t0: performance.now() });
       } else if (!paa && i >= 0) {
         aktive.splice(i, 1);
       }
@@ -226,6 +238,11 @@ const SKJEMA_ENDEPUNKT = "https://api.web3forms.com/submit";
             if (p.target.__synlig) settAktiv(ramme, true);
           });
           ramme.src = ramme.getAttribute("data-src");
+          var mobil = p.target.querySelector(".preview__mobil");
+          if (mobil) {
+            mobil.addEventListener("load", function () { mobil.classList.add("er-klar"); });
+            mobil.src = mobil.getAttribute("data-src");
+          }
         }
         p.target.__synlig = synlig;
         settAktiv(ramme, synlig);
