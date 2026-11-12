@@ -170,6 +170,26 @@ const SKJEMA_ENDEPUNKT = "https://api.web3forms.com/submit";
     }
   }
 
+  // De ekte sidene lastes først når kortet er synlig, så forsiden ikke blir tung.
+  // Skjermbildet ligger under som reserve og vises til siden er klar.
+  var rammer = document.querySelectorAll(".preview__ramme");
+  var spareData = navigator.connection && navigator.connection.saveData;
+  // Bare på bredere skjermer: på mobil vises skjermbildet med mobilbilde, som gir et bedre inntrykk og sparer data.
+  var bredSkjerm = window.matchMedia("(min-width: 700px)").matches;
+  if (rammer.length && "IntersectionObserver" in window && !spareData && bredSkjerm) {
+    var rammeObserver = new IntersectionObserver(function (poster) {
+      poster.forEach(function (p) {
+        if (!p.isIntersecting) return;
+        rammeObserver.unobserve(p.target);
+        var ramme = p.target.querySelector(".preview__ramme");
+        if (!ramme) return;
+        ramme.addEventListener("load", function () { ramme.classList.add("er-klar"); });
+        ramme.src = ramme.getAttribute("data-src");
+      });
+    }, { threshold: 0.6 });
+    rammer.forEach(function (r) { rammeObserver.observe(r.closest(".example") || r); });
+  }
+
   /* ---------- «Åpne som mobil»: eksempelsiden i en telefonramme ---------- */
   var phone = document.getElementById("mobilvisning");
   if (phone && typeof phone.showModal === "function") {
