@@ -333,7 +333,13 @@ h1, h2, h3, .h2 { font-family: var(--font-visning); font-weight: 500; letter-spa
 .example__lenke { position: absolute; inset: 0; z-index: 3; border-radius: inherit; }
 .example__lenke:focus-visible { outline-offset: -5px; }
 .example-cover { position: relative; display: block; aspect-ratio: 4 / 3; overflow: hidden; }
-.example-cover img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease); }
+.example-cover img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform 0.8s var(--ease); }
+.example-cover .example-cover__mobil { position: absolute; right: 0.9rem; bottom: 0.9rem; width: 24%; height: auto; aspect-ratio: 390 / 844; border: 3px solid var(--blekk); border-radius: 0.9rem; box-shadow: 0 10px 24px rgba(23, 19, 15, 0.35); background: var(--papir); }
+.preview .preview__ramme { position: absolute; top: 0; left: 0; z-index: 1; width: var(--pv-w, 1280px); height: var(--pv-h, 960px); border: 0; background: #fff; transform-origin: 0 0; transform: scale(var(--pv-s, 0.375)); opacity: 0; transition: opacity 0.5s var(--ease); pointer-events: none; }
+.preview .preview__ramme.er-klar { opacity: 1; }
+.preview .example-cover__mobil { z-index: 2; }
+.preview--mobil .example-cover__mobil { display: none; }
+.example__frame:hover .example-cover .example-cover__mobil, .example__frame:focus-within .example-cover .example-cover__mobil { transform: none; }
 .example__frame:hover .example-cover img { transform: scale(1.04); }
 .example-cover__shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(23, 19, 15, 0) 20%, rgba(23, 19, 15, 0.55) 55%, rgba(23, 19, 15, 0.9) 100%); }
 .example-cover__content { position: absolute; left: 1.25rem; right: 1.25rem; bottom: 1.1rem; display: grid; gap: 0.35rem; color: var(--papir); }
