@@ -177,16 +177,60 @@ const SKJEMA_ENDEPUNKT = "https://api.web3forms.com/submit";
   // Bare på bredere skjermer: på mobil vises skjermbildet med mobilbilde, som gir et bedre inntrykk og sparer data.
   var bredSkjerm = window.matchMedia("(min-width: 700px)").matches;
   if (rammer.length && "IntersectionObserver" in window && !spareData && bredSkjerm) {
+    // Sidene ruller sakte nedover og tilbake mens kortet er synlig, så besøkende ser mer enn toppen.
+    var HASTIGHET = 80;   // px per sekund (inne i den ekte siden)
+    var PAUSE = 1800;     // ms hvile øverst og nederst
+    var MAKS_RULL = 2600; // ruller ikke lenger ned enn dette
+    var aktive = [];
+    var rullLoop = null;
+    var jevn = function (t) { return t < 0.5 ? 2 * t * t : 1 - 2 * (1 - t) * (1 - t); };
+    var rullTick = function (na) {
+      aktive.forEach(function (st) {
+        try {
+          var doc = st.ramme.contentDocument, win = st.ramme.contentWindow;
+          if (!doc || !win) return;
+          if (!st.sjekket || na - st.sjekket > 2000) {
+            st.sjekket = na;
+            st.maxY = Math.max(0, Math.min(MAKS_RULL, doc.documentElement.scrollHeight - win.innerHeight));
+          }
+          if (!st.maxY) return;
+          var dur = st.maxY / HASTIGHET * 1000;
+          var p = (na - st.t0) % (2 * (dur + PAUSE));
+          var y;
+          if (p < PAUSE) y = 0;
+          else if (p < PAUSE + dur) y = jevn((p - PAUSE) / dur) * st.maxY;
+          else if (p < 2 * PAUSE + dur) y = st.maxY;
+          else y = (1 - jevn((p - 2 * PAUSE - dur) / dur)) * st.maxY;
+          win.scrollTo({ top: y, behavior: "instant" });
+        } catch (e) { /* ikke tilgang til siden: la den stå stille */ }
+      });
+      rullLoop = aktive.length ? requestAnimationFrame(rullTick) : null;
+    };
+    var settAktiv = function (ramme, paa) {
+      var i = aktive.findIndex(function (s) { return s.ramme === ramme; });
+      if (paa && i < 0 && ramme.classList.contains("er-klar") && !reduceMotion.matches) {
+        aktive.push({ ramme: ramme, t0: performance.now() });
+      } else if (!paa && i >= 0) {
+        aktive.splice(i, 1);
+      }
+      if (aktive.length && !rullLoop) rullLoop = requestAnimationFrame(rullTick);
+    };
     var rammeObserver = new IntersectionObserver(function (poster) {
       poster.forEach(function (p) {
-        if (!p.isIntersecting) return;
-        rammeObserver.unobserve(p.target);
         var ramme = p.target.querySelector(".preview__ramme");
         if (!ramme) return;
-        ramme.addEventListener("load", function () { ramme.classList.add("er-klar"); });
-        ramme.src = ramme.getAttribute("data-src");
+        var synlig = p.intersectionRatio >= 0.6;
+        if (synlig && !ramme.getAttribute("src")) {
+          ramme.addEventListener("load", function () {
+            ramme.classList.add("er-klar");
+            if (p.target.__synlig) settAktiv(ramme, true);
+          });
+          ramme.src = ramme.getAttribute("data-src");
+        }
+        p.target.__synlig = synlig;
+        settAktiv(ramme, synlig);
       });
-    }, { threshold: 0.6 });
+    }, { threshold: [0, 0.6, 1] });
     rammer.forEach(function (r) { rammeObserver.observe(r.closest(".example") || r); });
   }
 
