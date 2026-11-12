@@ -339,6 +339,10 @@ h1, h2, h3, .h2 { font-family: var(--font-visning); font-weight: 500; letter-spa
 .preview .preview__ramme.er-klar { opacity: 1; }
 .preview .example-cover__mobil { z-index: 2; }
 .preview--mobil .example-cover__mobil { display: none; }
+.example-cover .example-cover__mobil { display: block; overflow: hidden; }
+.example-cover__mobil img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; transform: none !important; }
+.example-cover__mobil .preview__mobil { position: absolute; top: 0; left: 0; width: 390px; height: 844px; border: 0; background: #fff; transform-origin: 0 0; transform: scale(var(--pm-s, 0.3)); opacity: 0; transition: opacity 0.5s var(--ease); pointer-events: none; }
+.example-cover__mobil .preview__mobil.er-klar { opacity: 1; }
 .example__frame:hover .example-cover .example-cover__mobil, .example__frame:focus-within .example-cover .example-cover__mobil { transform: none; }
 .example__frame:hover .example-cover img { transform: scale(1.04); }
 .example-cover__shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(23, 19, 15, 0) 20%, rgba(23, 19, 15, 0.55) 55%, rgba(23, 19, 15, 0.9) 100%); }
