@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kvelv Badstue – fiktivt eksempel av Nettstrax</title>
+  <meta name="description" content="Fiktivt konsept laget som eksempel av Nettstrax: en flytende badstue ved fjorden, med drop-in, private økter og booking.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0B2129">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230B2129'/%3E%3Cpath d='M6 22 Q16 6 26 22' fill='none' stroke='%23F4A582' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M5 26h22' stroke='%238FC6CF' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================================
+       Kvelv Badstue – fiktivt konsept av Nettstrax
+       Idé: fra kaldt til varmt. Siden starter i kald fjordnatt og
+       blir gradvis varmere mens du scroller, som en badstue som
+       varmes opp. Et termometer i kanten viser hvor du er.
+       Bevegelse:
+         1. Damp som stiger i toppen (canvas, stopper utenfor skjermen).
+         2. Bakgrunn og aksentfarge går fra kaldt til varmt ved scroll.
+         3. Overskrifter skyves opp linje for linje bak en maske.
+         4. Ritualet: en ring som fylles mens du leser stegene.
+       Alt er stille ved prefers-reduced-motion.
+       ========================================================= */
+    :root {
+      --t: 0;                 /* 0 = kaldt, 1 = varmt (settes av JS) */
+      --bg: #0B2129;          /* overskrives av JS */
+      --aksent: #8FC6CF;      /* overskrives av JS */
+      --tekst: #F3EDE4;
+      --dempet: #C3BDB3;      /* minst 8:1 mot alle bakgrunner */
+      --linje: rgba(243, 237, 228, .16);
+      --flate: rgba(243, 237, 228, .06);
+      --kald: #8FC6CF;
+      --varm: #F4A582;
+      --lys: #F3EDE4;
+      --lys-tekst: #1E1714;
+      --lys-dempet: #5A4D45;
+      --display: "Bricolage Grotesque", "Arial Black", system-ui, sans-serif;
+      --tekstfont: "Newsreader", Georgia, "Times New Roman", serif;
+      --gutter: clamp(20px, 5vw, 72px);
+      --ease: cubic-bezier(.22, 1, .36, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 84px; }
+    body { margin: 0; background: var(--bg); color: var(--tekst); font-family: var(--tekstfont); font-size: clamp(17px, 16px + .35vw, 20px); line-height: 1.6; overflow-x: hidden; }
+    @supports (overflow: clip) { body { overflow-x: clip; } }
+    h1, h2, h3, p, ul, ol, dl, dd, figure, fieldset, blockquote { margin: 0; }
+    ul, ol { padding: 0; list-style: none; }
+    fieldset { border: 0; padding: 0; min-width: 0; }
+    svg, canvas { display: block; max-width: 100%; }
+    a { color: inherit; }
+    button, input, select, textarea { font: inherit; color: inherit; }
+    :focus-visible { outline: 3px solid var(--aksent); outline-offset: 3px; border-radius: 6px; }
+    .lyst :focus-visible { outline-color: #A4482A; }
+    .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .wrap { width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: var(--gutter); }
+    .hopp { position: fixed; left: 12px; top: 12px; z-index: 100; padding: 12px 18px; border-radius: 999px; background: var(--tekst); color: #0B2129; font-family: var(--display); font-weight: 700; text-decoration: none; transform: translateY(-200%); }
+    .hopp:focus { transform: none; }
+    .fiktiv { position: relative; z-index: 60; padding: 8px var(--gutter); background: #071318; color: var(--dempet); text-align: center; font-family: var(--display); font-size: .82rem; }
+    .fiktiv a { color: var(--tekst); font-weight: 700; }
+
+    /* ---------- Typografi ---------- */
+    h1, h2, h3 { font-family: var(--display); font-weight: 700; letter-spacing: -.03em; }
+    .smaa { font-family: var(--display); font-size: .8rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--aksent); }
+    .h2 { margin-top: 14px; font-size: clamp(2.6rem, 1.7rem + 4vw, 5.6rem); line-height: .92; font-variation-settings: "opsz" 96; }
+    .h2 em, h1 em { font-family: var(--tekstfont); font-style: italic; font-weight: 400; letter-spacing: -.01em; color: var(--aksent); }
+    .ingress { margin-top: 22px; max-width: 34rem; color: var(--dempet); font-size: clamp(1.1rem, 1rem + .4vw, 1.3rem); }
+
+    /* Overskrifter skyves opp linje for linje */
+    .linjer > span { display: block; overflow: hidden; padding-bottom: .06em; margin-bottom: -.06em; }
+    .linjer > span > span { display: block; }
+    .js .linjer > span > span { transform: translateY(105%); transition: transform 1s var(--ease); transition-delay: calc(var(--l, 0) * 110ms); }
+    .js .linjer.vist > span > span { transform: none; }
+    .js [data-inn] { opacity: 0; transform: translateY(20px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+    .js [data-inn].vist { opacity: 1; transform: none; }
+
+    /* ---------- Knapper ---------- */
+    .knapp { display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 56px; padding: 14px 28px; border: 0; border-radius: 999px; background: var(--aksent); color: #10181B; font-family: var(--display); font-weight: 700; font-size: 1.02rem; text-decoration: none; cursor: pointer; box-shadow: 0 0 0 0 transparent; transition: transform .35s var(--ease), box-shadow .35s var(--ease); }
+    .knapp:hover { transform: translateY(-2px); box-shadow: 0 14px 40px -12px var(--aksent); }
+    .knapp svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; transition: transform .35s var(--ease); }
+    .knapp:hover svg { transform: translateX(4px); }
+    .knapp--strek { background: transparent; color: var(--tekst); box-shadow: inset 0 0 0 1.5px var(--linje); }
+    .knapp--strek:hover { box-shadow: inset 0 0 0 1.5px var(--tekst); }
+    .lyst .knapp { background: #A4482A; color: #fff; }
+    .lyst .knapp:hover { box-shadow: 0 14px 40px -14px #A4482A; }
+
+    /* ---------- Topp ---------- */
+    .topp { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 82%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid var(--linje); }
+    .topp .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 72px; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--display); font-weight: 800; font-size: 1.55rem; letter-spacing: -.03em; }
+    .logo svg { width: 34px; height: 24px; }
+    .logo svg path:first-child { stroke: var(--aksent); }
+    .nav { display: none; gap: 28px; font-family: var(--display); font-size: .95rem; font-weight: 600; }
+    .nav a { padding: 10px 0; text-decoration: none; opacity: .85; }
+    .nav a:hover { opacity: 1; color: var(--aksent); }
+    .topp .knapp { min-height: 46px; padding: 10px 20px; font-size: .95rem; }
+    @media (min-width: 1000px) { .nav { display: flex; } }
+
+    /* ---------- Termometer i kanten ---------- */
+    .termo { position: fixed; z-index: 40; right: clamp(10px, 2vw, 28px); top: 50%; transform: translateY(-50%); display: none; flex-direction: column; align-items: center; gap: 10px; font-family: var(--display); font-size: .78rem; font-weight: 700; color: var(--dempet); pointer-events: none; }
+    .termo__ror { position: relative; width: 6px; height: 34vh; border-radius: 99px; background: var(--linje); overflow: hidden; }
+    .termo__fyll { position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(0deg, var(--kald), var(--varm)); transform-origin: bottom; transform: scaleY(var(--t)); }
+    .termo__kule { width: 16px; height: 16px; border-radius: 50%; background: var(--aksent); box-shadow: 0 0 18px var(--aksent); }
+    .termo__tall { color: var(--tekst); font-variant-numeric: tabular-nums; }
+    @media (min-width: 1100px) { .termo { display: flex; } }
+
+    /* ---------- Hero ---------- */
+    .hero { position: relative; min-height: calc(100svh - 108px); display: grid; align-items: end; overflow: hidden; isolation: isolate; }
+    .hero__himmel { position: absolute; inset: 0; z-index: -2; background:
+        radial-gradient(60% 50% at 70% 72%, rgba(244, 165, 130, .32), transparent 70%),
+        radial-gradient(40% 30% at 22% 18%, rgba(143, 198, 207, .16), transparent 70%),
+        linear-gradient(180deg, #071318 0%, #0B2129 55%, #10303A 100%); }
+    .hero__fjord { position: absolute; left: 0; right: 0; bottom: 0; height: 34%; z-index: -1; background: linear-gradient(180deg, rgba(5, 18, 22, 0) 0%, #06161B 30%); }
+    .hero__fjord::before { content: ""; position: absolute; left: 0; right: 0; top: 30%; height: 1px; background: linear-gradient(90deg, transparent, rgba(244, 165, 130, .6) 55%, transparent 85%); }
+    .hero__fjord::after { /* lysstriper i vannet */
+      content: ""; position: absolute; left: 50%; top: 32%; width: min(520px, 60vw); height: 60%;
+      background: repeating-linear-gradient(180deg, rgba(244, 165, 130, .22) 0 2px, transparent 2px 12px);
+      -webkit-mask: linear-gradient(180deg, #000, transparent); mask: linear-gradient(180deg, #000, transparent);
+      transform: translateX(-30%);
+    }
+    .hero canvas { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; }
+    .hero__hytte { position: absolute; z-index: -1; left: 62%; bottom: 30%; width: clamp(120px, 16vw, 230px); transform: translateX(-50%); }
+    @media (max-width: 899px) { .hero__hytte { display: none; } .hero__fjord::after { opacity: .35; } }
+    .hero__innhold { padding-block: clamp(48px, 8vw, 120px) clamp(48px, 7vw, 96px); }
+    .hero h1 { margin-top: 18px; font-size: clamp(3.4rem, 1.6rem + 7.6vw, 9.2rem); line-height: .86; letter-spacing: -.045em; font-variation-settings: "opsz" 96; max-width: 10ch; }
+    .hero__bunn { display: grid; gap: 28px; margin-top: clamp(28px, 4vw, 48px); }
+    @media (min-width: 900px) { .hero__bunn { grid-template-columns: 1fr auto; align-items: end; } }
+    .hero__bunn .ingress { margin-top: 0; }
+    .hero__knapper { display: flex; flex-wrap: wrap; gap: 12px; }
+    .maaler { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; font-family: var(--display); font-size: .88rem; font-weight: 600; }
+    .maaler span { padding: 6px 12px; border-radius: 999px; background: var(--flate); box-shadow: inset 0 0 0 1px var(--linje); }
+    .maaler b { color: var(--aksent); }
+
+    /* ---------- Seksjoner ---------- */
+    .seksjon { position: relative; padding-block: clamp(88px, 11vw, 160px); }
+    .topptekst { display: grid; gap: 22px; margin-bottom: clamp(44px, 5vw, 72px); }
+    @media (min-width: 900px) { .topptekst { grid-template-columns: 1.15fr .85fr; align-items: end; } .topptekst .ingress { margin-top: 0; } }
+
+    /* ---------- Økter (priser) ---------- */
+    .okter { display: grid; gap: 16px; }
+    @media (min-width: 900px) { .okter { grid-template-columns: 1fr 1fr 1fr; } .okt:nth-child(2) { transform: translateY(40px); } .js .okt:nth-child(2)[data-inn]:not(.vist) { transform: translateY(60px); } }
+    .okt { position: relative; display: flex; flex-direction: column; gap: 14px; min-height: 100%; padding: clamp(24px, 3vw, 36px); border-radius: 28px; background: var(--flate); box-shadow: inset 0 0 0 1px var(--linje); overflow: hidden; isolation: isolate; transition: box-shadow .4s var(--ease); }
+    .okt::before { /* varme som stiger opp fra bunnen ved hover */
+      content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(120% 70% at 50% 120%, rgba(244, 165, 130, .35), transparent 65%); opacity: 0; transform: translateY(20%); transition: opacity .6s var(--ease), transform .8s var(--ease);
+    }
+    .okt:hover::before, .okt:focus-within::before { opacity: 1; transform: none; }
+    .okt:hover { box-shadow: inset 0 0 0 1px rgba(244, 165, 130, .5); }
+    .okt__tid { font-family: var(--display); font-size: .82rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--aksent); }
+    .okt h3 { font-size: clamp(1.9rem, 1.5rem + 1.4vw, 2.6rem); line-height: 1; }
+    .okt p { color: var(--dempet); }
+    .okt__pris { margin-top: auto; padding-top: 18px; border-top: 1px solid var(--linje); display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+    .okt__pris b { font-family: var(--display); font-weight: 800; font-size: 2rem; letter-spacing: -.03em; }
+    .okt__pris span { font-size: .95rem; color: var(--dempet); }
+    .merk { margin-top: clamp(56px, 6vw, 72px); font-family: var(--display); font-size: .82rem; color: var(--dempet); }
+
+    /* ---------- Ritualet ---------- */
+    .ritual .wrap { display: grid; gap: 48px; align-items: center; }
+    @media (min-width: 960px) { .ritual .wrap { grid-template-columns: .9fr 1.1fr; gap: 80px; } .ring { position: sticky; top: 120px; } }
+    .ring { position: relative; width: min(100%, 440px); aspect-ratio: 1; margin-inline: auto; }
+    .ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .ring circle { fill: none; stroke-width: 6; }
+    .ring .spor { stroke: var(--linje); }
+    .ring .fyll { stroke: url(#ringfarge); stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: calc(100 - var(--r, 0) * 100); transition: stroke-dashoffset .2s linear; }
+    .ring__midt { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 18%; }
+    .ring__midt b { display: block; font-family: var(--display); font-weight: 800; font-size: clamp(3rem, 2rem + 4vw, 5.2rem); line-height: .9; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+    .ring__midt span { display: block; margin-top: 8px; color: var(--dempet); }
+    .steg { display: grid; gap: 0; border-top: 1px solid var(--linje); }
+    .steg li { display: grid; grid-template-columns: 4.5rem 1fr; gap: 6px 20px; padding: 32px 0; border-bottom: 1px solid var(--linje); opacity: .45; transition: opacity .5s var(--ease); }
+    .steg li.aktiv { opacity: 1; }
+    .steg__nr { font-family: var(--display); font-weight: 800; font-size: 3rem; line-height: .9; color: var(--aksent); }
+    .steg h3 { font-size: clamp(1.6rem, 1.3rem + 1vw, 2.2rem); line-height: 1.05; }
+    .steg p { grid-column: 2; color: var(--dempet); }
+    .steg small { grid-column: 2; font-family: var(--display); font-size: .82rem; font-weight: 600; color: var(--aksent); }
+
+    /* ---------- Bestill (lys flate) ---------- */
+    .lyst { background: var(--lys); color: var(--lys-tekst); border-radius: clamp(28px, 4vw, 48px); }
+    .bestill { margin-inline: clamp(8px, 1.5vw, 20px); }
+    .lyst .smaa { color: #A4482A; }
+    .lyst .h2 em { color: #A4482A; }
+    .lyst .ingress { color: var(--lys-dempet); }
+    .bestill .wrap { display: grid; gap: 40px; }
+    @media (min-width: 1000px) { .bestill .wrap { grid-template-columns: .75fr 1.25fr; gap: 72px; align-items: start; } }
+    .bok { display: grid; gap: 26px; }
+    .bok legend, .felt label { display: block; margin-bottom: 10px; font-family: var(--display); font-weight: 700; font-size: .95rem; }
+    .dager { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: thin; }
+    .dag { flex: none; width: 74px; min-height: 76px; border: 0; border-radius: 18px; background: #E8E0D4; color: var(--lys-tekst); cursor: pointer; line-height: 1.1; transition: background-color .25s, color .25s, transform .3s var(--ease); }
+    .dag:hover { transform: translateY(-2px); }
+    .dag small { display: block; font-family: var(--display); font-size: .78rem; font-weight: 600; text-transform: capitalize; }
+    .dag b { font-family: var(--display); font-size: 1.6rem; font-weight: 800; }
+    .dag[aria-pressed="true"] { background: var(--lys-tekst); color: var(--lys); }
+    .okter-dag { display: grid; gap: 8px; }
+    .slot { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 16px; min-height: 64px; padding: 12px 18px; border: 0; border-radius: 18px; background: #fff; box-shadow: inset 0 0 0 1.5px #E2D8CA; text-align: left; cursor: pointer; transition: box-shadow .2s, background-color .2s; }
+    .slot:hover:not(:disabled) { box-shadow: inset 0 0 0 1.5px var(--lys-tekst); }
+    @media (max-width: 479px) { .slot { grid-template-columns: auto 1fr; } .slot > span:not(.plasser) { display: none; } .slot .plasser { justify-self: end; } }
+    .slot b { font-family: var(--display); font-weight: 800; font-size: 1.15rem; font-variant-numeric: tabular-nums; }
+    .slot span { color: var(--lys-dempet); }
+    .plasser { display: flex; align-items: center; gap: 8px; font-family: var(--display); font-size: .85rem; font-weight: 600; }
+    .plasser i { display: block; width: 52px; height: 6px; border-radius: 99px; background: #E8E0D4; overflow: hidden; }
+    .plasser i::after { content: ""; display: block; height: 100%; width: calc(var(--fri) * 100%); background: #3E7C70; border-radius: inherit; }
+    .slot[aria-pressed="true"] { background: var(--lys-tekst); color: var(--lys); box-shadow: none; }
+    .slot[aria-pressed="true"] span { color: #D5CCC0; }
+    .slot[aria-pressed="true"] .plasser i { background: #4B3F38; }
+    .slot:disabled { opacity: .45; cursor: not-allowed; }
+    .rad { display: grid; gap: 18px; }
+    @media (min-width: 600px) { .rad { grid-template-columns: 1fr 1fr; } }
+    .felt input { width: 100%; min-height: 54px; padding: 12px 16px; border: 0; border-radius: 16px; background: #fff; box-shadow: inset 0 0 0 1.5px #D7CBBB; font-size: 1rem; }
+    .felt input:focus-visible { outline: 3px solid #A4482A; outline-offset: 2px; }
+    .felt [aria-invalid="true"] { box-shadow: inset 0 0 0 2px #A3261B; }
+    .feil { margin-top: 6px; font-family: var(--display); font-size: .9rem; font-weight: 600; color: #A3261B; }
+    .feil:empty { display: none; }
+    .antall { display: flex; align-items: center; gap: 6px; }
+    .antall button { width: 54px; height: 54px; border: 0; border-radius: 50%; background: #E8E0D4; font-size: 1.5rem; line-height: 1; cursor: pointer; }
+    .antall button:hover:not(:disabled) { background: var(--lys-tekst); color: var(--lys); }
+    .antall button:disabled { opacity: .35; cursor: not-allowed; }
+    .antall output { min-width: 3ch; text-align: center; font-family: var(--display); font-weight: 800; font-size: 1.6rem; }
+    .sum { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 22px; border-radius: 22px; background: var(--lys-tekst); color: var(--lys); }
+    .sum b { display: block; font-family: var(--display); font-weight: 800; font-size: 2rem; letter-spacing: -.03em; line-height: 1; }
+    .sum small { color: #D5CCC0; font-size: .9rem; }
+    .sum .knapp { background: var(--varm); color: #1E1714; }
+    .bok__merk { font-family: var(--display); font-size: .85rem; color: var(--lys-dempet); }
+    .takk { padding: 32px; border-radius: 28px; background: #fff; }
+    .takk:focus { outline: none; }
+    .takk h3 { font-size: 2.4rem; line-height: 1; }
+    .takk p { margin-top: 10px; color: var(--lys-dempet); }
+
+    /* ---------- Om ---------- */
+    .om .wrap { display: grid; gap: 40px; align-items: center; }
+    @media (min-width: 960px) { .om .wrap { grid-template-columns: 1fr 1fr; gap: 80px; } }
+    .om p.tekst { margin-top: 20px; color: var(--dempet); max-width: 34rem; }
+    .tre { position: relative; aspect-ratio: 4 / 5; border-radius: 999px 999px 32px 32px; overflow: hidden; background:
+        repeating-linear-gradient(0deg, #5A3826 0 22px, #4A2D1F 22px 24px, #63402C 24px 46px, #4A2D1F 46px 48px); }
+    .tre::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 45% at 50% 85%, rgba(244, 165, 130, .65), transparent 70%); }
+    .tre::after { content: "80 °C"; position: absolute; left: 50%; top: 22%; transform: translateX(-50%); padding: 10px 18px; border-radius: 999px; background: rgba(30, 23, 20, .7); color: var(--varm); font-family: var(--display); font-weight: 800; font-size: 1.4rem; }
+    .fakta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 32px; }
+    .fakta li { padding-top: 14px; border-top: 1px solid var(--linje); }
+    .fakta b { display: block; font-family: var(--display); font-weight: 800; font-size: clamp(1.7rem, 1.3rem + 1.4vw, 2.4rem); line-height: 1; color: var(--aksent); }
+    .fakta span { font-size: .95rem; color: var(--dempet); }
+
+    /* ---------- Anmeldelser ---------- */
+    .anm { display: grid; gap: 18px; }
+    @media (min-width: 900px) { .anm { grid-template-columns: 1.2fr 1fr 1fr; align-items: start; } .anm li:nth-child(2) { margin-top: 64px; } .anm li:nth-child(3) { margin-top: 128px; } }
+    .anm li { padding: 28px; border-radius: 28px; background: var(--flate); box-shadow: inset 0 0 0 1px var(--linje); }
+    .anm blockquote { font-style: italic; font-size: clamp(1.3rem, 1.15rem + .5vw, 1.6rem); line-height: 1.35; }
+    .anm p { margin-top: 18px; font-family: var(--display); font-size: .9rem; color: var(--dempet); }
+    .anm__fiktiv { display: inline-block; margin-top: 8px; padding: 3px 10px; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--linje); font-family: var(--display); font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--dempet); }
+
+    /* ---------- Praktisk ---------- */
+    .praktisk .wrap { display: grid; gap: 40px; }
+    @media (min-width: 960px) { .praktisk .wrap { grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; } }
+    .ta-med { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+    .ta-med li { padding: 10px 16px; border-radius: 999px; background: var(--flate); box-shadow: inset 0 0 0 1px var(--linje); font-family: var(--display); font-weight: 600; font-size: .95rem; }
+    .tider { margin-top: 28px; border-top: 1px solid var(--linje); }
+    .tider div { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--linje); font-family: var(--display); }
+    .tider dt { font-weight: 600; }
+    .tider .i-dag { color: var(--aksent); }
+    .adresse { margin-top: 28px; font-style: normal; font-family: var(--display); font-weight: 700; font-size: 1.6rem; line-height: 1.2; letter-spacing: -.02em; }
+    .kart { position: relative; aspect-ratio: 4 / 3; margin-top: 28px; border-radius: 28px; overflow: hidden; background: linear-gradient(160deg, #123540, #0B2129); box-shadow: inset 0 0 0 1px var(--linje); }
+    .kart::before { content: ""; position: absolute; left: -10%; right: 40%; top: -10%; bottom: -10%; border-radius: 0 50% 50% 0; background: #1F3A2C; }
+    .kart__nal { position: absolute; left: 62%; top: 46%; width: 18px; height: 18px; border-radius: 50%; background: var(--varm); box-shadow: 0 0 0 8px rgba(244, 165, 130, .25); }
+    .kart__merk { position: absolute; left: 16px; bottom: 16px; padding: 4px 12px; border-radius: 999px; background: rgba(7, 19, 24, .8); font-family: var(--display); font-size: .78rem; font-weight: 600; }
+
+    /* ---------- Spørsmål ---------- */
+    .faq__liste { border-top: 1px solid var(--linje); }
+    .faq__liste details { border-bottom: 1px solid var(--linje); }
+    .faq__liste summary { display: flex; justify-content: space-between; align-items: center; gap: 20px; min-height: 68px; padding: 16px 0; cursor: pointer; list-style: none; font-family: var(--display); font-weight: 700; font-size: clamp(1.2rem, 1.05rem + .6vw, 1.6rem); letter-spacing: -.02em; }
+    .faq__liste summary::-webkit-details-marker { display: none; }
+    .faq__liste summary::after { content: ""; flex: none; width: 14px; height: 14px; border-right: 2px solid var(--aksent); border-bottom: 2px solid var(--aksent); transform: rotate(45deg) translate(-3px, -3px); transition: transform .35s var(--ease); }
+    .faq__liste details[open] summary::after { transform: rotate(-135deg); }
+    .faq__liste details p { padding-bottom: 24px; max-width: 42rem; color: var(--dempet); }
+
+    /* ---------- Bunn ---------- */
+    .bunn { padding-block: 72px 36px; }
+    .bunn__stor { font-family: var(--display); font-weight: 800; font-size: clamp(3rem, 1rem + 9vw, 9rem); line-height: .9; letter-spacing: -.05em; }
+    .bunn__stor em { font-family: var(--tekstfont); font-style: italic; font-weight: 400; color: var(--aksent); }
+    .bunn__rad { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--linje); font-family: var(--display); font-size: .88rem; color: var(--dempet); }
+    .bunn a { color: var(--tekst); }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+      .js [data-inn], .js .linjer > span > span { opacity: 1; transform: none; }
+      .steg li { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <a class="hopp" href="#innhold">Hopp til innholdet</a>
+  <p class="fiktiv">Fiktivt konsept laget som eksempel av Nettstrax. <a href="https://nettstrax.no">nettstrax.no</a></p>
+
+  <header class="topp">
+    <div class="wrap">
+      <a class="logo" href="#innhold"><svg viewBox="0 0 34 24" aria-hidden="true"><path d="M3 18 Q17 -2 31 18" fill="none" stroke-width="3" stroke-linecap="round"/><path d="M2 22h30" stroke="#8FC6CF" stroke-width="2.4" stroke-linecap="round"/></svg>Kvelv</a>
+      <nav class="nav" aria-label="Hovedmeny">
+        <a href="#okter">Økter og priser</a>
+        <a href="#ritualet">Ritualet</a>
+        <a href="#praktisk">Praktisk</a>
+        <a href="#sporsmal">Spørsmål</a>
+      </nav>
+      <a class="knapp" href="#bestill">Book plass</a>
+    </div>
+  </header>
+
+  <div class="termo" aria-hidden="true">
+    <span class="termo__tall" id="termo-tall">6 °C</span>
+    <span class="termo__ror"><span class="termo__fyll"></span></span>
+    <span class="termo__kule"></span>
+  </div>
+
+  <main id="innhold">
+    <!-- ============ HERO ============ -->
+    <section class="hero" aria-labelledby="hero-tittel">
+      <div class="hero__himmel" aria-hidden="true"></div>
+      <svg class="hero__hytte" viewBox="0 0 220 120" aria-hidden="true">
+        <path d="M20 96 L110 30 L200 96 Z" fill="#06161B"/>
+        <rect x="40" y="70" width="140" height="30" fill="#06161B"/>
+        <rect x="96" y="74" width="26" height="18" rx="2" fill="#F4A582"/>
+        <rect x="96" y="74" width="26" height="18" rx="2" fill="#FFD9B8" opacity=".5"/>
+        <path d="M10 104 H210" stroke="#06161B" stroke-width="10" stroke-linecap="round"/>
+        <rect x="150" y="20" width="10" height="34" fill="#06161B"/>
+      </svg>
+      <canvas id="damp" aria-hidden="true"></canvas>
+      <div class="hero__fjord" aria-hidden="true"></div>
+      <div class="wrap hero__innhold">
+        <p class="smaa">Flytende badstue i Eksempelby</p>
+        <h1 id="hero-tittel" class="linjer" data-linjer><span><span>Kaldt vann.</span></span><span><span><em>Varm</em> sjel.</span></span></h1>
+        <div class="hero__bunn">
+          <div>
+            <p class="ingress">En vedfyrt badstue som flyter ved bryggen. Varm deg opp, dypp deg i fjorden og hvil. Drop-in hele uka, eller lei hele badstua for gjengen.</p>
+            <p class="maaler"><span>Badstue <b>ca. 80 °C</b></span><span>Plass til <b>12</b></span><span>Rett i <b>fjorden</b></span></p>
+          </div>
+          <div class="hero__knapper">
+            <a class="knapp" href="#bestill">Book plass <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+            <a class="knapp knapp--strek" href="#okter">Se økter og priser</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ØKTER ============ -->
+    <section class="seksjon" id="okter" aria-labelledby="okter-tittel">
+      <div class="wrap">
+        <div class="topptekst">
+          <div>
+            <p class="smaa" data-inn>Økter og priser</p>
+            <h2 id="okter-tittel" class="h2 linjer" data-linjer><span><span>Velg hvor lenge</span></span><span><span>du vil <em>bli</em>.</span></span></h2>
+          </div>
+          <p class="ingress" data-inn>Alle økter inkluderer håndkle, vann og en krakk på bryggen. Du trenger bare badetøy.</p>
+        </div>
+        <ul class="okter">
+          <li class="okt" data-inn><span class="okt__tid">90 minutter</span><h3>Drop-in</h3><p>Del badstua med andre. Kom alene eller ta med en venn.</p><p class="okt__pris"><b>290 kr</b><span>per person</span></p></li>
+          <li class="okt" data-inn><span class="okt__tid">Hverdager 07–09</span><h3>Morgenbad</h3><p>Start dagen med varme og en kald dukkert før jobb.</p><p class="okt__pris"><b>190 kr</b><span>per person</span></p></li>
+          <li class="okt" data-inn><span class="okt__tid">2 timer · opptil 12</span><h3>Hele badstua</h3><p>For vennegjengen, laget eller bursdagen. Vi fyrer opp før dere kommer.</p><p class="okt__pris"><b>2 990 kr</b><span>for alle</span></p></li>
+        </ul>
+        <p class="merk">Alle priser er eksempelpriser for et fiktivt firma.</p>
+      </div>
+    </section>
+
+    <!-- ============ RITUALET ============ -->
+    <section class="seksjon ritual" id="ritualet" aria-labelledby="ritual-tittel">
+      <div class="wrap">
+        <div class="ring" aria-hidden="true">
+          <svg viewBox="0 0 120 120">
+            <defs><linearGradient id="ringfarge" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#8FC6CF"/><stop offset="1" stop-color="#F4A582"/></linearGradient></defs>
+            <circle class="spor" cx="60" cy="60" r="52" pathLength="100"/>
+            <circle class="fyll" id="ring-fyll" cx="60" cy="60" r="52" pathLength="100"/>
+          </svg>
+          <div class="ring__midt"><div><b id="ring-tall">1</b><span id="ring-tekst">Varm opp</span></div></div>
+        </div>
+        <div>
+          <p class="smaa" data-inn>Ritualet</p>
+          <h2 id="ritual-tittel" class="h2 linjer" data-linjer><span><span>Varmt, kaldt,</span></span><span><span><em>hvile</em>. Gjenta.</span></span></h2>
+          <p class="ingress" data-inn>Første gang? Følg disse tre stegene, to eller tre runder. Vi viser deg hvordan når du kommer.</p>
+          <ol class="steg" id="steg" style="margin-top:40px">
+            <li data-steg="0"><span class="steg__nr">1</span><h3>Varm opp</h3><p>Sett deg i badstua til du er god og varm. Gå ut før det blir ubehagelig.</p><small>10–15 minutter</small></li>
+            <li data-steg="1"><span class="steg__nr">2</span><h3>Kald dukkert</h3><p>Gå rolig ned trappa og ut i fjorden. Pust ut, og kom opp igjen.</p><small>Noen sekunder</small></li>
+            <li data-steg="2"><span class="steg__nr">3</span><h3>Hvil</h3><p>Sett deg på bryggen med et håndkle. Kjenn varmen komme tilbake.</p><small>10 minutter</small></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BESTILL ============ -->
+    <section class="seksjon lyst bestill" id="bestill" aria-labelledby="bestill-tittel">
+      <div class="wrap">
+        <div>
+          <p class="smaa" data-inn>Book plass</p>
+          <h2 id="bestill-tittel" class="h2 linjer" data-linjer><span><span>Finn en økt</span></span><span><span>med <em>ledig</em> plass.</span></span></h2>
+          <p class="ingress" data-inn>Velg dag og tid. Grønn strek viser hvor mange plasser som er ledige.</p>
+        </div>
+        <form class="bok" id="bok" novalidate data-inn>
+          <fieldset><legend>Dag</legend><div class="dager" id="dager"></div></fieldset>
+          <fieldset><legend>Drop-in-økter</legend><div class="okter-dag" id="slots" aria-live="polite"></div><p class="feil" id="slot-feil"></p></fieldset>
+          <fieldset>
+            <legend>Antall personer</legend>
+            <div class="antall"><button type="button" id="minus" aria-label="Én færre">−</button><output id="antall" aria-live="polite">1</output><button type="button" id="pluss" aria-label="Én til">+</button></div>
+          </fieldset>
+          <div class="rad">
+            <div class="felt"><label for="navn">Navn</label><input id="navn" autocomplete="name" required aria-describedby="navn-feil"><p class="feil" id="navn-feil"></p></div>
+            <div class="felt"><label for="mobil">Mobil</label><input id="mobil" type="tel" inputmode="tel" autocomplete="tel" required aria-describedby="mobil-feil"><p class="feil" id="mobil-feil"></p></div>
+          </div>
+          <div class="sum">
+            <div><b id="sum">290 kr</b><small id="sum-tekst">1 person × 290 kr (eksempelpris)</small></div>
+            <button class="knapp" type="submit">Book plass</button>
+          </div>
+          <p class="bok__merk">Dette er et eksempel. Ingenting blir bestilt eller betalt.</p>
+        </form>
+        <div class="takk" id="takk" tabindex="-1" hidden>
+          <h3>Vi fyrer opp.</h3>
+          <p id="takk-tekst"></p>
+          <p>Dette er et fiktivt eksempel. Ingen plass er booket.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ OM ============ -->
+    <section class="seksjon om" aria-labelledby="om-tittel">
+      <div class="wrap">
+        <div class="tre" role="img" aria-label="Plassholder for bilde av badstua: varmt lys fra ovnen mot vegger av tre" data-inn></div>
+        <div>
+          <p class="smaa" data-inn>Om Kvelv</p>
+          <h2 id="om-tittel" class="h2 linjer" data-linjer><span><span>Bygd for</span></span><span><span>fjorden.</span></span></h2>
+          <p class="tekst" data-inn>Kvelv er en liten badstue i tre som flyter ved bryggen i Eksempelby. Vi fyrer med ved, og vinduet vender rett ut mot fjorden.</p>
+          <p class="tekst" data-inn>Badstua drives av Mari og Jon (fiktive personer), som er på bryggen hver dag og hjelper deg i gang.</p>
+          <ul class="fakta" data-inn>
+            <li><b>12</b><span>plasser</span></li>
+            <li><b>Ved</b><span>i ovnen</span></li>
+            <li><b>Hele</b><span>året</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ANMELDELSER ============ -->
+    <section class="seksjon" aria-labelledby="anm-tittel">
+      <div class="wrap">
+        <div class="topptekst">
+          <div>
+            <p class="smaa" data-inn>Anmeldelser</p>
+            <h2 id="anm-tittel" class="h2 linjer" data-linjer><span><span>Etter en <em>runde</em>.</span></span></h2>
+          </div>
+          <p class="ingress" data-inn>Anmeldelsene er fiktive eksempler.</p>
+        </div>
+        <ul class="anm">
+          <li data-inn><blockquote>«Jeg trodde jeg aldri ville bade i november. Nå gleder jeg meg til det hver uke.»</blockquote><p>Kari, Eksempelby</p><span class="anm__fiktiv">Fiktiv anmeldelse</span></li>
+          <li data-inn><blockquote>«Leide hele badstua til 40-årsdagen. Rolig, varmt og helt annerledes.»</blockquote><p>Per, Eksempelby</p><span class="anm__fiktiv">Fiktiv anmeldelse</span></li>
+          <li data-inn><blockquote>«Morgenbad før jobb. Bedre enn kaffe.»</blockquote><p>Nina, Eksempelby</p><span class="anm__fiktiv">Fiktiv anmeldelse</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ PRAKTISK ============ -->
+    <section class="seksjon praktisk" id="praktisk" aria-labelledby="pr-tittel">
+      <div class="wrap">
+        <div>
+          <p class="smaa" data-inn>Praktisk</p>
+          <h2 id="pr-tittel" class="h2 linjer" data-linjer><span><span>Ta med</span></span><span><span><em>badetøy</em>.</span></span></h2>
+          <ul class="ta-med" data-inn><li>Badetøy</li><li>Badesko</li><li>Lue til vinteren</li><li>Godt humør</li></ul>
+          <dl class="tider" id="tider" data-inn>
+            <div data-dag="1 2 3 4 5"><dt>Mandag–fredag</dt><dd>07–21</dd></div>
+            <div data-dag="6 0"><dt>Lørdag–søndag</dt><dd>10–20</dd></div>
+          </dl>
+        </div>
+        <div>
+          <address class="adresse" data-inn>Brygge 3, Eksempelveien 2<br>0000 Eksempelby</address>
+          <p class="ingress" data-inn>Parker ved havna. Garderobe og dusj i bryggehuset.</p>
+          <div class="kart" role="img" aria-label="Kartplassholder: her vises et kart på en ekte side" data-inn><span class="kart__nal" aria-hidden="true"></span><span class="kart__merk">Kart</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SPØRSMÅL ============ -->
+    <section class="seksjon" id="sporsmal" aria-labelledby="faq-tittel">
+      <div class="wrap">
+        <div class="topptekst">
+          <div>
+            <p class="smaa" data-inn>Spørsmål</p>
+            <h2 id="faq-tittel" class="h2 linjer" data-linjer><span><span>Før første <em>gang</em>.</span></span></h2>
+          </div>
+        </div>
+        <div class="faq__liste" data-inn>
+          <details><summary>Må jeg bade i fjorden?</summary><p>Nei. Mange nøyer seg med en kald dusj, eller bare å sitte på bryggen og kjøle seg ned.</p></details>
+          <details><summary>Er det trygt å bade om vinteren?</summary><p>Gå rolig uti, bli bare noen sekunder og hold deg ved trappa. Har du hjerteproblemer, snakk med legen din først.</p></details>
+          <details><summary>Hvor varmt er det inne?</summary><p>Vanligvis rundt 80 grader. Det er kjøligere på nederste benk.</p></details>
+          <details><summary>Kan jeg komme alene?</summary><p>Ja. På drop-in deler du badstua med andre, og vi hjelper deg i gang.</p></details>
+          <details><summary>Hva om det blir storm?</summary><p>Da stenger vi og sender deg SMS. Du får plassen flyttet eller pengene tilbake.</p></details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bunn">
+    <div class="wrap">
+      <p class="bunn__stor" aria-hidden="true">Kaldt. <em>Varmt.</em> Kvelv.</p>
+      <div class="bunn__rad">
+        <p>Kvelv Badstue (fiktivt firma) · Eksempelveien 2, 0000 Eksempelby · 000 00 000</p>
+        <p>Fiktivt konsept laget som eksempel av Nettstrax. <a href="https://nettstrax.no">nettstrax.no</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    "use strict";
+    var rolig = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var root = document.documentElement;
+    root.classList.add("js");
+
+    /* ---------- Innglidning og linje-masker ---------- */
+    document.querySelectorAll("[data-linjer]").forEach(function (h) {
+      Array.prototype.forEach.call(h.children, function (s, i) { s.firstElementChild.style.setProperty("--l", i); });
+    });
+    var inn = document.querySelectorAll("[data-inn], [data-linjer]");
+    if (rolig || !("IntersectionObserver" in window)) inn.forEach(function (el) { el.classList.add("vist"); });
+    else {
+      var io = new IntersectionObserver(function (e) { e.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add("vist"); io.unobserve(x.target); } }); }, { rootMargin: "0px 0px -8% 0px" });
+      inn.forEach(function (el) { io.observe(el); });
+    }
+
+    /* ---------- Fra kaldt til varmt ---------- */
+    function blend(a, b, t) {
+      var x = parseInt(a.slice(1), 16), y = parseInt(b.slice(1), 16);
+      var r = Math.round(((x >> 16) & 255) * (1 - t) + ((y >> 16) & 255) * t);
+      var g = Math.round(((x >> 8) & 255) * (1 - t) + ((y >> 8) & 255) * t);
+      var bl = Math.round((x & 255) * (1 - t) + (y & 255) * t);
+      return "#" + ((1 << 24) + (r << 16) + (g << 8) + bl).toString(16).slice(1);
+    }
+    var termoTall = document.getElementById("termo-tall");
+    var theme = document.querySelector('meta[name="theme-color"]');
+    var steg = Array.prototype.slice.call(document.querySelectorAll("#steg li"));
+    var ritual = document.getElementById("ritualet");
+    var ringTall = document.getElementById("ring-tall"), ringTekst = document.getElementById("ring-tekst"), ring = document.querySelector(".ring");
+    var NAVN = ["Varm opp", "Kald dukkert", "Hvil"];
+
+    function oppdater() {
+      var maks = root.scrollHeight - innerHeight;
+      var t = rolig ? .5 : Math.min(1, Math.max(0, scrollY / Math.max(1, maks)));
+      var bg = blend("#0B2129", "#2A1712", t);
+      root.style.setProperty("--t", t.toFixed(3));
+      root.style.setProperty("--bg", bg);
+      root.style.setProperty("--aksent", blend("#8FC6CF", "#F4A582", Math.min(1, t * 1.4)));
+      termoTall.textContent = Math.round(6 + t * 74) + " °C";
+      if (theme) theme.setAttribute("content", bg);
+
+      // Ritualet: ringen fylles mens stegene passerer midten av skjermen
+      var r = ritual.getBoundingClientRect();
+      var p = Math.min(1, Math.max(0, (innerHeight * .55 - r.top) / (r.height * .8)));
+      ring.style.setProperty("--r", (rolig ? 1 : p).toFixed(3));
+      var aktiv = rolig ? -1 : Math.min(2, Math.floor(p * 3));
+      steg.forEach(function (s, i) { s.classList.toggle("aktiv", i === aktiv || rolig); });
+      if (!rolig) { ringTall.textContent = aktiv + 1; ringTekst.textContent = NAVN[aktiv]; }
+    }
+    if (rolig) { ringTall.textContent = "3"; ringTekst.textContent = "steg, to eller tre runder"; }
+    var venter = false;
+    addEventListener("scroll", function () { if (!venter) { venter = true; requestAnimationFrame(function () { venter = false; oppdater(); }); } }, { passive: true });
+    addEventListener("resize", oppdater);
+    oppdater();
+
+    /* ---------- Damp i toppen ---------- */
+    var c = document.getElementById("damp"), ctx = c.getContext("2d");
+    var dpr = Math.min(1.5, window.devicePixelRatio || 1), W = 0, H = 0, partikler = [], synlig = true;
+    function storrelse() { W = c.clientWidth; H = c.clientHeight; c.width = W * dpr; c.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+    function ny(start) {
+      var kilde = W < 900 ? W - 60 : W * .62;
+      return { x: kilde + (Math.random() - .5) * W * .12, y: start ? H * (.05 + Math.random() * .6) : (W < 900 ? 110 : H * .72), r: 30 + Math.random() * 70, v: .25 + Math.random() * .45, d: (Math.random() - .5) * .25, a: 0, maksA: .018 + Math.random() * .03, liv: 0 };
+    }
+    function tegn() {
+      ctx.clearRect(0, 0, W, H);
+      partikler.forEach(function (p, i) {
+        p.liv++; p.y -= p.v; p.x += p.d + Math.sin((p.liv + i * 40) / 60) * .3; p.r += .18;
+        var hoyde = p.y / H;
+        p.a = Math.min(p.maksA, p.liv / 120 * p.maksA) * Math.min(1, hoyde * 2.2);
+        if (p.y < -p.r || p.a <= 0.001 && p.liv > 200) partikler[i] = ny(false);
+        var g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);
+        g.addColorStop(0, "rgba(255,226,206," + p.a + ")"); g.addColorStop(.6, "rgba(255,226,206," + (p.a * .4) + ")"); g.addColorStop(1, "rgba(255,226,206,0)");
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+      });
+    }
+    function loop() { if (synlig) tegn(); requestAnimationFrame(loop); }
+    storrelse();
+    for (var i = 0; i < 26; i++) partikler.push(ny(true));
+    addEventListener("resize", storrelse);
+    if ("IntersectionObserver" in window) new IntersectionObserver(function (e) { synlig = e[0].isIntersecting; }).observe(c);
+    if (rolig) { for (var k = 0; k < 160; k++) partikler.forEach(function (p) { p.liv++; p.y -= p.v; p.r += .18; }); tegn(); }
+    else requestAnimationFrame(loop);
+
+    /* ---------- Booking (fiktive økter og plasser) ---------- */
+    var PRIS = 290, KAP = 12;
+    var dagerEl = document.getElementById("dager"), slotsEl = document.getElementById("slots");
+    var kort = new Intl.DateTimeFormat("nb-NO", { weekday: "short" }), lang = new Intl.DateTimeFormat("nb-NO", { weekday: "long", day: "numeric", month: "long" });
+    var valgtDag = null, valgtSlot = null, antall = 1;
+    function tilf(n) { var x = Math.sin(n * 12.9898) * 43758.5453; return x - Math.floor(x); }
+    function tider(dato) { var helg = dato.getDay() === 0 || dato.getDay() === 6; return helg ? ["10:00", "11:45", "13:30", "15:15", "17:00", "18:30"] : ["07:00", "16:00", "17:45", "19:30"]; }
+    function ledige(dato, tid) { return Math.floor(tilf(dato.getDate() * 100 + parseInt(tid) * 7 + dato.getMonth()) * (KAP + 1)); }
+    function tegnSlots() {
+      slotsEl.innerHTML = "";
+      tider(valgtDag).forEach(function (tid) {
+        var fri = ledige(valgtDag, tid);
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "slot"; b.setAttribute("aria-pressed", String(valgtSlot === tid));
+        b.disabled = fri < antall;
+        b.innerHTML = "<b>" + tid + "</b><span>Drop-in, 90 min</span><span class=\"plasser\" style=\"--fri:" + (fri / KAP).toFixed(2) + "\"><i aria-hidden=\"true\"></i>" + (fri === 0 ? "Fullt" : fri + " ledige") + "</span>";
+        b.setAttribute("aria-label", tid + ", " + (fri === 0 ? "fullt" : fri + " ledige plasser"));
+        b.addEventListener("click", function () { valgtSlot = tid; document.getElementById("slot-feil").textContent = ""; tegnSlots(); oppdaterSum(); slotsEl.querySelector('[aria-pressed="true"]').focus(); });
+        slotsEl.appendChild(b);
+      });
+    }
+    function oppdaterSum() {
+      document.getElementById("antall").textContent = antall;
+      document.getElementById("minus").disabled = antall <= 1;
+      document.getElementById("pluss").disabled = antall >= 6;
+      document.getElementById("sum").textContent = new Intl.NumberFormat("nb-NO").format(antall * PRIS) + " kr";
+      document.getElementById("sum-tekst").textContent = antall + (antall === 1 ? " person" : " personer") + " × " + PRIS + " kr (eksempelpris)";
+    }
+    var d = new Date(); d.setHours(12, 0, 0, 0);
+    for (var n = 0; n < 7; n++) {
+      (function (dato, forste) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "dag"; b.setAttribute("aria-pressed", String(forste)); b.setAttribute("aria-label", lang.format(dato));
+        b.innerHTML = "<small>" + (forste ? "I dag" : kort.format(dato).replace(".", "")) + "</small><b>" + dato.getDate() + "</b>";
+        b.addEventListener("click", function () { valgtDag = dato; valgtSlot = null; dagerEl.querySelectorAll(".dag").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); }); tegnSlots(); });
+        dagerEl.appendChild(b);
+        if (forste) valgtDag = dato;
+      })(new Date(d), n === 0);
+      d.setDate(d.getDate() + 1);
+    }
+    document.getElementById("minus").addEventListener("click", function () { antall = Math.max(1, antall - 1); oppdaterSum(); tegnSlots(); });
+    document.getElementById("pluss").addEventListener("click", function () { antall = Math.min(6, antall + 1); if (valgtSlot && ledige(valgtDag, valgtSlot) < antall) valgtSlot = null; oppdaterSum(); tegnSlots(); });
+    tegnSlots(); oppdaterSum();
+
+    var bok = document.getElementById("bok");
+    bok.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var forste = null, meld = { navn: "Skriv inn navnet ditt.", mobil: "Skriv inn mobilnummeret ditt." };
+      ["navn", "mobil"].forEach(function (id) {
+        var f = document.getElementById(id), tom = !f.value.trim();
+        f.setAttribute("aria-invalid", String(tom));
+        document.getElementById(id + "-feil").textContent = tom ? meld[id] : "";
+        if (tom && !forste) forste = f;
+      });
+      document.getElementById("slot-feil").textContent = valgtSlot ? "" : "Velg en økt med ledig plass.";
+      if (!valgtSlot) { var l = slotsEl.querySelector(".slot:not(:disabled)"); if (l) l.focus(); return; }
+      if (forste) { forste.focus(); return; }
+      document.getElementById("takk-tekst").textContent = antall + (antall === 1 ? " plass" : " plasser") + " på drop-in " + lang.format(valgtDag) + " kl. " + valgtSlot + ". På en ekte side ville du fått bekreftelse på SMS.";
+      bok.hidden = true; var t = document.getElementById("takk"); t.hidden = false; t.focus();
+    });
+
+    /* Åpningstid i dag */
+    var idag = String(new Date().getDay());
+    document.querySelectorAll("#tider [data-dag]").forEach(function (r) { if (r.getAttribute("data-dag").split(" ").indexOf(idag) > -1) { r.classList.add("i-dag"); r.querySelector("dt").insertAdjacentHTML("beforeend", ' <span class="vh">(i dag)</span>'); } });
+  })();
+  </script>
+</body>
+</html>
