@@ -1,0 +1,611 @@
+<!doctype html>
+<!--
+  Kardang Bilverksted – fiktivt konsept laget som eksempel av Nettstrax.
+
+  BILDER: legg fotografier i eksempler/bilder/kardang/ med disse navnene,
+  så vises de automatisk. Mangler en fil, vises en stripet plassholder.
+    verksted.jpg   16:9  bil på løfte i verkstedet
+    mekaniker.jpg  4:5   mekaniker ved arbeid (hender og verktøy holder)
+  Hold hvert bilde under ca. 200 kB.
+-->
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kardang Bilverksted – fiktivt eksempel av Nettstrax</title>
+  <meta name="description" content="Fiktivt konsept laget som eksempel av Nettstrax: et lokalt bilverksted med service, EU-kontroll, dekk og reparasjoner.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#121212">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23FFD23F'/%3E%3Cpath d='M9 7v18M9 16l11-9M13 13l9 12' stroke='%23121212' stroke-width='3.4' fill='none'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================================
+       Kardang Bilverksted – asfalt, signalgult og kraft.
+       Skrift: Archivo (variabel bredde) + Space Mono.
+       Bevegelse:
+         1. Overskriften i hero strekker seg ut når du scroller.
+         2. Et løpende bånd med tjenester.
+         3. Tjenestekortene legger seg oppå hverandre (sticky).
+         4. «Slik jobber vi» kjører sidelengs mens du scroller (PC).
+       Alt slås av ved prefers-reduced-motion.
+       ========================================================= */
+    :root {
+      --asfalt: #121212;
+      --asfalt-2: #1C1C1C;
+      --asfalt-3: #262626;
+      --gul: #FFD23F;
+      --kritt: #F2F0EA;
+      --graa: #A9A69E;       /* 7,9:1 på asfalt */
+      --graa-mork: #55524C;  /* 7,0:1 på kritt */
+      --linje: rgba(242, 240, 234, .14);
+      --linje-mork: rgba(18, 18, 18, .16);
+      --vid: "Archivo", "Arial Narrow", Arial, sans-serif;
+      --mono: "Space Mono", ui-monospace, Menlo, Consolas, monospace;
+      --gutter: clamp(20px, 4.5vw, 64px);
+      --ease: cubic-bezier(.22, 1, .36, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 84px; }
+    body { margin: 0; background: var(--asfalt); color: var(--kritt); font-family: var(--vid); font-variation-settings: "wdth" 100; font-size: clamp(16px, 15px + .3vw, 18px); line-height: 1.55; overflow-x: hidden; }
+    @supports (overflow: clip) { body { overflow-x: clip; } }
+    h1, h2, h3, p, ul, ol, dl, dd, figure, fieldset, blockquote { margin: 0; }
+    ul, ol { padding: 0; list-style: none; }
+    fieldset { border: 0; padding: 0; min-width: 0; }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; }
+    button, input, select, textarea { font: inherit; color: inherit; }
+    :focus-visible { outline: 3px solid var(--gul); outline-offset: 3px; }
+    .lys :focus-visible { outline-color: var(--asfalt); }
+    .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .wrap { width: 100%; max-width: 1320px; margin-inline: auto; padding-inline: var(--gutter); }
+    .hopp { position: fixed; left: 12px; top: 12px; z-index: 100; padding: 12px 18px; background: var(--gul); color: var(--asfalt); font-weight: 800; text-decoration: none; transform: translateY(-200%); }
+    .hopp:focus { transform: none; }
+    .fiktiv { padding: 8px var(--gutter); background: var(--gul); color: var(--asfalt); text-align: center; font-family: var(--mono); font-size: .8rem; }
+    .fiktiv a { font-weight: 700; }
+
+    /* ---------- Typografi ---------- */
+    .tag { font-family: var(--mono); font-size: .8125rem; letter-spacing: .06em; text-transform: uppercase; color: var(--gul); }
+    .lys .tag { color: var(--asfalt); background: var(--gul); padding: 2px 8px; display: inline-block; }
+    .h2 { margin-top: 16px; font-weight: 850; font-variation-settings: "wdth" 70; font-size: clamp(2.75rem, 1.6rem + 5vw, 6.5rem); line-height: .88; letter-spacing: -.01em; text-transform: uppercase; text-wrap: balance; }
+    .ingress { margin-top: 20px; max-width: 36rem; color: var(--graa); font-size: clamp(1.05rem, 1rem + .3vw, 1.2rem); }
+    .lys .ingress { color: var(--graa-mork); }
+
+    /* ---------- Knapper ---------- */
+    .knapp { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 54px; padding: 14px 26px; border: 2px solid var(--gul); background: var(--gul); color: var(--asfalt); font-weight: 800; font-variation-settings: "wdth" 85; font-size: 1.05rem; text-transform: uppercase; letter-spacing: .02em; text-decoration: none; cursor: pointer; overflow: hidden; isolation: isolate; transition: color .3s var(--ease); }
+    .knapp::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--kritt); transform: translateY(101%); transition: transform .35s var(--ease); }
+    .knapp:hover::before { transform: none; }
+    .knapp svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.4; transition: transform .35s var(--ease); }
+    .knapp:hover svg { transform: translateX(4px); }
+    .knapp--strek { background: transparent; color: var(--kritt); border-color: var(--kritt); }
+    .knapp--strek::before { background: var(--kritt); }
+    .knapp--strek:hover { color: var(--asfalt); }
+    .lys .knapp { background: var(--asfalt); border-color: var(--asfalt); color: var(--gul); }
+    .lys .knapp::before { background: var(--gul); }
+    .lys .knapp:hover { color: var(--asfalt); }
+
+    /* ---------- Topp ---------- */
+    .topp { position: sticky; top: 0; z-index: 50; background: var(--asfalt); border-bottom: 1px solid var(--linje); }
+    .topp .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 72px; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 900; font-variation-settings: "wdth" 62; font-size: 1.9rem; line-height: 1; letter-spacing: .02em; text-transform: uppercase; }
+    .logo i { width: 30px; height: 30px; flex: none; background: var(--gul); clip-path: polygon(0 0, 100% 0, 100% 70%, 70% 100%, 0 100%); }
+    .nav { display: none; gap: 28px; font-family: var(--mono); font-size: .875rem; text-transform: uppercase; }
+    .nav a { padding: 12px 0; text-decoration: none; background: linear-gradient(var(--gul), var(--gul)) left 80% / 0 2px no-repeat; transition: background-size .3s var(--ease); }
+    .nav a:hover { background-size: 100% 2px; }
+    .topp__hoyre { display: flex; align-items: center; gap: 20px; }
+    .topp__tlf { display: none; font-family: var(--mono); font-weight: 700; text-decoration: none; }
+    .topp .knapp { min-height: 46px; padding: 10px 18px; font-size: .95rem; }
+    @media (min-width: 1060px) { .nav, .topp__tlf { display: flex; } }
+
+    /* ---------- Hero: overskriften strekker seg ut ---------- */
+    .hero { position: relative; padding-top: clamp(40px, 6vw, 96px); }
+    .hero h1 { --b: 62; font-weight: 900; font-variation-settings: "wdth" var(--b); font-size: clamp(3.6rem, 13.4vw, 13.5rem); line-height: .82; letter-spacing: -.01em; text-transform: uppercase; }
+    .hero h1 span { display: block; }
+    .hero h1 .gul { color: var(--gul); }
+    .hero__under { display: grid; gap: 28px; margin-top: clamp(28px, 4vw, 56px); padding-bottom: clamp(40px, 6vw, 80px); }
+    @media (min-width: 900px) { .hero__under { grid-template-columns: 1fr auto; align-items: end; } }
+    .hero__under .ingress { margin-top: 0; }
+    .hero__handling { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero__status { display: inline-flex; align-items: center; gap: 10px; margin-top: 18px; font-family: var(--mono); font-size: .875rem; color: var(--graa); }
+    .hero__status i { width: 10px; height: 10px; border-radius: 50%; background: #5BD27A; box-shadow: 0 0 0 4px rgba(91, 210, 122, .2); }
+    .hero__status.stengt i { background: #F0805B; box-shadow: 0 0 0 4px rgba(240, 128, 91, .2); }
+
+    /* ---------- Løpende bånd ---------- */
+    .baand { overflow: hidden; background: var(--gul); color: var(--asfalt); border-block: 2px solid var(--asfalt); }
+    .baand__spor { display: flex; width: max-content; animation: kjor 28s linear infinite; }
+    .baand p { display: flex; gap: 32px; padding: 16px 16px; font-weight: 900; font-variation-settings: "wdth" 70; font-size: clamp(1.4rem, 1rem + 1.6vw, 2.2rem); text-transform: uppercase; white-space: nowrap; }
+    .baand p span::after { content: "/"; margin-left: 32px; opacity: .4; }
+    @keyframes kjor { to { transform: translateX(-50%); } }
+
+    /* ---------- Bilde med stripet plassholder ---------- */
+    .foto { position: relative; overflow: hidden; background: repeating-linear-gradient(-45deg, var(--asfalt-2) 0 22px, var(--asfalt-3) 22px 44px); }
+    .foto img { width: 100%; height: 100%; object-fit: cover; }
+    .foto__plass { position: absolute; left: 16px; bottom: 16px; padding: 4px 10px; background: var(--asfalt); font-family: var(--mono); font-size: .75rem; text-transform: uppercase; color: var(--graa); }
+    .foto img + .foto__plass { display: none; }
+    .foto--169 { aspect-ratio: 16 / 9; }
+    .foto--45 { aspect-ratio: 4 / 5; }
+
+    /* ---------- Tjenester: kortene stables ---------- */
+    .seksjon { padding-block: clamp(80px, 10vw, 144px); }
+    .lys { background: var(--kritt); color: var(--asfalt); }
+    .tj__topp { display: grid; gap: 20px; margin-bottom: clamp(40px, 5vw, 64px); }
+    @media (min-width: 900px) { .tj__topp { grid-template-columns: 1.1fr .9fr; align-items: end; } .tj__topp .ingress { margin-top: 0; } }
+    .stabel { display: grid; gap: 16px; }
+    .kort { position: sticky; top: calc(88px + var(--n) * 14px); display: grid; gap: 20px; padding: clamp(24px, 4vw, 48px); background: var(--asfalt); color: var(--kritt); border: 2px solid var(--asfalt); transform-origin: center top; transition: transform .2s linear, filter .2s linear; }
+    .kort:nth-child(2n) { background: var(--asfalt-2); }
+    .kort:last-child { background: var(--gul); color: var(--asfalt); }
+    .kort__nr { font-family: var(--mono); font-size: .875rem; color: var(--gul); }
+    .kort:last-child .kort__nr { color: var(--asfalt); }
+    .kort h3 { font-weight: 900; font-variation-settings: "wdth" 66; font-size: clamp(2.2rem, 1.6rem + 2.6vw, 4rem); line-height: .9; text-transform: uppercase; }
+    .kort__pris { font-weight: 800; font-variation-settings: "wdth" 80; font-size: clamp(1.4rem, 1.2rem + .8vw, 2rem); }
+    .kort p { color: var(--graa); max-width: 36rem; }
+    .kort:last-child p { color: #3B3A35; }
+    .kort ul { display: flex; flex-wrap: wrap; gap: 8px; }
+    .kort li { padding: 6px 12px; border: 1px solid currentColor; font-family: var(--mono); font-size: .8125rem; opacity: .85; }
+    @media (min-width: 900px) {
+      .kort { grid-template-columns: 5rem 1.3fr 1fr; grid-template-areas: "nr tittel pris" "nr tekst liste"; column-gap: 40px; align-items: start; }
+      .kort__nr { grid-area: nr; } .kort h3 { grid-area: tittel; } .kort__pris { grid-area: pris; justify-self: end; } .kort p { grid-area: tekst; } .kort ul { grid-area: liste; justify-content: flex-end; }
+    }
+    .tj__merk { margin-top: 24px; font-family: var(--mono); font-size: .8125rem; color: var(--graa-mork); }
+
+    /* ---------- EU-kontroll ---------- */
+    .eu .wrap { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; align-items: center; }
+    @media (min-width: 960px) { .eu .wrap { grid-template-columns: 1fr 1fr; gap: 80px; } }
+    .eu__boks { padding: clamp(24px, 4vw, 44px); border: 2px solid var(--gul); background: var(--asfalt-2); }
+    .eu__boks label { display: block; font-family: var(--mono); font-size: .875rem; text-transform: uppercase; color: var(--gul); }
+    .eu__felt { display: flex; gap: 10px; margin-top: 10px; }
+    .eu__felt input { flex: 1; width: 100%; min-width: 0; min-height: 60px; padding: 10px 16px; border: 2px solid var(--kritt); background: var(--asfalt); font-weight: 800; font-variation-settings: "wdth" 80; font-size: 1.8rem; letter-spacing: .04em; }
+    .eu__felt input:focus-visible { outline-offset: 2px; }
+    .eu__svar { margin-top: 24px; min-height: 9rem; }
+    .eu__aar { display: block; font-weight: 900; font-variation-settings: "wdth" 62; font-size: clamp(4rem, 3rem + 5vw, 7.5rem); line-height: .85; color: var(--gul); }
+    .eu__svar p { margin-top: 10px; color: var(--graa); }
+    .eu__merk { margin-top: 16px; font-family: var(--mono); font-size: .78rem; color: var(--graa); }
+    .eu__merk a { color: var(--kritt); }
+
+    /* ---------- Slik jobber vi: sidelengs ---------- */
+    .prosess { position: relative; }
+    .prosess__spor { display: grid; gap: 16px; }
+    .steg { display: grid; align-content: space-between; gap: 32px; min-height: 260px; padding: 28px; border: 2px solid var(--asfalt); background: var(--kritt); }
+    .steg b { font-weight: 900; font-variation-settings: "wdth" 62; font-size: 6rem; line-height: .8; color: var(--asfalt); -webkit-text-stroke: 0; }
+    .steg:nth-child(odd) b { color: transparent; -webkit-text-stroke: 2px var(--asfalt); }
+    .steg h3 { font-weight: 900; font-variation-settings: "wdth" 72; font-size: 1.9rem; line-height: .95; text-transform: uppercase; }
+    .steg p { margin-top: 10px; color: var(--graa-mork); }
+    .prosess.pinn { height: 300vh; }
+    .prosess.pinn .prosess__klistre { position: sticky; top: 72px; height: calc(100vh - 72px); display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
+    .prosess.pinn .prosess__spor { display: flex; gap: 24px; width: max-content; max-width: none; margin: 0; padding-inline: var(--gutter); will-change: transform; }
+    @media (min-width: 640px) and (max-width: 959px) { .prosess__spor { grid-template-columns: 1fr 1fr; } }
+    .prosess.pinn .steg { width: min(420px, 34vw); min-height: 360px; }
+    .prosess__fremdrift { height: 4px; margin: 32px var(--gutter) 0; background: var(--linje-mork); }
+    .prosess__fremdrift span { display: block; height: 100%; background: var(--asfalt); transform-origin: left; transform: scaleX(var(--p, 0)); }
+    .prosess:not(.pinn) .prosess__fremdrift { display: none; }
+
+    /* ---------- Verkstedet ---------- */
+    .om .wrap { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; }
+    @media (min-width: 960px) { .om .wrap { grid-template-columns: 1.2fr .8fr; gap: 64px; align-items: end; } }
+    .om p.tekst { margin-top: 18px; color: var(--graa); max-width: 34rem; }
+    .liste { margin-top: 28px; border-top: 1px solid var(--linje); }
+    .liste li { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--linje); }
+    .liste span:last-child { font-family: var(--mono); color: var(--gul); text-align: right; }
+
+    /* ---------- Anmeldelser ---------- */
+    .anm { display: grid; gap: 16px; }
+    @media (min-width: 900px) { .anm { grid-template-columns: repeat(3, 1fr); } }
+    .anm li { display: grid; align-content: space-between; gap: 24px; padding: 28px; border: 2px solid var(--asfalt); }
+    .anm blockquote { font-weight: 800; font-variation-settings: "wdth" 75; font-size: clamp(1.4rem, 1.2rem + .6vw, 1.75rem); line-height: 1.15; }
+    .anm p { font-family: var(--mono); font-size: .8125rem; }
+    .anm__fiktiv { display: inline-block; margin-top: 6px; padding: 2px 8px; background: var(--asfalt); color: var(--kritt); font-family: var(--mono); font-size: .72rem; text-transform: uppercase; }
+
+    /* ---------- Finn oss ---------- */
+    .finn .wrap { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; }
+    @media (min-width: 960px) { .finn .wrap { grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; } }
+    .tider { margin-top: 28px; border-top: 2px solid var(--gul); }
+    .tider div { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--linje); font-family: var(--mono); }
+    .tider .i-dag { color: var(--gul); }
+    .adresse { margin-top: 28px; font-style: normal; font-weight: 800; font-variation-settings: "wdth" 75; font-size: 1.9rem; line-height: 1.1; text-transform: uppercase; }
+    .kart { position: relative; aspect-ratio: 4 / 3; background: var(--asfalt-2); border: 2px solid var(--linje); overflow: hidden; }
+    .kart::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 47%, #333 47% 53%, transparent 53%), linear-gradient(0deg, transparent 58%, #333 58% 64%, transparent 64%), linear-gradient(90deg, transparent 49.6%, var(--gul) 49.6% 50.4%, transparent 50.4%) 0 0 / 100% 24px; }
+    .kart__nal { position: absolute; left: 62%; top: 32%; width: 22px; height: 22px; background: var(--gul); clip-path: polygon(50% 100%, 0 0, 100% 0); }
+    .kart__merk { position: absolute; left: 14px; bottom: 14px; padding: 4px 10px; background: var(--asfalt); font-family: var(--mono); font-size: .75rem; color: var(--graa); }
+
+    /* ---------- Spørsmål ---------- */
+    .faq .wrap { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; }
+    @media (min-width: 960px) { .faq .wrap { grid-template-columns: .8fr 1.2fr; gap: 80px; align-items: start; } }
+    .faq__liste { border-top: 2px solid var(--asfalt); }
+    .faq__liste details { border-bottom: 1px solid var(--linje-mork); }
+    .faq__liste summary { display: flex; justify-content: space-between; align-items: center; gap: 20px; min-height: 64px; padding: 16px 0; cursor: pointer; list-style: none; font-weight: 800; font-variation-settings: "wdth" 80; font-size: clamp(1.2rem, 1.05rem + .5vw, 1.5rem); text-transform: uppercase; }
+    .faq__liste summary::-webkit-details-marker { display: none; }
+    .faq__liste summary::after { content: ""; flex: none; width: 28px; height: 28px; background: linear-gradient(var(--asfalt), var(--asfalt)) center / 14px 2.5px no-repeat, linear-gradient(var(--asfalt), var(--asfalt)) center / 2.5px 14px no-repeat, var(--gul); transition: transform .3s var(--ease); }
+    .faq__liste details[open] summary::after { transform: rotate(45deg); }
+    .faq__liste details p { padding-bottom: 22px; max-width: 40rem; color: var(--graa-mork); }
+
+    /* ---------- Bestill ---------- */
+    .bestill .wrap { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; }
+    @media (min-width: 960px) { .bestill .wrap { grid-template-columns: .8fr 1.2fr; gap: 72px; align-items: start; } }
+    .skjema { display: grid; gap: 22px; padding: clamp(22px, 4vw, 40px); border: 2px solid var(--gul); }
+    .rad { display: grid; gap: 18px; }
+    @media (min-width: 600px) { .rad { grid-template-columns: 1fr 1fr; } }
+    .felt label, .skjema legend { display: block; margin-bottom: 8px; font-family: var(--mono); font-size: .8125rem; text-transform: uppercase; color: var(--gul); }
+    .felt input, .felt select { width: 100%; min-height: 54px; padding: 12px 14px; border: 2px solid rgba(242, 240, 234, .35); border-radius: 0; background: var(--asfalt); color: var(--kritt); font-size: 1rem; -webkit-appearance: none; appearance: none; }
+    .felt select { background: var(--asfalt) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23FFD23F' stroke-width='2'/%3E%3C/svg%3E") right 14px center / 12px no-repeat; padding-right: 40px; }
+    .felt input:hover, .felt select:hover { border-color: var(--kritt); }
+    .felt #regnr { font-weight: 800; font-variation-settings: "wdth" 80; font-size: 1.3rem; letter-spacing: .06em; text-transform: uppercase; }
+    .felt [aria-invalid="true"] { border-color: #F0805B; }
+    .feil { margin-top: 6px; font-size: .9375rem; font-weight: 700; color: #F59A7C; }
+    .feil:empty { display: none; }
+    .valg { display: flex; flex-wrap: wrap; gap: 8px; }
+    .valg label { position: relative; }
+    .valg input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .valg span { display: inline-flex; align-items: center; min-height: 48px; padding: 10px 16px; border: 2px solid rgba(242, 240, 234, .35); font-weight: 700; font-variation-settings: "wdth" 85; text-transform: uppercase; }
+    .valg input:checked + span { background: var(--gul); border-color: var(--gul); color: var(--asfalt); }
+    .valg input:focus-visible + span { outline: 3px solid var(--gul); outline-offset: 2px; }
+    .skjema .knapp { width: 100%; }
+    .skjema__merk { font-family: var(--mono); font-size: .8125rem; color: var(--graa); }
+    .takk { padding: 32px; border: 2px solid var(--gul); }
+    .takk:focus { outline: none; }
+    .takk h3 { font-weight: 900; font-variation-settings: "wdth" 66; font-size: 3rem; line-height: .9; text-transform: uppercase; color: var(--gul); }
+    .takk p { margin-top: 10px; color: var(--graa); }
+    .bestill__tlf { display: inline-block; margin-top: 24px; font-weight: 900; font-variation-settings: "wdth" 70; font-size: clamp(2.4rem, 1.8rem + 2.4vw, 3.6rem); line-height: 1; color: var(--gul); text-decoration: none; }
+
+    /* ---------- Bunn ---------- */
+    .bunn { border-top: 2px solid var(--gul); padding-block: 56px 32px; }
+    .bunn__navn { font-weight: 900; font-variation-settings: "wdth" 62; font-size: clamp(4rem, 17vw, 15rem); line-height: .8; text-transform: uppercase; color: var(--asfalt-3); letter-spacing: -.01em; }
+    .bunn__linje { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--linje); font-family: var(--mono); font-size: .8125rem; color: var(--graa); }
+    .bunn a { color: var(--kritt); }
+
+    /* ---------- Innglidning ---------- */
+    .js [data-inn] { opacity: 0; transform: translateY(24px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+    .js [data-inn].vist { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .js [data-inn] { opacity: 1; transform: none; }
+      .kort { position: static; }
+    }
+  </style>
+</head>
+<body>
+  <a class="hopp" href="#innhold">Hopp til innholdet</a>
+  <p class="fiktiv">Fiktivt konsept laget som eksempel av Nettstrax. <a href="https://nettstrax.no">nettstrax.no</a></p>
+
+  <header class="topp">
+    <div class="wrap">
+      <a class="logo" href="#innhold"><i aria-hidden="true"></i>Kardang</a>
+      <nav class="nav" aria-label="Hovedmeny">
+        <a href="#tjenester">Tjenester</a>
+        <a href="#eu-kontroll">EU-kontroll</a>
+        <a href="#finn-oss">Åpningstider</a>
+        <a href="#sporsmal">Spørsmål</a>
+      </nav>
+      <div class="topp__hoyre">
+        <a class="topp__tlf" href="#" data-demo>000 00 000</a>
+        <a class="knapp" href="#bestill">Bestill time</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="innhold">
+    <!-- ============ HERO ============ -->
+    <section class="hero" aria-labelledby="hero-tittel">
+      <div class="wrap">
+        <p class="tag">Bilverksted i Eksempelby</p>
+        <h1 id="hero-tittel" data-strekk><span>Bilen inn.</span><span class="gul">Bekymringen</span><span>ut.</span></h1>
+        <div class="hero__under">
+          <div>
+            <p class="ingress">Service, EU-kontroll, dekk og reparasjoner på alle bilmerker. Du får fast pris før vi skrur, og en SMS når bilen er klar.</p>
+            <p class="hero__status" id="status"><i aria-hidden="true"></i><span>Åpent i dag 07–17</span></p>
+          </div>
+          <div class="hero__handling">
+            <a class="knapp" href="#bestill">Bestill time <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+            <a class="knapp knapp--strek" href="#" data-demo>Ring 000 00 000</a>
+          </div>
+        </div>
+      </div>
+      <div class="baand" aria-hidden="true">
+        <div class="baand__spor">
+          <p><span>Service</span><span>EU-kontroll</span><span>Dekkskift</span><span>Bremser</span><span>Feilsøking</span><span>Klimaanlegg</span></p>
+          <p><span>Service</span><span>EU-kontroll</span><span>Dekkskift</span><span>Bremser</span><span>Feilsøking</span><span>Klimaanlegg</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TJENESTER ============ -->
+    <section class="seksjon lys" id="tjenester" aria-labelledby="tj-tittel">
+      <div class="wrap">
+        <div class="tj__topp" data-inn>
+          <div>
+            <p class="tag">Tjenester og priser</p>
+            <h2 id="tj-tittel" class="h2">Det vi fikser.</h2>
+          </div>
+          <p class="ingress">Prisene er veiledende for en vanlig personbil. Du får alltid fast pris før vi starter, og vi ringer før vi gjør noe ekstra.</p>
+        </div>
+        <ol class="stabel">
+          <li class="kort" style="--n:0"><span class="kort__nr">01</span><h3>Service</h3><span class="kort__pris">fra 2 490 kr</span><p>Etter bilprodusentens serviceprogram. Garantien beholdes, og servicen registreres digitalt.</p><ul><li>Olje og filter</li><li>Sjekkliste</li><li>Digital servicebok</li></ul></li>
+          <li class="kort" style="--n:1"><span class="kort__nr">02</span><h3>EU-kontroll</h3><span class="kort__pris">890 kr</span><p>Periodisk kontroll av bilen. Finner vi feil, får du pris på utbedring før vi gjør noe.</p><ul><li>Ca. 1 time</li><li>Etterkontroll ved behov</li></ul></li>
+          <li class="kort" style="--n:2"><span class="kort__nr">03</span><h3>Dekkskift</h3><span class="kort__pris">490 kr</span><p>Vi bytter hjul og sjekker mønsterdybden. Dekkhotell for hele sesongen.</p><ul><li>Hjulskift</li><li>Dekkhotell</li><li>Balansering</li></ul></li>
+          <li class="kort" style="--n:3"><span class="kort__nr">04</span><h3>Reparasjoner</h3><span class="kort__pris">pris etter feilsøking</span><p>Bremser, clutch, eksos, lys og elektronikk. Vi finner feilen, forklarer den og gir deg fast pris.</p><ul><li>Feilsøking med diagnoseverktøy</li><li>Alle bilmerker</li></ul></li>
+        </ol>
+        <p class="tj__merk">Alle priser er eksempelpriser for et fiktivt firma.</p>
+      </div>
+    </section>
+
+    <!-- ============ EU-KONTROLL ============ -->
+    <section class="seksjon eu" id="eu-kontroll" aria-labelledby="eu-tittel">
+      <div class="wrap">
+        <div data-inn>
+          <p class="tag">EU-kontroll</p>
+          <h2 id="eu-tittel" class="h2">Når må bilen inn?</h2>
+          <p class="ingress">Skriv inn året bilen ble registrert første gang, så ser du omtrent når neste EU-kontroll er. Nye biler skal på kontroll etter fire år, og så hvert andre år.</p>
+        </div>
+        <form class="eu__boks" id="eu" data-inn>
+          <label for="aar">Første registrering (år)</label>
+          <div class="eu__felt"><input id="aar" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="2019" aria-describedby="eu-svar"></div>
+          <div class="eu__svar" id="eu-svar" aria-live="polite">
+            <span class="eu__aar" id="eu-aar">—</span>
+            <p id="eu-tekst">Skriv inn et årstall.</p>
+          </div>
+          <a class="knapp" href="#bestill" id="eu-knapp">Bestill EU-kontroll</a>
+          <p class="eu__merk">Veiledende. Den eksakte fristen står i vognkortet og hos Statens vegvesen.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============ SLIK JOBBER VI ============ -->
+    <section class="lys prosess" id="prosess" aria-labelledby="pr-tittel">
+      <div class="prosess__klistre">
+        <div class="wrap" style="padding-top:clamp(64px,8vw,112px)">
+          <p class="tag">Slik jobber vi</p>
+          <h2 id="pr-tittel" class="h2">Fra nøkkel til nøkkel.</h2>
+        </div>
+        <div style="margin-top:clamp(32px,4vw,56px);padding-bottom:clamp(64px,8vw,112px)">
+          <ol class="prosess__spor wrap" id="spor">
+            <li class="steg"><b>1</b><div><h3>Bestill</h3><p>Velg tid på nett eller ring. Fortell gjerne hva du har hørt eller merket.</p></div></li>
+            <li class="steg"><b>2</b><div><h3>Lever bilen</h3><p>Slipp nøkkelen i postkassen hvis du kommer før vi åpner.</p></div></li>
+            <li class="steg"><b>3</b><div><h3>Fast pris</h3><p>Vi ringer med pris før vi gjør noe utover det du har bestilt.</p></div></li>
+            <li class="steg"><b>4</b><div><h3>SMS når klar</h3><p>Du får melding med hva vi har gjort. Betal med kort eller Vipps.</p></div></li>
+          </ol>
+          <div class="prosess__fremdrift" aria-hidden="true"><span id="fremdrift"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ VERKSTEDET ============ -->
+    <section class="seksjon om" aria-labelledby="om-tittel">
+      <div class="wrap">
+        <figure class="foto foto--169" data-inn>
+          <img src="bilder/kardang/verksted.jpg" alt="Bil på løfte i verkstedet" width="1600" height="900" loading="lazy" onerror="this.remove()">
+          <span class="foto__plass" aria-hidden="true">Foto · verkstedet</span>
+        </figure>
+        <div data-inn>
+          <p class="tag">Verkstedet</p>
+          <h2 id="om-tittel" class="h2">To løfter. Ingen kø.</h2>
+          <p class="tekst">Kardang er et lite verksted i Eksempelby, drevet av mekaniker Ole (fiktiv person). Vi tar få biler om gangen, så din bil blir ikke stående.</p>
+          <ul class="liste">
+            <li><span>Bilmerker</span><span>Alle</span></li>
+            <li><span>Elbil og hybrid</span><span>Ja</span></li>
+            <li><span>Lånebil</span><span>Etter avtale</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ANMELDELSER ============ -->
+    <section class="seksjon lys" aria-labelledby="anm-tittel">
+      <div class="wrap">
+        <div data-inn>
+          <p class="tag">Anmeldelser</p>
+          <h2 id="anm-tittel" class="h2">Det kundene sier.</h2>
+          <p class="ingress">Anmeldelsene er fiktive eksempler.</p>
+        </div>
+        <ul class="anm" style="margin-top:clamp(40px,5vw,64px)">
+          <li data-inn><blockquote>«Ringte før de byttet bremseklosser. Prisen var den samme som de sa.»</blockquote><div><p>Kari, Eksempelby</p><span class="anm__fiktiv">Fiktiv</span></div></li>
+          <li data-inn><blockquote>«Leverte bilen om morgenen, fikk SMS klokka to. Enkelt.»</blockquote><div><p>Per, Eksempelby</p><span class="anm__fiktiv">Fiktiv</span></div></li>
+          <li data-inn><blockquote>«De forklarte hva som var galt uten å gjøre det vanskelig.»</blockquote><div><p>Nina, Eksempelby</p><span class="anm__fiktiv">Fiktiv</span></div></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ FINN OSS ============ -->
+    <section class="seksjon finn" id="finn-oss" aria-labelledby="finn-tittel">
+      <div class="wrap">
+        <div data-inn>
+          <p class="tag">Finn oss</p>
+          <h2 id="finn-tittel" class="h2">Like ved riksveien.</h2>
+          <address class="adresse">Eksempelveien 40<br>0000 Eksempelby</address>
+          <dl class="tider" id="tider">
+            <div data-dag="1 2 3 4 5"><dt>Mandag–fredag</dt><dd>07–17</dd></div>
+            <div data-dag="6"><dt>Lørdag</dt><dd>Stengt</dd></div>
+            <div data-dag="0"><dt>Søndag</dt><dd>Stengt</dd></div>
+          </dl>
+          <p class="ingress">Nøkkelpostkasse ved porten for levering utenom åpningstid.</p>
+        </div>
+        <div class="kart" role="img" aria-label="Kartplassholder: her vises et kart på en ekte side" data-inn>
+          <span class="kart__nal" aria-hidden="true"></span>
+          <span class="kart__merk">Kart</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SPØRSMÅL ============ -->
+    <section class="seksjon lys faq" id="sporsmal" aria-labelledby="faq-tittel">
+      <div class="wrap">
+        <div data-inn>
+          <p class="tag">Spørsmål</p>
+          <h2 id="faq-tittel" class="h2">Ofte spurt.</h2>
+        </div>
+        <div class="faq__liste" data-inn>
+          <details><summary>Mister jeg garantien hvis jeg ikke bruker merkeverksted?</summary><p>Nei. Så lenge servicen følger bilprodusentens program og originale eller tilsvarende deler brukes, beholder du garantien.</p></details>
+          <details><summary>Hvor lang tid tar en service?</summary><p>De fleste servicer tar to til fire timer. Lever bilen om morgenen, så er den som regel klar samme dag.</p></details>
+          <details><summary>Tar dere elbil?</summary><p>Ja. Vi gjør service, dekkskift, bremser og EU-kontroll på elbil og hybrid.</p></details>
+          <details><summary>Hva om dere finner flere feil?</summary><p>Da ringer vi deg med pris før vi gjør noe. Du bestemmer.</p></details>
+          <details><summary>Kan jeg vente mens dere jobber?</summary><p>Ja, på dekkskift og mindre jobber. Det står kaffe på venterommet.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BESTILL ============ -->
+    <section class="seksjon bestill" id="bestill" aria-labelledby="bestill-tittel">
+      <div class="wrap">
+        <div data-inn>
+          <p class="tag">Bestill time</p>
+          <h2 id="bestill-tittel" class="h2">Sett bilen på listen.</h2>
+          <p class="ingress">Vi bekrefter timen på SMS innen én arbeidsdag.</p>
+          <a class="bestill__tlf" href="#" data-demo>000 00 000</a>
+        </div>
+        <form class="skjema" id="skjema" novalidate data-inn>
+          <fieldset>
+            <legend>Hva skal gjøres?</legend>
+            <div class="valg">
+              <label><input type="radio" name="jobb" value="Service" checked><span>Service</span></label>
+              <label><input type="radio" name="jobb" value="EU-kontroll"><span>EU-kontroll</span></label>
+              <label><input type="radio" name="jobb" value="Dekkskift"><span>Dekkskift</span></label>
+              <label><input type="radio" name="jobb" value="Reparasjon"><span>Reparasjon</span></label>
+            </div>
+          </fieldset>
+          <div class="rad">
+            <div class="felt"><label for="regnr">Registreringsnummer</label><input id="regnr" autocomplete="off" required placeholder="AB 12345" aria-describedby="regnr-feil"><p class="feil" id="regnr-feil"></p></div>
+            <div class="felt"><label for="dato">Ønsket dag</label><input id="dato" type="date" required aria-describedby="dato-feil"><p class="feil" id="dato-feil"></p></div>
+          </div>
+          <div class="rad">
+            <div class="felt"><label for="navn">Navn</label><input id="navn" autocomplete="name" required aria-describedby="navn-feil"><p class="feil" id="navn-feil"></p></div>
+            <div class="felt"><label for="mobil">Mobil</label><input id="mobil" type="tel" inputmode="tel" autocomplete="tel" required aria-describedby="mobil-feil"><p class="feil" id="mobil-feil"></p></div>
+          </div>
+          <button class="knapp" type="submit">Bestill time</button>
+          <p class="skjema__merk">Dette er et eksempel. Skjemaet sender ingenting.</p>
+        </form>
+        <div class="takk" id="takk" tabindex="-1" hidden>
+          <h3>Bilen er på listen.</h3>
+          <p id="takk-tekst"></p>
+          <p>Dette er et fiktivt eksempel. Ingen time er bestilt.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bunn">
+    <div class="wrap">
+      <p class="bunn__navn" aria-hidden="true">Kardang</p>
+      <div class="bunn__linje">
+        <p>Kardang Bilverksted (fiktivt firma) · Eksempelveien 40, 0000 Eksempelby · 000 00 000</p>
+        <p>Fiktivt konsept laget som eksempel av Nettstrax. <a href="https://nettstrax.no">nettstrax.no</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    "use strict";
+    var rolig = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document.documentElement.classList.add("js");
+
+    /* Innglidning */
+    var inn = document.querySelectorAll("[data-inn]");
+    if (rolig || !("IntersectionObserver" in window)) inn.forEach(function (el) { el.classList.add("vist"); });
+    else {
+      var io = new IntersectionObserver(function (e) { e.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add("vist"); io.unobserve(x.target); } }); }, { rootMargin: "0px 0px -8% 0px" });
+      inn.forEach(function (el) { io.observe(el); });
+    }
+
+    /* Åpent nå? (fiktive tider: hverdager 07–17) */
+    var naa = new Date(), dag = naa.getDay(), t = naa.getHours() + naa.getMinutes() / 60;
+    var aapent = dag >= 1 && dag <= 5 && t >= 7 && t < 17;
+    var status = document.getElementById("status");
+    status.classList.toggle("stengt", !aapent);
+    status.querySelector("span").textContent = aapent ? "Åpent nå · stenger kl. 17" : (dag >= 1 && dag <= 5 && t < 7 ? "Åpner kl. 07 i dag" : "Stengt nå · åpner neste hverdag kl. 07");
+    document.querySelectorAll("#tider [data-dag]").forEach(function (r) { if (r.getAttribute("data-dag").split(" ").indexOf(String(dag)) > -1) { r.classList.add("i-dag"); r.querySelector("dt").insertAdjacentHTML("beforeend", ' <span class="vh">(i dag)</span>'); } });
+
+    /* Telefonnummeret er fiktivt */
+    document.querySelectorAll("[data-demo]").forEach(function (a) { a.addEventListener("click", function (e) { e.preventDefault(); alert("Dette er et fiktivt nummer i et eksempel. På en ekte side ringer knappen verkstedet."); }); });
+
+    /* ---------- Scrollstyrt bevegelse (én rAF per scroll) ---------- */
+    var h1 = document.querySelector("[data-strekk]");
+    var kort = Array.prototype.slice.call(document.querySelectorAll(".kort"));
+    var prosess = document.getElementById("prosess"), spor = document.getElementById("spor"), fremdrift = document.getElementById("fremdrift");
+    var pinnMq = matchMedia("(min-width: 960px)");
+    function sjekkPinn() { prosess.classList.toggle("pinn", !rolig && pinnMq.matches); spor.style.transform = ""; }
+    sjekkPinn(); pinnMq.addEventListener ? pinnMq.addEventListener("change", function () { sjekkPinn(); oppdater(); }) : null;
+
+    /* Hvor bred overskriften kan bli uten å gå ut over kanten */
+    var maksB = 100;
+    function maalBredde() {
+      var plass = h1.parentElement.clientWidth - parseFloat(getComputedStyle(h1.parentElement).paddingLeft) * 2;
+      maksB = 100;
+      h1.style.setProperty("--b", maksB);
+      var bredest = function () { return Math.max.apply(null, Array.prototype.map.call(h1.children, function (s) { return s.scrollWidth; })); };
+      h1.querySelectorAll("span").forEach(function (s) { s.style.width = "max-content"; });
+      while (maksB > 62 && bredest() > plass) { maksB -= 2; h1.style.setProperty("--b", maksB); }
+      h1.querySelectorAll("span").forEach(function (s) { s.style.width = ""; });
+    }
+    function oppdater() {
+      var vh = innerHeight;
+      // 1. Overskriften går fra smal til bred de første 60 % av skjermhøyden
+      var p = Math.min(1, Math.max(0, scrollY / (vh * .6)));
+      h1.style.setProperty("--b", (62 + p * (maksB - 62)).toFixed(1));
+      // 2. Kort som er dekket av neste kort, krymper litt og blir mørkere
+      kort.forEach(function (k, i) {
+        var neste = kort[i + 1];
+        if (!neste) return;
+        var dekk = Math.min(1, Math.max(0, 1 - (neste.getBoundingClientRect().top - k.getBoundingClientRect().top) / k.offsetHeight));
+        k.style.transform = "scale(" + (1 - dekk * .04).toFixed(3) + ")";
+        k.style.filter = "brightness(" + (1 - dekk * .35).toFixed(3) + ")";
+      });
+      // 3. Stegene kjører sidelengs mens seksjonen er festet
+      if (prosess.classList.contains("pinn")) {
+        var r = prosess.getBoundingClientRect();
+        var total = prosess.offsetHeight - (vh - 72);
+        var q = Math.min(1, Math.max(0, -r.top / total));
+        var maks = spor.scrollWidth - document.documentElement.clientWidth;
+        spor.style.transform = "translate3d(" + (-q * maks).toFixed(1) + "px,0,0)";
+        fremdrift.style.setProperty("--p", q.toFixed(3));
+      }
+    }
+    if (rolig) { maalBredde(); if (document.fonts) document.fonts.ready.then(maalBredde); }
+    else {
+      var venter = false;
+      addEventListener("scroll", function () { if (!venter) { venter = true; requestAnimationFrame(function () { venter = false; oppdater(); }); } }, { passive: true });
+      addEventListener("resize", function () { maalBredde(); oppdater(); });
+      maalBredde(); oppdater();
+      if (document.fonts) document.fonts.ready.then(function () { maalBredde(); oppdater(); });
+    }
+
+    /* ---------- EU-kontroll: første kontroll etter 4 år, så hvert 2. år ---------- */
+    var aarFelt = document.getElementById("aar"), aarUt = document.getElementById("eu-aar"), tekst = document.getElementById("eu-tekst");
+    var iAar = new Date().getFullYear();
+    function beregn() {
+      var v = aarFelt.value.replace(/\D/g, "");
+      if (aarFelt.value !== v) aarFelt.value = v;
+      if (v.length < 4) { aarUt.textContent = "—"; tekst.textContent = "Skriv inn et årstall."; return; }
+      var a = +v;
+      if (a < 1950 || a > iAar) { aarUt.textContent = "—"; tekst.textContent = "Skriv et årstall mellom 1950 og " + iAar + "."; return; }
+      var neste = a + 4;
+      while (neste < iAar) neste += 2;
+      aarUt.textContent = neste;
+      tekst.textContent = neste === iAar ? "Bilen skal trolig på EU-kontroll i år. Bestill gjerne i god tid." : "Neste EU-kontroll er trolig i " + neste + ".";
+    }
+    aarFelt.addEventListener("input", beregn);
+    document.getElementById("eu").addEventListener("submit", function (e) { e.preventDefault(); });
+    document.getElementById("eu-knapp").addEventListener("click", function () { var r = document.querySelector('input[name="jobb"][value="EU-kontroll"]'); if (r) r.checked = true; });
+
+    /* ---------- Bestilling: sjekker feltene, sender ingenting ---------- */
+    var skjema = document.getElementById("skjema"), dato = document.getElementById("dato");
+    dato.min = new Date().toISOString().slice(0, 10);
+    var meld = { regnr: "Skriv inn registreringsnummeret.", dato: "Velg en dag.", navn: "Skriv inn navnet ditt.", mobil: "Skriv inn mobilnummeret ditt." };
+    skjema.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var forste = null;
+      ["regnr", "dato", "navn", "mobil"].forEach(function (id) {
+        var f = document.getElementById(id), tom = !f.value.trim();
+        f.setAttribute("aria-invalid", String(tom));
+        document.getElementById(id + "-feil").textContent = tom ? meld[id] : "";
+        if (tom && !forste) forste = f;
+      });
+      if (forste) { forste.focus(); return; }
+      var d = new Date(dato.value + "T12:00");
+      document.getElementById("takk-tekst").textContent = skjema.querySelector('input[name="jobb"]:checked').value + " for " + document.getElementById("regnr").value.trim().toUpperCase() + ", " + new Intl.DateTimeFormat("nb-NO", { weekday: "long", day: "numeric", month: "long" }).format(d) + ". På en ekte side ville du fått bekreftelse på SMS.";
+      skjema.hidden = true; var tk = document.getElementById("takk"); tk.hidden = false; tk.focus();
+    });
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,575 @@
+<!doctype html>
+<!--
+  Brennvidde Optikk – fiktivt konsept laget som eksempel av Nettstrax.
+
+  BILDER: legg fotografier i eksempler/bilder/brennvidde-optikk/ med disse navnene,
+  så vises de automatisk. Mangler en fil, vises en rolig plassholderflate.
+    hero.jpg           4:5   butikken eller en kunde i synstest
+    innfatning-1.jpg   4:5   nærbilde av briller på et bord
+    innfatning-2.jpg   1:1
+    innfatning-3.jpg   1:1
+    innfatning-4.jpg   1:1
+    innfatning-5.jpg   1:1
+    optiker.jpg        4:5   optikeren ved instrumentet
+  Hold hvert bilde under ca. 200 kB (for eksempel 1200 px bredt, JPEG kvalitet 75).
+-->
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Brennvidde Optikk – fiktivt eksempel av Nettstrax</title>
+  <meta name="description" content="Fiktivt konsept laget som eksempel av Nettstrax: en lokal optiker med synsundersøkelse, kontaktlinser og briller.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#EDEEE9">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23111517'/%3E%3Ccircle cx='16' cy='16' r='8' fill='none' stroke='%23EDEEE9' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='2.5' fill='%23E2584B'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Familjen+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================================
+       Brennvidde Optikk – rolig, redaksjonell optikerside.
+       Avstander på en 8-pikslers skala. To bevegelser: myk
+       innfading ved scroll og hover på knapper.
+       ========================================================= */
+    :root {
+      --papir: #EDEEE9;
+      --papir-2: #E3E5DE;
+      --hvit: #F8F8F5;
+      --blekk: #111517;
+      --dempet: #4D585C;     /* 6,4:1 på papir */
+      --rod: #B8352A;        /* 5,1:1 på papir */
+      --rod-lys: #F08A7E;
+      --linje: rgba(17, 21, 23, .14);
+      --serif: "Instrument Serif", "Times New Roman", serif;
+      --sans: "Familjen Grotesk", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      --s1: 8px; --s2: 16px; --s3: 24px; --s4: 32px; --s5: 40px; --s6: 48px; --s8: 64px; --s10: 80px; --s12: 96px; --s16: 128px;
+      --gutter: clamp(var(--s3), 5vw, var(--s8));
+      --seksjon: clamp(var(--s10), 9vw, var(--s16));
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 88px; }
+    body { margin: 0; background: var(--papir); color: var(--blekk); font-family: var(--sans); font-size: clamp(16px, 15px + .25vw, 18px); line-height: 1.6; overflow-x: hidden; }
+    @supports (overflow: clip) { body { overflow-x: clip; } }
+    h1, h2, h3, p, ul, ol, dl, dd, figure, fieldset, blockquote { margin: 0; }
+    ul, ol { padding: 0; list-style: none; }
+    fieldset { border: 0; padding: 0; min-width: 0; }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; }
+    button, input, select, textarea { font: inherit; color: inherit; }
+    :focus-visible { outline: 3px solid var(--rod); outline-offset: 3px; border-radius: 4px; }
+    .mork :focus-visible { outline-color: var(--rod-lys); }
+    .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .wrap { width: 100%; max-width: 1240px; margin-inline: auto; padding-inline: var(--gutter); }
+    .hopp { position: fixed; left: var(--s2); top: var(--s2); z-index: 100; padding: 12px 18px; background: var(--blekk); color: var(--papir); font-weight: 600; text-decoration: none; transform: translateY(-200%); }
+    .hopp:focus { transform: none; }
+    .fiktiv { padding: var(--s1) var(--gutter); background: var(--blekk); color: #C9CEC9; text-align: center; font-size: .85rem; }
+    .fiktiv a { color: #fff; font-weight: 600; text-underline-offset: 3px; }
+
+    /* ---------- Typografi ---------- */
+    h1, h2, h3 { font-family: var(--serif); font-weight: 400; letter-spacing: -.01em; }
+    .overline { font-size: .8125rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--rod); }
+    .mork .overline { color: var(--rod-lys); }
+    .h2 { margin-top: var(--s2); font-size: clamp(2.4rem, 1.6rem + 3.2vw, 4.25rem); line-height: 1; max-width: 18ch; text-wrap: balance; }
+    .ingress { margin-top: var(--s3); max-width: 36rem; color: var(--dempet); font-size: clamp(1.0625rem, 1rem + .3vw, 1.25rem); line-height: 1.55; }
+    .mork .ingress { color: #C9CEC9; }
+    .seksjon__topp { display: grid; gap: var(--s3); margin-bottom: clamp(var(--s5), 5vw, var(--s8)); }
+    @media (min-width: 900px) { .seksjon__topp { grid-template-columns: 1fr 1fr; align-items: end; column-gap: var(--s8); } .seksjon__topp .ingress { margin-top: 0; } }
+
+    /* ---------- Knapper (bevegelse 2: hover) ---------- */
+    .knapp { display: inline-flex; align-items: center; justify-content: center; gap: var(--s1); min-height: 52px; padding: 14px var(--s4); border: 1.5px solid var(--blekk); border-radius: 999px; background: var(--blekk); color: var(--papir); font-weight: 600; text-decoration: none; cursor: pointer; transition: background-color .25s, border-color .25s, color .25s; }
+    .knapp:hover { background: var(--rod); border-color: var(--rod); }
+    .knapp--lys { background: transparent; color: var(--blekk); }
+    .knapp--lys:hover { color: var(--papir); }
+    .mork .knapp { background: var(--papir); color: var(--blekk); border-color: var(--papir); }
+    .mork .knapp:hover { background: var(--rod-lys); border-color: var(--rod-lys); }
+    .tlf { display: inline-block; padding-block: 10px; font-weight: 600; text-decoration: underline; text-decoration-color: var(--rod); text-decoration-thickness: 1.5px; text-underline-offset: 4px; }
+    .tlf:hover { color: var(--rod); }
+
+    /* ---------- Bilder og plassholdere ---------- */
+    .foto { position: relative; overflow: hidden; border-radius: var(--s2); background: linear-gradient(160deg, #D7DAD3, #C6CBC3); }
+    .foto img { width: 100%; height: 100%; object-fit: cover; }
+    .foto--45 { aspect-ratio: 4 / 5; }
+    .foto--11 { aspect-ratio: 1; }
+    .foto--varm { background: linear-gradient(160deg, #DCD6CC, #C9C0B3); }
+    .foto--kald { background: linear-gradient(160deg, #D2D8D9, #BCC4C6); }
+    .foto__plass { position: absolute; inset: 0; display: grid; place-items: center; padding: var(--s2); font-size: .8125rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: rgba(17, 21, 23, .55); text-align: center; }
+    .foto img + .foto__plass { display: none; }
+    figcaption { margin-top: var(--s1); font-size: .9375rem; color: var(--dempet); }
+
+    /* ---------- Topp ---------- */
+    .topp { position: sticky; top: 0; z-index: 50; background: rgba(237, 238, 233, .94); border-bottom: 1px solid var(--linje); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+    .topp .wrap { display: flex; align-items: center; justify-content: space-between; gap: var(--s2); min-height: 72px; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--serif); font-size: 1.6rem; line-height: 1; white-space: nowrap; }
+    .logo svg { width: 30px; height: 30px; flex: none; }
+    .nav { display: none; gap: var(--s4); }
+    .nav a { padding: 10px 0; font-weight: 600; font-size: .9375rem; text-decoration: none; }
+    .nav a:hover { color: var(--rod); }
+    .topp__hoyre { display: flex; align-items: center; gap: var(--s3); }
+    .topp__tlf { display: none; font-weight: 600; text-decoration: none; }
+    .topp .knapp { min-height: 44px; padding: 10px 20px; font-size: .9375rem; }
+    @media (min-width: 1040px) { .nav, .topp__tlf { display: flex; } }
+
+    /* ---------- Hero ---------- */
+    .hero { padding-block: clamp(var(--s5), 6vw, var(--s12)) var(--seksjon); }
+    .hero .wrap { display: grid; gap: var(--s6); align-items: end; }
+    @media (min-width: 900px) { .hero .wrap { grid-template-columns: 1.15fr .85fr; column-gap: var(--s8); } }
+    .hero h1 { margin-top: var(--s2); font-size: clamp(2.9rem, 1.5rem + 5.4vw, 6.25rem); line-height: .95; letter-spacing: -.02em; max-width: 13ch; }
+    .hero h1 em { color: var(--rod); }
+    .hero__handling { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2) var(--s4); margin-top: var(--s5); }
+    .hero__handling .tlf-tekst { font-size: .9375rem; color: var(--dempet); }
+    .hero__fakta { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s2); margin-top: var(--s6); padding-top: var(--s3); border-top: 1px solid var(--linje); max-width: 40rem; }
+    .hero__fakta b { display: block; font-family: var(--serif); font-weight: 400; font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem); line-height: 1.1; }
+    .hero__fakta span { font-size: .875rem; color: var(--dempet); }
+
+    /* ---------- Tjenester ---------- */
+    .seksjon { padding-block: var(--seksjon); }
+    .seksjon--2 { background: var(--papir-2); }
+    .tjenester { display: grid; gap: 0; border-top: 1.5px solid var(--blekk); }
+    @media (min-width: 900px) { .tjenester { grid-template-columns: repeat(3, 1fr); } .tjeneste + .tjeneste { border-left: 1px solid var(--linje); } .tjeneste { padding-inline: var(--s4); } .tjeneste:first-child { padding-left: 0; } .tjeneste:last-child { padding-right: 0; } }
+    .tjeneste { display: flex; flex-direction: column; padding-block: var(--s4); border-bottom: 1px solid var(--linje); }
+    .tjeneste h3 { font-size: clamp(1.75rem, 1.4rem + 1vw, 2.25rem); line-height: 1.1; }
+    .tjeneste .pris { margin-top: var(--s1); font-size: 1.125rem; font-weight: 600; }
+    .tjeneste p { margin-top: var(--s2); color: var(--dempet); }
+    .tjeneste ul { margin-top: var(--s2); display: grid; gap: var(--s1); flex: 1; }
+    .tjeneste li { position: relative; padding-left: var(--s3); }
+    .tjeneste li::before { content: ""; position: absolute; left: 0; top: .75em; width: 10px; height: 1.5px; background: var(--rod); }
+    .tjeneste .tlf { margin-top: var(--s3); align-self: flex-start; }
+    .merk { margin-top: var(--s3); font-size: .875rem; color: var(--dempet); }
+
+    /* ---------- Innfatninger ---------- */
+    .galleri { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2); }
+    .galleri figure:first-child { grid-column: 1 / -1; }
+    @media (min-width: 900px) {
+      .galleri { grid-template-columns: 1.3fr 1fr 1fr; grid-template-rows: auto auto; gap: var(--s3); }
+      .galleri figure:first-child { grid-column: 1; grid-row: 1 / span 2; }
+      .galleri figure:first-child .foto { aspect-ratio: auto; height: 100%; min-height: 100%; }
+      .galleri figure:first-child { display: flex; flex-direction: column; }
+      .galleri figure:first-child .foto { flex: 1; }
+    }
+
+    /* ---------- Steg ---------- */
+    .steg { display: grid; gap: var(--s4); counter-reset: steg; }
+    @media (min-width: 900px) { .steg { grid-template-columns: repeat(3, 1fr); gap: var(--s6); } }
+    .steg li { padding-top: var(--s3); border-top: 1.5px solid var(--blekk); }
+    .steg b { display: block; font-family: var(--serif); font-weight: 400; font-size: clamp(3rem, 2.4rem + 2vw, 4.5rem); line-height: 1; color: var(--rod); }
+    .steg h3 { margin-top: var(--s2); font-size: 1.75rem; line-height: 1.15; }
+    .steg p { margin-top: var(--s1); color: var(--dempet); }
+
+    /* ---------- Hvorfor oss ---------- */
+    .hvorfor .wrap { display: grid; gap: var(--s6); align-items: center; }
+    @media (min-width: 900px) { .hvorfor .wrap { grid-template-columns: .85fr 1.15fr; column-gap: var(--s10); } }
+    .grunner { margin-top: var(--s5); display: grid; gap: var(--s3); }
+    .grunner li { display: grid; grid-template-columns: var(--s5) 1fr; gap: var(--s2); padding-bottom: var(--s3); border-bottom: 1px solid var(--linje); }
+    .grunner li::before { content: ""; width: var(--s3); height: var(--s3); margin-top: 4px; border-radius: 50%; border: 1.5px solid var(--blekk); background: radial-gradient(circle, var(--rod) 0 4px, transparent 5px); }
+    .grunner h3 { font-size: 1.5rem; line-height: 1.2; }
+    .grunner p { margin-top: 4px; color: var(--dempet); }
+
+    /* ---------- Anmeldelser ---------- */
+    .mork { background: var(--blekk); color: var(--papir); }
+    .anm { display: grid; gap: var(--s5); }
+    @media (min-width: 900px) { .anm { grid-template-columns: repeat(3, 1fr); gap: var(--s6); } }
+    .anm li { padding-top: var(--s3); border-top: 1px solid #3A4448; }
+    .anm blockquote { font-family: var(--serif); font-size: clamp(1.5rem, 1.3rem + .6vw, 1.875rem); line-height: 1.25; }
+    .anm p { margin-top: var(--s2); font-size: .9375rem; color: #C9CEC9; }
+    .anm__fiktiv { display: inline-block; margin-top: var(--s1); padding: 2px 10px; border: 1px solid #8E9A9C; border-radius: 999px; font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: #C9CEC9; }
+
+    /* ---------- Besøk ---------- */
+    .besok .wrap { display: grid; gap: var(--s6); }
+    @media (min-width: 900px) { .besok .wrap { grid-template-columns: 1fr 1fr; column-gap: var(--s8); align-items: start; } }
+    .besok__info { display: grid; gap: var(--s4); margin-top: var(--s5); }
+    .besok__info address { font-style: normal; font-family: var(--serif); font-size: 1.75rem; line-height: 1.2; }
+    .tider { border-top: 1.5px solid var(--blekk); }
+    .tider div { display: flex; justify-content: space-between; gap: var(--s2); padding-block: 12px; border-bottom: 1px solid var(--linje); }
+    .tider dt { font-weight: 600; }
+    .tider .i-dag dt, .tider .i-dag dd { color: var(--rod); }
+    .kart { aspect-ratio: 4 / 3; border-radius: var(--s2); background: linear-gradient(160deg, #D9DCD5, #CDD1C9); position: relative; overflow: hidden; }
+    .kart::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 49.6%, rgba(248, 248, 245, .9) 49.6% 50.4%, transparent 50.4%), linear-gradient(0deg, transparent 39.3%, rgba(248, 248, 245, .9) 39.3% 40.7%, transparent 40.7%); }
+    .kart__nal { position: absolute; left: 56%; top: 30%; width: 18px; height: 18px; border-radius: 50%; background: var(--rod); box-shadow: 0 0 0 6px rgba(184, 53, 42, .2); }
+    .kart__merk { position: absolute; left: var(--s2); bottom: var(--s2); padding: 4px 12px; border-radius: 999px; background: var(--hvit); font-size: .8125rem; font-weight: 600; }
+
+    /* ---------- Spørsmål ---------- */
+    .faq .wrap { display: grid; gap: var(--s5); }
+    @media (min-width: 900px) { .faq .wrap { grid-template-columns: .8fr 1.2fr; column-gap: var(--s10); align-items: start; } }
+    .faq__liste { border-top: 1.5px solid var(--blekk); }
+    .faq__liste details { border-bottom: 1px solid var(--linje); }
+    .faq__liste summary { display: flex; justify-content: space-between; align-items: center; gap: var(--s3); min-height: 64px; padding-block: var(--s2); cursor: pointer; list-style: none; font-family: var(--serif); font-size: clamp(1.375rem, 1.2rem + .6vw, 1.75rem); line-height: 1.2; }
+    .faq__liste summary::-webkit-details-marker { display: none; }
+    .faq__liste summary::after { content: "+"; flex: none; width: var(--s4); text-align: center; font-family: var(--sans); font-size: 1.5rem; color: var(--rod); }
+    .faq__liste details[open] summary::after { content: "−"; }
+    .faq__liste details p { padding-bottom: var(--s3); max-width: 38rem; color: var(--dempet); }
+
+    /* ---------- Bestilling ---------- */
+    .bestill .wrap { display: grid; gap: var(--s6); }
+    @media (min-width: 960px) { .bestill .wrap { grid-template-columns: .8fr 1.2fr; column-gap: var(--s8); align-items: start; } }
+    .skjema { display: grid; gap: var(--s3); padding: clamp(var(--s3), 4vw, var(--s5)); border-radius: var(--s3); background: var(--hvit); border: 1px solid var(--linje); }
+    .rad { display: grid; gap: var(--s3); }
+    @media (min-width: 600px) { .rad { grid-template-columns: 1fr 1fr; } }
+    .felt label, .skjema legend { display: block; margin-bottom: var(--s1); font-weight: 600; }
+    .felt input, .felt select, .felt textarea { width: 100%; min-height: 52px; padding: 12px var(--s2); border: 1.5px solid rgba(17, 21, 23, .35); border-radius: 12px; background: #fff; font-size: 1rem; }
+    .felt textarea { min-height: 112px; resize: vertical; }
+    .felt [aria-invalid="true"] { border-color: #9E2B25; border-width: 2px; }
+    .feil { margin-top: 6px; font-size: .9375rem; font-weight: 600; color: #9E2B25; }
+    .feil:empty { display: none; }
+    .valg { display: flex; flex-wrap: wrap; gap: var(--s1); }
+    .valg label { position: relative; }
+    .valg input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .valg span { display: inline-flex; align-items: center; min-height: 48px; padding: 10px 20px; border: 1.5px solid rgba(17, 21, 23, .25); border-radius: 999px; background: #fff; }
+    .valg input:checked + span { background: var(--blekk); border-color: var(--blekk); color: var(--papir); }
+    .valg input:focus-visible + span { outline: 3px solid var(--rod); outline-offset: 2px; }
+    .skjema .knapp { width: 100%; }
+    .skjema__merk { font-size: .875rem; color: var(--dempet); }
+    .takk { padding: var(--s5); border-radius: var(--s3); background: var(--hvit); border: 1px solid var(--linje); }
+    .takk:focus { outline: none; }
+    .takk h3 { font-size: 2.25rem; line-height: 1.1; }
+    .takk p { margin-top: var(--s1); color: var(--dempet); }
+    .bestill__alt { margin-top: var(--s4); display: grid; gap: var(--s1); }
+
+    /* ---------- Bunn ---------- */
+    .bunn { padding-block: var(--s10) var(--s5); }
+    .bunn__topp { display: grid; gap: var(--s4); padding-bottom: var(--s6); border-bottom: 1px solid #3A4448; }
+    @media (min-width: 900px) { .bunn__topp { grid-template-columns: 1.4fr 1fr 1fr; align-items: start; } }
+    .bunn .logo { color: var(--papir); }
+    .bunn p, .bunn dd { color: #C9CEC9; font-size: .9375rem; }
+    .bunn dt { font-size: .8125rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--rod-lys); }
+    .bunn a { color: var(--papir); text-underline-offset: 3px; }
+    .bunn__linje { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s2); padding-top: var(--s3); }
+
+    /* ---------- Bevegelse 1: myk innfading ved scroll ---------- */
+    .js [data-inn] { opacity: 0; transform: translateY(16px); transition: opacity .8s ease, transform .8s ease; }
+    .js [data-inn].vist { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; }
+      .js [data-inn] { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="hopp" href="#innhold">Hopp til innholdet</a>
+  <p class="fiktiv">Fiktivt konsept laget som eksempel av Nettstrax. <a href="https://nettstrax.no">Til nettstrax.no</a></p>
+
+  <header class="topp">
+    <div class="wrap">
+      <a class="logo" href="#innhold"><svg viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="13" fill="none" stroke="#111517" stroke-width="1.6"/><circle cx="15" cy="15" r="7" fill="none" stroke="#111517" stroke-width="1.6"/><circle cx="15" cy="15" r="2.4" fill="#B8352A"/></svg>Brennvidde</a>
+      <nav class="nav" aria-label="Hovedmeny">
+        <a href="#tjenester">Tjenester og priser</a>
+        <a href="#innfatninger">Innfatninger</a>
+        <a href="#besok">Åpningstider</a>
+        <a href="#sporsmal">Spørsmål</a>
+      </nav>
+      <div class="topp__hoyre">
+        <a class="topp__tlf" href="#" data-demo>000 00 000</a>
+        <a class="knapp" href="#bestill">Bestill time</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="innhold">
+    <!-- ============ HERO ============ -->
+    <section class="hero" aria-labelledby="hero-tittel">
+      <div class="wrap">
+        <div>
+          <p class="overline">Optiker i Eksempelby</p>
+          <h1 id="hero-tittel">Godt syn starter med en <em>grundig</em> undersøkelse.</h1>
+          <p class="ingress">Synsundersøkelse, kontaktlinser og briller hos utdannet optiker. Vi setter av 45 minutter til hver synstest, så du aldri blir hastet gjennom.</p>
+          <div class="hero__handling">
+            <a class="knapp" href="#bestill">Bestill time</a>
+            <span class="tlf-tekst">eller ring <a class="tlf" href="#" data-demo>000 00 000</a></span>
+          </div>
+          <ul class="hero__fakta">
+            <li><b>790 kr</b><span>synsundersøkelse</span></li>
+            <li><b>45 min</b><span>per synstest</span></li>
+            <li><b>Lørdag</b><span>åpent 10–15</span></li>
+          </ul>
+        </div>
+        <figure class="foto foto--45 foto--varm">
+          <img src="bilder/brennvidde-optikk/hero.jpg" alt="Optikeren måler synet til en kunde ved instrumentet i butikken" width="960" height="1200" fetchpriority="high" onerror="this.remove()">
+          <span class="foto__plass" aria-hidden="true">Foto · butikken</span>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ TJENESTER ============ -->
+    <section class="seksjon seksjon--2" id="tjenester" aria-labelledby="tj-tittel">
+      <div class="wrap">
+        <div class="seksjon__topp" data-inn>
+          <div>
+            <p class="overline">Tjenester og priser</p>
+            <h2 id="tj-tittel" class="h2">Det vi hjelper deg med.</h2>
+          </div>
+          <p class="ingress">Du får prisen før vi starter. Kjøper du briller hos oss, er synsundersøkelsen inkludert.</p>
+        </div>
+        <ul class="tjenester" data-inn>
+          <li class="tjeneste">
+            <h3>Synsundersøkelse</h3>
+            <p class="pris">790 kr</p>
+            <p>En grundig sjekk av synet og øyehelsen. Du får resultatet forklart, og en kopi av brilleseddelen.</p>
+            <ul><li>45 minutter</li><li>Måling av syn og øyetrykk</li><li>Bilde av netthinnen ved behov</li></ul>
+            <a class="tlf" href="#bestill">Bestill synsundersøkelse</a>
+          </li>
+          <li class="tjeneste">
+            <h3>Kontaktlinser</h3>
+            <p class="pris">Tilpasning 990 kr</p>
+            <p>Vi finner linser som passer øynene dine, og lærer deg å sette dem inn og ta dem ut.</p>
+            <ul><li>Prøvelinser med hjem</li><li>Kontroll etter én uke</li><li>Dags- og månedslinser</li></ul>
+            <a class="tlf" href="#bestill">Bestill tilpasning</a>
+          </li>
+          <li class="tjeneste">
+            <h3>Briller</h3>
+            <p class="pris">Fra 2 490 kr</p>
+            <p>Innfatning og glass, tilpasset ansiktet og hverdagen din. Vi justerer brillene gratis så lenge du har dem.</p>
+            <ul><li>Enkeltstyrke og progressive glass</li><li>Solbriller med styrke</li><li>Gratis justering</li></ul>
+            <a class="tlf" href="#bestill">Bestill time</a>
+          </li>
+        </ul>
+        <p class="merk">Alle priser er eksempelpriser for et fiktivt firma.</p>
+      </div>
+    </section>
+
+    <!-- ============ INNFATNINGER ============ -->
+    <section class="seksjon" id="innfatninger" aria-labelledby="innf-tittel">
+      <div class="wrap">
+        <div class="seksjon__topp" data-inn>
+          <div>
+            <p class="overline">Innfatninger</p>
+            <h2 id="innf-tittel" class="h2">Et lite, nøye valgt utvalg.</h2>
+          </div>
+          <p class="ingress">Vi har innfatninger fra mindre produsenter i Norden og Europa. Ta deg god tid i butikken, så hjelper vi deg å finne en som sitter godt.</p>
+        </div>
+        <div class="galleri" data-inn>
+          <figure>
+            <div class="foto foto--45 foto--kald"><img src="bilder/brennvidde-optikk/innfatning-1.jpg" alt="Briller med tynn metallinnfatning på et lyst bord" width="960" height="1200" loading="lazy" onerror="this.remove()"><span class="foto__plass" aria-hidden="true">Foto · innfatning</span></div>
+            <figcaption>Lette rammer i titan</figcaption>
+          </figure>
+          <figure>
+            <div class="foto foto--11 foto--varm"><img src="bilder/brennvidde-optikk/innfatning-2.jpg" alt="Brune briller i acetat" width="800" height="800" loading="lazy" onerror="this.remove()"><span class="foto__plass" aria-hidden="true">Foto</span></div>
+            <figcaption>Klassisk acetat</figcaption>
+          </figure>
+          <figure>
+            <div class="foto foto--11"><img src="bilder/brennvidde-optikk/innfatning-3.jpg" alt="Solbriller med mørke glass" width="800" height="800" loading="lazy" onerror="this.remove()"><span class="foto__plass" aria-hidden="true">Foto</span></div>
+            <figcaption>Solbriller med styrke</figcaption>
+          </figure>
+          <figure>
+            <div class="foto foto--11 foto--kald"><img src="bilder/brennvidde-optikk/innfatning-4.jpg" alt="Små, fargerike barnebriller" width="800" height="800" loading="lazy" onerror="this.remove()"><span class="foto__plass" aria-hidden="true">Foto</span></div>
+            <figcaption>Barnebriller</figcaption>
+          </figure>
+          <figure>
+            <div class="foto foto--11 foto--varm"><img src="bilder/brennvidde-optikk/innfatning-5.jpg" alt="Hylle med innfatninger i butikken" width="800" height="800" loading="lazy" onerror="this.remove()"><span class="foto__plass" aria-hidden="true">Foto</span></div>
+            <figcaption>Hele utvalget i butikken</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIK GÅR DET TIL ============ -->
+    <section class="seksjon seksjon--2" aria-labelledby="steg-tittel">
+      <div class="wrap">
+        <div class="seksjon__topp" data-inn>
+          <div>
+            <p class="overline">Slik går det til</p>
+            <h2 id="steg-tittel" class="h2">Tre steg til riktige briller.</h2>
+          </div>
+        </div>
+        <ol class="steg" data-inn>
+          <li><b>1</b><h3>Bestill time</h3><p>Velg en tid som passer på nett, eller ring oss.</p></li>
+          <li><b>2</b><h3>Synsundersøkelse</h3><p>Vi måler synet og ser på øyehelsen. Du får resultatet forklart.</p></li>
+          <li><b>3</b><h3>Velg og hent</h3><p>Vi hjelper deg å velge innfatning og glass. Brillene er klare på cirka én uke.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ HVORFOR OSS ============ -->
+    <section class="seksjon hvorfor" aria-labelledby="hvorfor-tittel">
+      <div class="wrap">
+        <figure class="foto foto--45" data-inn>
+          <img src="bilder/brennvidde-optikk/optiker.jpg" alt="Optikeren ved instrumentet i undersøkelsesrommet" width="960" height="1200" loading="lazy" onerror="this.remove()">
+          <span class="foto__plass" aria-hidden="true">Foto · optikeren</span>
+        </figure>
+        <div data-inn>
+          <p class="overline">Hvorfor Brennvidde</p>
+          <h2 id="hvorfor-tittel" class="h2">En optiker som tar seg tid.</h2>
+          <p class="ingress">Brennvidde drives av optiker Hedda (fiktiv person). Hun tar én kunde om gangen.</p>
+          <ul class="grunner">
+            <li><div><h3>Utdannet optiker</h3><p>Synsundersøkelsen gjøres alltid av en utdannet optiker.</p></div></li>
+            <li><div><h3>Tid til hver kunde</h3><p>45 minutter per synstest. Du får spørre om alt du lurer på.</p></div></li>
+            <li><div><h3>Gratis justering</h3><p>Sitter brillene skjevt, kom innom. Det tar fem minutter og koster ingenting.</p></div></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ANMELDELSER ============ -->
+    <section class="seksjon mork" aria-labelledby="anm-tittel">
+      <div class="wrap">
+        <div class="seksjon__topp" data-inn>
+          <div>
+            <p class="overline">Anmeldelser</p>
+            <h2 id="anm-tittel" class="h2">Hva kundene sier.</h2>
+          </div>
+          <p class="ingress">Anmeldelsene under er fiktive eksempler, laget for å vise hvordan seksjonen kan se ut.</p>
+        </div>
+        <ul class="anm" data-inn>
+          <li><blockquote>«Hun forklarte hvorfor synet mitt hadde endret seg. Første gang noen har gjort det.»</blockquote><p>Kari, Eksempelby</p><span class="anm__fiktiv">Fiktiv anmeldelse</span></li>
+          <li><blockquote>«Fikk god tid til å prøve innfatninger. Ingen mas.»</blockquote><p>Ola, Eksempelby</p><span class="anm__fiktiv">Fiktiv anmeldelse</span></li>
+          <li><blockquote>«Kontaktlinsene sitter perfekt, og jeg fikk hjelp til å lære å sette dem inn.»</blockquote><p>Ingrid, Eksempelby</p><span class="anm__fiktiv">Fiktiv anmeldelse</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ BESØK ============ -->
+    <section class="seksjon besok" id="besok" aria-labelledby="besok-tittel">
+      <div class="wrap">
+        <div data-inn>
+          <p class="overline">Besøk oss</p>
+          <h2 id="besok-tittel" class="h2">Midt i sentrum.</h2>
+          <div class="besok__info">
+            <address>Eksempelveien 7<br>0000 Eksempelby</address>
+            <dl class="tider" id="tider">
+              <div data-dag="1 2 3 4"><dt>Mandag–torsdag</dt><dd>10–18</dd></div>
+              <div data-dag="5"><dt>Fredag</dt><dd>10–17</dd></div>
+              <div data-dag="6"><dt>Lørdag</dt><dd>10–15</dd></div>
+              <div data-dag="0"><dt>Søndag</dt><dd>Stengt</dd></div>
+            </dl>
+            <p>Telefon <a class="tlf" href="#" data-demo>000 00 000</a> · Parkering i bakgården.</p>
+          </div>
+        </div>
+        <div class="kart" role="img" aria-label="Kartplassholder: her vises et kart på en ekte side" data-inn>
+          <span class="kart__nal" aria-hidden="true"></span>
+          <span class="kart__merk">Kart</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SPØRSMÅL ============ -->
+    <section class="seksjon seksjon--2 faq" id="sporsmal" aria-labelledby="faq-tittel">
+      <div class="wrap">
+        <div data-inn>
+          <p class="overline">Spørsmål</p>
+          <h2 id="faq-tittel" class="h2">Ofte stilte spørsmål.</h2>
+          <p class="ingress">Finner du ikke svaret? Ring oss på <a class="tlf" href="#" data-demo>000 00 000</a>.</p>
+        </div>
+        <div class="faq__liste" data-inn>
+          <details><summary>Hvor ofte bør jeg sjekke synet?</summary><p>For de fleste voksne holder det med hvert andre år. Merker du endringer, hodepine eller at du myser mer, bør du komme tidligere.</p></details>
+          <details><summary>Trenger jeg henvisning?</summary><p>Nei. Du kan bestille synsundersøkelse direkte hos oss.</p></details>
+          <details><summary>Hvor lang tid tar det å få briller?</summary><p>Vanligvis cirka én uke. Spesialglass kan ta litt lenger, og da sier vi fra når du bestiller.</p></details>
+          <details><summary>Kan barn bestille time?</summary><p>Ja. Vi undersøker barn fra skolealder. Ta gjerne med en voksen.</p></details>
+          <details><summary>Hva om jeg ikke blir vant til de nye brillene?</summary><p>Gi det et par uker. Kjennes det fortsatt feil, kommer du tilbake, så sjekker vi glassene og justerer.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BESTILL ============ -->
+    <section class="seksjon bestill" id="bestill" aria-labelledby="bestill-tittel">
+      <div class="wrap">
+        <div data-inn>
+          <p class="overline">Bestill time</p>
+          <h2 id="bestill-tittel" class="h2">Finn en tid som passer.</h2>
+          <p class="ingress">Send oss ønsket dag, så bekrefter vi timen på SMS innen én arbeidsdag.</p>
+          <div class="bestill__alt">
+            <p>Liker du heller å ringe?</p>
+            <a class="tlf" href="#" data-demo>000 00 000</a>
+          </div>
+        </div>
+        <form class="skjema" id="skjema" novalidate data-inn>
+          <fieldset>
+            <legend>Hva gjelder det?</legend>
+            <div class="valg">
+              <label><input type="radio" name="tjeneste" value="Synsundersøkelse" checked><span>Synsundersøkelse</span></label>
+              <label><input type="radio" name="tjeneste" value="Kontaktlinser"><span>Kontaktlinser</span></label>
+              <label><input type="radio" name="tjeneste" value="Briller"><span>Briller</span></label>
+            </div>
+          </fieldset>
+          <div class="rad">
+            <div class="felt"><label for="dato">Ønsket dag</label><input id="dato" type="date" required aria-describedby="dato-feil"><p class="feil" id="dato-feil"></p></div>
+            <div class="felt"><label for="tid">Tid på dagen</label><select id="tid"><option>Formiddag</option><option>Ettermiddag</option></select></div>
+          </div>
+          <div class="rad">
+            <div class="felt"><label for="navn">Navn</label><input id="navn" autocomplete="name" required aria-describedby="navn-feil"><p class="feil" id="navn-feil"></p></div>
+            <div class="felt"><label for="mobil">Mobil</label><input id="mobil" type="tel" inputmode="tel" autocomplete="tel" required aria-describedby="mobil-feil"><p class="feil" id="mobil-feil"></p></div>
+          </div>
+          <div class="felt"><label for="melding">Noe vi bør vite? (valgfritt)</label><textarea id="melding"></textarea></div>
+          <button class="knapp" type="submit">Bestill time</button>
+          <p class="skjema__merk">Dette er et eksempel. Skjemaet sender ingenting.</p>
+        </form>
+        <div class="takk" id="takk" tabindex="-1" hidden>
+          <h3>Takk, <span id="takk-navn"></span>.</h3>
+          <p id="takk-tekst"></p>
+          <p>Dette er et fiktivt eksempel. Ingen time er bestilt.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bunn mork">
+    <div class="wrap">
+      <div class="bunn__topp">
+        <div>
+          <a class="logo" href="#innhold"><svg viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="13" fill="none" stroke="#EDEEE9" stroke-width="1.6"/><circle cx="15" cy="15" r="7" fill="none" stroke="#EDEEE9" stroke-width="1.6"/><circle cx="15" cy="15" r="2.4" fill="#F08A7E"/></svg>Brennvidde Optikk</a>
+          <p style="margin-top:16px">Synsundersøkelse, kontaktlinser og briller i Eksempelby.</p>
+          <p style="margin-top:24px"><a class="knapp" href="#bestill">Bestill time</a></p>
+        </div>
+        <dl><dt>Adresse</dt><dd>Eksempelveien 7<br>0000 Eksempelby</dd><dt style="margin-top:16px">Telefon</dt><dd>000 00 000</dd></dl>
+        <dl><dt>Åpent</dt><dd>Man–tor 10–18<br>Fre 10–17<br>Lør 10–15</dd></dl>
+      </div>
+      <div class="bunn__linje">
+        <p>© <span id="aar">2026</span> Brennvidde Optikk er et fiktivt firma. Telefon og adresse er oppdiktet.</p>
+        <p>Fiktivt konsept laget som eksempel av Nettstrax. <a href="https://nettstrax.no">nettstrax.no</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    "use strict";
+    document.documentElement.classList.add("js");
+    document.getElementById("aar").textContent = new Date().getFullYear();
+
+    /* Myk innfading ved scroll (eneste scrollbevegelse) */
+    var inn = document.querySelectorAll("[data-inn]");
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+      inn.forEach(function (el) { el.classList.add("vist"); });
+    } else {
+      var io = new IntersectionObserver(function (e) {
+        e.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add("vist"); io.unobserve(x.target); } });
+      }, { rootMargin: "0px 0px -8% 0px" });
+      inn.forEach(function (el) { io.observe(el); });
+    }
+
+    /* Marker dagens åpningstid */
+    var dag = String(new Date().getDay());
+    document.querySelectorAll("#tider [data-dag]").forEach(function (r) {
+      if (r.getAttribute("data-dag").split(" ").indexOf(dag) > -1) {
+        r.classList.add("i-dag");
+        r.querySelector("dt").insertAdjacentHTML("beforeend", ' <span class="vh">(i dag)</span>');
+      }
+    });
+
+    /* Telefonnummeret er fiktivt */
+    document.querySelectorAll("[data-demo]").forEach(function (a) {
+      a.addEventListener("click", function (e) { e.preventDefault(); alert("Dette er et fiktivt nummer i et eksempel. På en ekte side ringer lenken butikken."); });
+    });
+
+    /* Bestilling: sjekker feltene og viser en bekreftelse. Sender ingenting. */
+    var skjema = document.getElementById("skjema"), dato = document.getElementById("dato");
+    dato.min = new Date().toISOString().slice(0, 10);
+    var meld = { dato: "Velg en dag.", navn: "Skriv inn navnet ditt.", mobil: "Skriv inn mobilnummeret ditt." };
+    skjema.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var forste = null;
+      ["dato", "navn", "mobil"].forEach(function (id) {
+        var f = document.getElementById(id), tom = !f.value.trim();
+        f.setAttribute("aria-invalid", String(tom));
+        document.getElementById(id + "-feil").textContent = tom ? meld[id] : "";
+        if (tom && !forste) forste = f;
+      });
+      if (forste) { forste.focus(); return; }
+      var d = new Date(dato.value + "T12:00");
+      document.getElementById("takk-navn").textContent = document.getElementById("navn").value.trim().split(" ")[0];
+      document.getElementById("takk-tekst").textContent = skjema.querySelector('input[name="tjeneste"]:checked').value + ", " +
+        new Intl.DateTimeFormat("nb-NO", { weekday: "long", day: "numeric", month: "long" }).format(d) + " (" + document.getElementById("tid").value.toLowerCase() + "). På en ekte side ville du fått bekreftelse på SMS.";
+      skjema.hidden = true; var t = document.getElementById("takk"); t.hidden = false; t.focus();
+    });
+  })();
+  </script>
+</body>
+</html>
